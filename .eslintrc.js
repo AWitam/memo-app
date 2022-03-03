@@ -7,11 +7,12 @@ module.exports = {
     sourceType: 'module',
   },
 
-  extends: ['plugin:@typescript-eslint/recommended'],
+  //extends: ['plugin:@typescript-eslint/recommended'],
 
   rules: {
-    '@typescript-eslint/indent': ['error', 2],
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/no-explicit-any': 'error',
+    // '@typescript-eslint/indent': ['error', 2],
+    // '@typescript-eslint/no-unused-vars': 'error',
+    // '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
 }

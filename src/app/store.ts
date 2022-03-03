@@ -1,7 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import studySetsReducer from '../state/studySetForm/studySetsSlice'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    collections: studySetsReducer,
+  },
 })
 
 export type AppDispatch = typeof store.dispatch

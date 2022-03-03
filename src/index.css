@@ -7,24 +7,24 @@ body {
 
 @font-face {
   font-family: 'Space Grotesk';
-  src: local('Space Grotesk'), url('./fonts/SpaceGrotesk-Light.woff2') format('woff2');
+  src: local('Space Grotesk'), url('./assets/fonts/SpaceGrotesk-Light.woff2') format('woff2');
   font-weight: 300;
 }
 
 @font-face {
   font-family: 'Space Grotesk';
-  src: local('Space Grotesk'), url('./fonts/SpaceGrotesk-Regular.woff2') format('woff2');
+  src: local('Space Grotesk'), url('./assets/fonts/SpaceGrotesk-Regular.woff2') format('woff2');
   font-weight: 400;
 }
 
 @font-face {
   font-family: 'Space Grotesk';
-  src: local('Space Grotesk'), url('./fonts/SpaceGrotesk-Medium.woff2') format('woff2');
+  src: local('Space Grotesk'), url('./assets/fonts/SpaceGrotesk-Medium.woff2') format('woff2');
   font-weight: 500;
 }
 
 @font-face {
   font-family: 'Space Grotesk';
-  src: local('Space Grotesk'), url('./fonts/SpaceGrotesk-Bold.woff2') format('woff2');
+  src: local('Space Grotesk'), url('./assets/fonts/SpaceGrotesk-Bold.woff2') format('woff2');
   font-weight: 700;
 }
