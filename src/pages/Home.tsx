@@ -1,14 +1,12 @@
 import { useAppSelector } from '../app/hooks'
-import { Link, Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ROUTES } from '../app/routes'
 import { Collection } from './Collection'
-import { useContext, useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useFirebase } from '../firebase/firebaseContextProvider'
-import { fetchUserStudySets, selectStudySets, StudySet } from '../state/studySetForm/studySetsSlice'
-import { FlashCardField } from '../components/StudySetForm/StudySetForm'
+import { fetchUserStudySets } from '../state/studySetForm/studySetsSlice'
 import { collection } from '@firebase/firestore'
 import { useEffect } from 'react'
-import { Navbar } from '../components/Navbar/Navbar'
 
 export const Home = () => {
   // todo: create auth logic
@@ -24,7 +22,7 @@ export const Home = () => {
   const fetchStudySets = async () => {
     try {
       const studySetsRef = collection(db, 'studySets')
-      const res = await dispatch(fetchUserStudySets({ userId: 'user1', studySetsRef })).unwrap()
+      await dispatch(fetchUserStudySets({ userId: 'user1', studySetsRef })).unwrap()
     } catch (error) {
       console.log(error)
     }

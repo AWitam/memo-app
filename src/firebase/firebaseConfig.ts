@@ -1,3 +1,9 @@
+/*
+It's okay to expose this data -> docs:
+https://firebase.google.com/docs/projects/api-keys
+
+*/
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyD0nq8Bv20lpZR7wy8MGKiCYCvKz_7b1tA',
   authDomain: 'memo-app-5781e.firebaseapp.com',

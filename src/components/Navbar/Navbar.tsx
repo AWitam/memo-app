@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
 
 export const Navbar = () => {

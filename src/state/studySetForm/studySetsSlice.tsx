@@ -1,31 +1,7 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { FlashCardField } from '../../components/StudySetForm/StudySetForm'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
-import { ref, onValue } from 'firebase/database'
-import { collection, query, where, getDocs } from 'firebase/firestore'
-
-export interface FlashcardField {
-  id: string
-  term: string
-  definition: string
-}
-
-export interface StudySet {
-  id: string
-  summary: StudySetSummary
-  items?: Array<FlashcardField>
-}
-
-interface StudySetSummary {
-  title: string
-  description: string
-  numberOfItems?: number
-}
-
-interface StudySetsState {
-  studySets: StudySet[]
-  isLoading: boolean
-}
+import { query, where, getDocs, DocumentData } from 'firebase/firestore'
+import { StudySetItemPayload, StudySetsState, UserStudySetPayload } from '../types'
 
 const initialState: StudySetsState = {
   studySets: [],
@@ -34,10 +10,10 @@ const initialState: StudySetsState = {
 
 export const fetchUserStudySets = createAsyncThunk(
   'studySetsSlice/fetchUserStudySets',
-  async ({ userId, studySetsRef }: any): Promise<Array<any>> => {
+  async ({ userId, studySetsRef }: UserStudySetPayload): Promise<Array<DocumentData>> => {
     const q = query(studySetsRef, where('creator', '==', userId))
     const querySnapshot = await getDocs(q)
-    const userStudySetsData: any = []
+    const userStudySetsData: Array<DocumentData> = []
     querySnapshot.forEach((doc) => {
       userStudySetsData.push({ id: doc.id, summary: doc.data() })
     })
@@ -47,7 +23,7 @@ export const fetchUserStudySets = createAsyncThunk(
 
 export const fetchStudySetsItems = createAsyncThunk(
   'studySetsSlice/fetchStudySetItems',
-  async ({ userId, studySetsItemsRef }: any): Promise<Array<any>> => {
+  async ({ userId, studySetsItemsRef }: StudySetItemPayload): Promise<Array<DocumentData>> => {
     const q = query(studySetsItemsRef, where('', '==', userId))
     const querySnapshot = await getDocs(q)
     const userStudySetsData: Array<any> = []

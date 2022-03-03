@@ -1,17 +1,13 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux'
 import { RootState } from '../../app/store'
-
 import { v4 as uuidv4 } from 'uuid'
 import { selectStudySets, addStudySet } from '../../state/studySetForm/studySetsSlice'
 
-const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
+import { FlashCardField } from '../../common/types'
+import { WordsForm } from './WordsForm'
 
-export interface FlashCardField {
-  id: string
-  term: string
-  definition: string
-}
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export const StudySetForm = () => {
   const createStudySetParams = useTypedSelector(selectStudySets)
@@ -72,61 +68,6 @@ export const StudySetForm = () => {
           <WordsForm flashCardsFields={flashCardFields} addNewField={addCardInputs} updateField={updateField} />
         )}
       </form>
-    </div>
-  )
-}
-
-export interface FlashCardField {
-  id: string
-  term: string
-  definition: string
-}
-
-interface WordFormProps {
-  flashCardsFields: FlashCardField[]
-  addNewField: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-  updateField: (id: string, term: string, definition: string) => void
-}
-
-export const WordsForm: React.FC<WordFormProps> = ({ flashCardsFields, addNewField, ...props }) => {
-  return (
-    <>
-      <h2>Add words and definitions</h2>
-      {flashCardsFields.map((field) => (
-        <InputGroup key={field.id} field={field} updateField={props.updateField} />
-      ))}
-      <div>
-        <button onClick={(e) => addNewField(e)}>Add new word</button>
-        <button>Save and continue</button>
-      </div>
-    </>
-  )
-}
-
-interface InputGroupProps {
-  field: FlashCardField
-  updateField: (id: string, term: string, definition: string) => void
-}
-
-export const InputGroup = ({ field, updateField }: InputGroupProps) => {
-  const { id, term, definition } = field
-
-  const [termValue, setTermValue] = useState(term)
-  const [definitionValue, setDescriptionValue] = useState(definition)
-
-  useEffect(() => {
-    updateField(id, termValue, definitionValue)
-  }, [termValue, definitionValue])
-
-  return (
-    <div>
-      <input type="text" name="term" value={termValue} onChange={(e) => setTermValue(e.target.value)} />
-      <input
-        type="text"
-        name="definition"
-        value={definitionValue}
-        onChange={(e) => setDescriptionValue(e.target.value)}
-      />
     </div>
   )
 }

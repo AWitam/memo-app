@@ -1,30 +1,31 @@
 import { createContext, useEffect, useContext, useState } from 'react'
-import { initializeApp } from 'firebase/app'
-import { RootState } from '../app/store'
-import { selectStudySets } from '../state/studySetForm/studySetsSlice'
-import { getFirestore } from 'firebase/firestore'
+import { FirebaseApp, initializeApp } from 'firebase/app'
+import { Firestore, getFirestore } from 'firebase/firestore'
 import { firebaseConfig } from './firebaseConfig'
-import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
+
+import { AppDispatch } from '../app/store'
+import { useAppDispatch } from '../app/hooks'
 
 type FirebaseContextProviderProps = {
   children: React.ReactNode
 }
 
-interface Api {
-  getAll: (dbRef: any) => void
+export interface FirebaseContext {
+  app: FirebaseApp
+  db: Firestore
 }
 
 const initialValue = {
-  app: undefined,
-  db: undefined,
+  app: null,
+  db: null,
 }
 
-const FirebaseContext = createContext<{ firebaseValue: any; dispatch: any } | undefined>(undefined)
+const FirebaseContext = createContext<{ firebaseValue: FirebaseContext; dispatch: AppDispatch } | undefined>(undefined)
 
 function FirebaseContextProvider({ children }: FirebaseContextProviderProps) {
   const [firebaseValue, setFirebaseValue] = useState<any>(initialValue)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (!firebaseValue.app) {
