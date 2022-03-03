@@ -1,16 +1,16 @@
 import { useAppSelector } from '../app/hooks'
-import { Link } from 'react-router-dom'
-import ROUTES from '../app/routes'
-import Collection from './Collection'
+import { Link, Outlet } from 'react-router-dom'
+import { ROUTES } from '../app/routes'
+import { Collection } from './Collection'
 import { useContext, useMemo, useState } from 'react'
 import { useFirebase } from '../firebase/firebaseContextProvider'
-
 import { fetchUserStudySets, selectStudySets, StudySet } from '../state/studySetForm/studySetsSlice'
 import { FlashCardField } from '../components/StudySetForm/StudySetForm'
 import { collection } from '@firebase/firestore'
 import { useEffect } from 'react'
+import { Navbar } from '../components/Navbar/Navbar'
 
-const Home = () => {
+export const Home = () => {
   // todo: create auth logic
 
   const studySets = useAppSelector((state) => state.collections.studySets)
@@ -44,7 +44,7 @@ const Home = () => {
       ) : (
         <div>
           <h2>No study sets yet!</h2>
-          <Link to={ROUTES.newStudySetRoute}>
+          <Link to={ROUTES.newStudySet}>
             <button>Create study set</button>
           </Link>
         </div>
@@ -52,5 +52,3 @@ const Home = () => {
     </div>
   )
 }
-
-export default Home

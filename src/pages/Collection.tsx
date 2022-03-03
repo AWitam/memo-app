@@ -3,12 +3,11 @@ import { useFirebase } from '../firebase/firebaseContextProvider'
 import { collection, getDocs } from '@firebase/firestore'
 import { fetchStudySetsItems } from '../state/studySetForm/studySetsSlice'
 import { Link } from 'react-router-dom'
-import ROUTES from '../app/routes'
-import { useState } from 'hoist-non-react-statics/node_modules/@types/react'
+import { ROUTES } from '../app/routes'
 
 // displays study sets summaries
 
-const Collection = () => {
+export const Collection = () => {
   const studySets = useAppSelector((state) => state.collections.studySets)
   const {
     firebaseValue: { app, db },
@@ -47,7 +46,7 @@ const Collection = () => {
         >
           <h2>{studySet.summary.title}</h2>
           <div>{getTermsFormat(studySet.summary.numberOfItems)}</div>
-          <Link to={ROUTES.studySetRoute(studySet.id)}>
+          <Link to={ROUTES.studySet}>
             <button style={{ margin: '10px' }} onClick={() => getStudySetItems(studySet.id)}>
               Practice
             </button>
@@ -57,5 +56,3 @@ const Collection = () => {
     </div>
   )
 }
-
-export default Collection
