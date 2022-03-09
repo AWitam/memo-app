@@ -11,7 +11,7 @@ export interface StudySetSummary {
 }
 
 export interface StudySet {
-  id: string
+  studySetId: string
   summary: StudySetSummary
-  items?: Array<FlashCardField>
+  terms?: Array<FlashCardField>
 }

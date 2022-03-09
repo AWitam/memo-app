@@ -18,8 +18,8 @@ export const Routing = () => {
       <Route path={ROUTES.root} element={<App />}>
         <Route path={ROUTES.root} element={<Home />} />
         <Route path={ROUTES.newStudySet} element={<StudySetForm />} />
-        <Route path={ROUTES.collection} element={<Collection />} />
-        <Route path={ROUTES.studySet} element={<StudySet />} />
+        <Route path={`${ROUTES.collection}`} element={<Collection />} />
+        <Route path={`${ROUTES.studySet}/:studySetId`} element={<StudySet />} />
         <Route path="/*" element={<div>Not found!</div>} />
       </Route>
     </Routes>

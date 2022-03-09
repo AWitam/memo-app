@@ -7,10 +7,8 @@ export interface StudySetsState {
 
 export type UserStudySetPayload = {
   userId: string
-  studySetsRef: Query
 }
 
 export type StudySetItemPayload = {
   userId: string
-  studySetsItemsRef: Query
 }

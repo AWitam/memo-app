@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import studySetsReducer from '../state/studySetForm/studySetsSlice'
+import studySetsReducer from '../state/studySet/studySetsSlice'
 
 export const store = configureStore({
   reducer: {

@@ -2,16 +2,19 @@ import { useState } from 'react'
 import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux'
 import { RootState } from '../../app/store'
 import { v4 as uuidv4 } from 'uuid'
-import { selectStudySets, addStudySet } from '../../state/studySetForm/studySetsSlice'
+import { selectStudySets, addStudySet } from '../../state/studySet/studySetsSlice'
 
 import { FlashCardField } from '../../common/types'
 import { WordsForm } from './WordsForm'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../../app/routes'
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export const StudySetForm = () => {
   const createStudySetParams = useTypedSelector(selectStudySets)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -38,8 +41,18 @@ export const StudySetForm = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     const studySetId = uuidv4()
-    dispatch(addStudySet({ id: studySetId, title, description, flashCardFields }))
-    // api.addStudySet({ title, description, flashCardFields })
+    const newStudySet = {
+      id: studySetId,
+      summary: {
+        title,
+        description,
+        numberOfItems: flashCardFields.length,
+        creator: 'user1',
+      },
+      terms: flashCardFields,
+    }
+    dispatch(addStudySet(newStudySet))
+    return navigate(`/${ROUTES.studySet}/${studySetId}`)
   }
 
   return (

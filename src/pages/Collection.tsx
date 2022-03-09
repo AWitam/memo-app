@@ -1,8 +1,5 @@
 import { useAppSelector } from '../app/hooks'
-import { useFirebase } from '../firebase/firebaseContextProvider'
-import { collection, getDocs } from '@firebase/firestore'
-import { fetchStudySetsItems } from '../state/studySetForm/studySetsSlice'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import { ROUTES } from '../app/routes'
 import { StudySet } from '../common/types'
 
@@ -10,10 +7,6 @@ import { StudySet } from '../common/types'
 
 export const Collection = () => {
   const studySets = useAppSelector((state) => state.collections.studySets)
-  const {
-    firebaseValue: { app, db },
-    dispatch,
-  } = useFirebase()
 
   const getTermsFormat = (numberOfItems: number | undefined): string => {
     switch (numberOfItems) {
@@ -26,32 +19,17 @@ export const Collection = () => {
     }
   }
 
-  const getStudySetItems = async (studySetId: string) => {
-    console.log(studySetId)
-    try {
-      const studySetsItemsRef = collection(db, `studySets/${studySetId}/terms`)
-      const data = await getDocs(studySetsItemsRef)
-      data.forEach((doc) => console.log(doc.data(), doc.id))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   return (
     <div>
       <h2>Your collection</h2>
-      {studySets.map((studySet: StudySet) => (
+      {studySets.map((studySet: any) => (
         <div
           key={studySet.summary.title}
           style={{ border: `1px solid #333`, padding: '20px', margin: '20px', maxWidth: '300px' }}
         >
           <h2>{studySet.summary.title}</h2>
           <div>{getTermsFormat(studySet.summary.numberOfItems)}</div>
-          <Link to={ROUTES.studySet}>
-            <button style={{ margin: '10px' }} onClick={() => getStudySetItems(studySet.id)}>
-              Practice
-            </button>
-          </Link>
+          <Link to={`/${ROUTES.studySet}/${studySet.id}`}>Practice</Link>
         </div>
       ))}
     </div>
