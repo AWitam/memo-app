@@ -3,7 +3,6 @@ import { Navbar } from '../components/Navbar/Navbar'
 import { useAppSelector } from './hooks'
 import { useFirebase } from '../firebase/firebaseContextProvider'
 import { fetchUserStudySets } from '../state/studySet/studySetsSlice'
-import { collection } from 'firebase/firestore'
 import { useCallback, useEffect } from 'react'
 
 function App() {
@@ -11,7 +10,7 @@ function App() {
   const { dispatch } = useFirebase()
 
   const fetchStudySets = useCallback(async () => {
-    dispatch(fetchUserStudySets({ userId: 'user1' })).unwrap()
+    dispatch(fetchUserStudySets('user1')).unwrap()
   }, [studySets])
 
   useEffect(() => {

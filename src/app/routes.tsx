@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router'
-import { StudySet } from '../components/StudySet/StudySet'
+import { StudySetPage } from '../components/StudySet/StudySet'
 import { StudySetForm } from '../components/StudySetForm/StudySetForm'
 import { Collection } from '../pages/Collection'
 import { Home } from '../pages/Home'
@@ -19,7 +19,10 @@ export const Routing = () => {
         <Route path={ROUTES.root} element={<Home />} />
         <Route path={ROUTES.newStudySet} element={<StudySetForm />} />
         <Route path={`${ROUTES.collection}`} element={<Collection />} />
-        <Route path={`${ROUTES.studySet}/:studySetId`} element={<StudySet />} />
+
+        <Route path={`${ROUTES.studySet}/:studySetId`} element={<StudySetPage />} />
+        <Route path={`${ROUTES.studySet}/:studySetId/edit`} element={<StudySetForm />} />
+
         <Route path="/*" element={<div>Not found!</div>} />
       </Route>
     </Routes>

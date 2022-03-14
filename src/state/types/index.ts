@@ -1,7 +1,7 @@
-import { DocumentData, Query } from 'firebase/firestore'
+import { StudySet } from '../../common/types'
 
 export interface StudySetsState {
-  studySets: DocumentData
+  studySets: Array<StudySet>
   isLoading: boolean
 }
 

@@ -7,11 +7,12 @@ export interface FlashCardField {
 export interface StudySetSummary {
   title: string
   description: string
-  numberOfItems?: number
+  numberOfItems: number
+  termsId: string
 }
 
-export interface StudySet {
+export type StudySet = {
   studySetId: string
-  summary: StudySetSummary
   terms?: Array<FlashCardField>
+  summary: StudySetSummary
 }

@@ -1,19 +1,24 @@
-import { useState } from 'react'
-import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux'
-import { RootState } from '../../app/store'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { selectStudySets, addStudySet } from '../../state/studySet/studySetsSlice'
+import { addStudySet, editStudySet, fetchStudySetData } from '../../state/studySet/studySetsSlice'
 
-import { FlashCardField } from '../../common/types'
+import { FlashCardField, StudySet } from '../../common/types'
 import { WordsForm } from './WordsForm'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
-
-const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
+import { useFirebase } from '../../firebase/firebaseContextProvider'
+import { useAppSelector } from '../../app/hooks'
 
 export const StudySetForm = () => {
-  const createStudySetParams = useTypedSelector(selectStudySets)
-  const dispatch = useDispatch()
+  let { studySetId } = useParams()
+  const isLoading = useAppSelector((state) => state.collections.isLoading)
+  const existingStudySet = useAppSelector((state) =>
+    state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
+  )
+
+  const [isEditingMode, setEditingMode] = useState(false)
+
+  const { dispatch } = useFirebase()
   const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
@@ -38,49 +43,91 @@ export const StudySetForm = () => {
     setFlashCardFields(updatedFlashCardFields)
   }
 
+  useEffect(() => {
+    if (existingStudySet) {
+      setEditingMode(true)
+      setTitle(existingStudySet.summary.title)
+      setDescription(existingStudySet.summary.description)
+      if (!existingStudySet?.terms) {
+        studySetId && dispatch(fetchStudySetData(existingStudySet.summary.termsId))
+      }
+      if (existingStudySet.terms) {
+        setFlashCardFields(existingStudySet.terms)
+      }
+    }
+  }, [existingStudySet, isLoading])
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
+    if (existingStudySet) {
+      handleUpdateStudySet()
+    } else {
+      handleAddNewStudySet()
+    }
+  }
+
+  const handleAddNewStudySet = () => {
     const studySetId = uuidv4()
     const newStudySet = {
-      id: studySetId,
+      studySetId,
       summary: {
         title,
         description,
         numberOfItems: flashCardFields.length,
         creator: 'user1',
+        termsId: uuidv4(),
       },
       terms: flashCardFields,
     }
+
     dispatch(addStudySet(newStudySet))
-    return navigate(`/${ROUTES.studySet}/${studySetId}`)
+    navigate(`/${ROUTES.studySet}/${studySetId}`)
+  }
+
+  const handleUpdateStudySet = () => {
+    if (existingStudySet) {
+      const updatedStudySet = {
+        ...existingStudySet,
+        summary: {
+          ...existingStudySet.summary,
+          numberOfItems: flashCardFields.length,
+        },
+        terms: flashCardFields,
+      }
+      dispatch(editStudySet(updatedStudySet))
+      navigate(`/${ROUTES.studySet}/${studySetId}`)
+    }
   }
 
   return (
     <div>
-      <h1>Create new study set!</h1>
-
-      <h2>Title and description</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input
-          type="text"
-          name="title"
-          id="collection-title"
-          placeholder="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          name="description"
-          id="collection-description"
-          placeholder="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        {title && (
-          <WordsForm flashCardsFields={flashCardFields} addNewField={addCardInputs} updateField={updateField} />
-        )}
-      </form>
+      {isLoading ? (
+        'loading ...'
+      ) : (
+        <>
+          <h1>{isEditingMode ? 'Edit study set' : 'Create new study set!'}</h1>
+          <h2>Title and description</h2>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <input
+              type="text"
+              name="title"
+              id="collection-title"
+              placeholder="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <input
+              type="text"
+              name="description"
+              id="collection-description"
+              placeholder="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            {title && <WordsForm flashCardsFields={flashCardFields} addNewField={addCardInputs} updateField={updateField} />}
+          </form>
+        </>
+      )}
     </div>
   )
 }
