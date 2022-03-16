@@ -6,19 +6,23 @@ import { FlashCardField, StudySet } from '../../common/types'
 import { WordsForm } from './WordsForm'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
-import { useFirebase } from '../../firebase/firebaseContextProvider'
+
 import { useAppSelector } from '../../app/hooks'
+import { useDispatch } from 'react-redux'
 
 export const StudySetForm = () => {
   let { studySetId } = useParams()
   const isLoading = useAppSelector((state) => state.collections.isLoading)
+  const user = useAppSelector((state) => state.auth.user)
+
   const existingStudySet = useAppSelector((state) =>
     state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
   )
 
   const [isEditingMode, setEditingMode] = useState(false)
 
-  const { dispatch } = useFirebase()
+  const dispatch = useDispatch()
+
   const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
@@ -74,7 +78,7 @@ export const StudySetForm = () => {
         title,
         description,
         numberOfItems: flashCardFields.length,
-        creator: 'user1',
+        creator: user && user.uid,
         termsId: uuidv4(),
       },
       terms: flashCardFields,

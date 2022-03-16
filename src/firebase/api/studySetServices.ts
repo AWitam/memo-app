@@ -1,6 +1,6 @@
 import { collection, deleteDoc, doc, DocumentData, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
-import { firebaseValue } from '.'
-import { StudySet } from '../common/types'
+import { firebaseValue } from '..'
+import { StudySet } from '../../common/types'
 
 export const getStudySetData = async (termsId: string) => {
   try {
@@ -48,11 +48,11 @@ export const editStudySetTerms = async (studySet: StudySet) => {
   const termsDocRef = doc(firebaseValue.db, 'terms', summary.termsId)
   const studySetRef = doc(firebaseValue.db, 'studySets', studySetId)
 
-  const updateTerms = await updateDoc(termsDocRef, {
+  const updateTerms = updateDoc(termsDocRef, {
     terms: terms,
   })
 
-  const updateTermsCount = await updateDoc(studySetRef, {
+  const updateTermsCount = updateDoc(studySetRef, {
     numberOfItems: summary.numberOfItems,
   })
 
@@ -63,5 +63,5 @@ export const deleteStudySet = async (studySetId: string, termsId: string) => {
   const termsRef = doc(firebaseValue.db, 'terms', termsId)
   const studySetRef = doc(firebaseValue.db, 'studySets', studySetId)
 
-  Promise.all([await deleteDoc(termsRef), deleteDoc(studySetRef)])
+  Promise.all([deleteDoc(termsRef), deleteDoc(studySetRef)])
 }

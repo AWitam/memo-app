@@ -2,10 +2,14 @@ import { useAppSelector } from '../app/hooks'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../app/routes'
 import { Collection } from './Collection'
+import { useCallback, useEffect } from 'react'
+import { fetchUserStudySets } from '../state/studySet/studySetsSlice'
+import { useDispatch } from 'react-redux'
 
 export const Home = () => {
   const isLoading = useAppSelector((state) => state.collections.isLoading)
   const studySets = useAppSelector((state) => state.collections.studySets)
+
   return (
     <div>
       <h2>Home</h2>

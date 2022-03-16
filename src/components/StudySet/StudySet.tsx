@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { StudySet } from '../../common/types'
-import { useFirebase } from '../../firebase/firebaseContextProvider'
+
 import { fetchStudySetData } from '../../state/studySet/studySetsSlice'
 
 export const StudySetPage = () => {
@@ -11,7 +12,7 @@ export const StudySetPage = () => {
   const currentStudySet = useAppSelector((state) =>
     state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
   )
-  const { dispatch } = useFirebase()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!isLoading && !currentStudySet?.terms) {

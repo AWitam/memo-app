@@ -1,28 +1,23 @@
 import GlobalStyle from '../theme/GlobalStyles'
 import { Navbar } from '../components/Navbar/Navbar'
 import { useAppSelector } from './hooks'
-import { useFirebase } from '../firebase/firebaseContextProvider'
-import { fetchUserStudySets } from '../state/studySet/studySetsSlice'
-import { useCallback, useEffect } from 'react'
 
-function App() {
-  const studySets = useAppSelector((state) => state.collections.studySets)
-  const { dispatch } = useFirebase()
+import { useEffect, useState } from 'react'
 
-  const fetchStudySets = useCallback(async () => {
-    dispatch(fetchUserStudySets('user1')).unwrap()
-  }, [studySets])
-
+function App({ children }: any) {
+  const user = useAppSelector((state) => state.auth.user)
+  const [loggedNavbarMode, setNavbarMode] = useState(false)
   useEffect(() => {
-    if (!studySets.length) {
-      fetchStudySets()
+    if (user) {
+      setNavbarMode(true)
     }
-  }, [])
+  }, [user])
 
   return (
     <>
       <GlobalStyle />
-      <Navbar />
+      <Navbar loggedMode={loggedNavbarMode} />
+      {children}
     </>
   )
 }

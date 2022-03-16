@@ -1,10 +1,10 @@
 import { useAppSelector } from '../app/hooks'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ROUTES } from '../app/routes'
 import { StudySet } from '../common/types'
 import { useEffect, useRef, useState } from 'react'
-import { useFirebase } from '../firebase/firebaseContextProvider'
 import { deleteStudySetThunk } from '../state/studySet/studySetsSlice'
+import { useDispatch } from 'react-redux'
 
 export const Collection = () => {
   const studySets = useAppSelector((state) => state.collections.studySets)
@@ -21,7 +21,7 @@ export const Collection = () => {
 const StudySetCard = ({ studySet }: { studySet: StudySet }) => {
   const { summary, studySetId } = studySet
   const [isOpen, setOpen] = useState(false)
-  const { dispatch } = useFirebase()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleDelete = (studySetId: string, termsId: string) => {
@@ -39,7 +39,7 @@ const StudySetCard = ({ studySet }: { studySet: StudySet }) => {
       {isOpen ? (
         <SettingsModal
           onDelete={() => handleDelete(studySetId, summary.termsId)}
-          onEdit={() => navigate(`${ROUTES.studySet}/${studySetId}/edit`)}
+          onEdit={() => navigate(`/${ROUTES.studySet}/${studySetId}/edit`)}
           toggleOpen={() => setOpen(!isOpen)}
         />
       ) : null}
