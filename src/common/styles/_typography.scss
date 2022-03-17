@@ -51,10 +51,23 @@ li {
 a {
   text-decoration: none;
   color: inherit;
+  font-weight: $font-weight-medium;
   font-size: $font-size-16;
   cursor: pointer;
 }
 
+label {
+  display: block;
+  margin-bottom: $spacing-8;
+}
+
 p {
   margin-bottom: $spacing-16;
+}
+
+.action {
+  &__link {
+    color: $action-purple;
+    text-decoration: underline;
+  }
 }

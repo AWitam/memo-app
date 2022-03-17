@@ -1,11 +1,11 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router'
-import { Navbar } from '../components/Navbar/Navbar'
+
 import { StudySetPage } from '../components/StudySet/StudySet'
 import { StudySetForm } from '../components/StudySetForm/StudySetForm'
 import { Collection } from '../pages/Collection'
 import { Home } from '../pages/Home'
 import { LandingPage } from '../pages/LandingPage/LandingPage'
-import { LoginPage } from '../pages/LoginPage'
+import { LoginPage } from '../pages/LoginPage/LoginPage'
 import { LogOutPage } from '../pages/LogOutPage'
 import App from './App'
 import { useAppSelector } from './hooks'

@@ -2,6 +2,9 @@ import { Auth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/aut
 
 export const signInWithGoogle = async (auth: Auth) => {
   const provider = new GoogleAuthProvider()
+  provider.setCustomParameters({
+    prompt: 'select_account',
+  })
   const result = await signInWithPopup(auth, provider)
 
   const credential = GoogleAuthProvider.credentialFromResult(result)

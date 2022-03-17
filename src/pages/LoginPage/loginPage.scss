@@ -1,0 +1,59 @@
+@import '../../common/styles/shared';
+
+.content {
+  grid-column-end: span 12;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content__center {
+  text-align: left;
+  width: 80%;
+}
+
+form {
+  max-width: 100%;
+  input {
+    width: 100%;
+    padding: $spacing-8;
+  }
+}
+
+.form {
+  &__body,
+  &__email,
+  &__password {
+    width: 100%;
+    margin: $spacing-16 0;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+
+    button {
+      margin: $spacing-16 0;
+    }
+  }
+}
+
+.content__social-login {
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 3rem;
+    border: 1px solid $dark-grey;
+    cursor: pointer;
+
+    svg {
+      max-width: 70%;
+      max-height: 70%;
+    }
+  }
+}
