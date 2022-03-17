@@ -21,3 +21,11 @@
     width: calc($screen-xxl-min - $spacing-48);
   }
 }
+
+section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0px, 1fr));
+  row-gap: 2rem;
+  padding: $spacing-48 $spacing-16;
+}

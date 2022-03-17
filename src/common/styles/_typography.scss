@@ -10,6 +10,22 @@ h6 {
 
 h1 {
   font-size: $font-size-32;
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+  margin-bottom: $spacing-32;
+}
+
+h1::after {
+  content: '';
+  display: block;
+  background: $lily;
+  width: 90%;
+  height: $font-size-20;
+  position: absolute;
+  bottom: -(calc($spacing-8 / 4));
+  right: -$spacing-8;
+  z-index: -1;
 }
 
 h2 {
@@ -27,6 +43,7 @@ ul {
   // margin-inline-end: 0;
   // padding-inline-start: 0;
 }
+
 li {
   list-style: none;
 }
@@ -36,4 +53,8 @@ a {
   color: inherit;
   font-size: $font-size-16;
   cursor: pointer;
+}
+
+p {
+  margin-bottom: $spacing-16;
 }

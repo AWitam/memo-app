@@ -62,7 +62,7 @@ export const Navbar = ({ loggedMode }: { loggedMode: boolean }) => {
 const NavLinks = ({ loggedMode, isMobile }: { loggedMode: boolean; isMobile?: boolean }) => (
   <>
     <div className="nav__links-left">
-      <NavItem to={ROUTES.root} content="Home" />
+      <NavItem to={loggedMode ? ROUTES.root : ROUTES.landing} content="Home" />
       {loggedMode && <NavItem to={ROUTES.collection} content="Collection" />}
       <NavItem
         to={ROUTES.newStudySet}

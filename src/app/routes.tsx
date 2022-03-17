@@ -4,6 +4,7 @@ import { StudySetPage } from '../components/StudySet/StudySet'
 import { StudySetForm } from '../components/StudySetForm/StudySetForm'
 import { Collection } from '../pages/Collection'
 import { Home } from '../pages/Home'
+import { LandingPage } from '../pages/LandingPage/LandingPage'
 import { LoginPage } from '../pages/LoginPage'
 import { LogOutPage } from '../pages/LogOutPage'
 import App from './App'
@@ -11,6 +12,7 @@ import { useAppSelector } from './hooks'
 
 export enum ROUTES {
   root = '/',
+  landing = '/home',
   collection = 'collection',
   newStudySet = 'new-study-set',
   studySet = 'study-set',
@@ -35,7 +37,7 @@ export const Routing = () => {
 
         <Route path={ROUTES.logIn} element={<LoginPage />} />
         <Route path={ROUTES.signUp} element={<div>sign up </div>} />
-        <Route path={ROUTES.root} element={<div>landing</div>} />
+        <Route path={ROUTES.landing} element={<LandingPage />} />
         <Route path="/*" element={<div>Not found!</div>} />
       </Route>
     </Routes>

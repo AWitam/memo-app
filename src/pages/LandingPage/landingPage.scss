@@ -1,0 +1,44 @@
+@import '../../common/styles/shared';
+
+.content__left,
+.content__right {
+  grid-column-end: span 12;
+  align-self: center;
+
+  @include md {
+    grid-column-end: span 6;
+  }
+}
+
+.content__text {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0px, 1fr));
+
+  p {
+    grid-column-end: span 6;
+
+    @include md {
+      grid-column-end: span 5;
+    }
+  }
+}
+
+.img__wrapper {
+  width: 100%;
+  position: relative;
+  img {
+    max-width: calc(100% - $spacing-16);
+    position: relative;
+  }
+}
+
+.img__wrapper::before {
+  display: block;
+  content: '';
+  position: absolute;
+  width: calc(100% - $spacing-16);
+  height: 100%;
+  top: $spacing-16;
+  left: $spacing-16;
+  background-color: $lily;
+}
