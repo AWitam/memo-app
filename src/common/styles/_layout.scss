@@ -1,0 +1,23 @@
+@import './breakpoints';
+@import './variables';
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+
+  @include md {
+    width: calc($screen-md-min - $spacing-16);
+  }
+
+  @include lg {
+    width: calc($screen-lg-min - $spacing-16);
+  }
+
+  @include xl {
+    width: calc($screen-xl-min - $spacing-48);
+  }
+
+  @include xxl {
+    width: calc($screen-xxl-min - $spacing-48);
+  }
+}

@@ -1,8 +1,9 @@
 import GlobalStyle from '../theme/GlobalStyles'
 import { Navbar } from '../components/Navbar/Navbar'
 import { useAppSelector } from './hooks'
-
 import { useEffect, useState } from 'react'
+import { Routing } from './routes'
+import { Outlet } from 'react-router-dom'
 
 function App({ children }: any) {
   const user = useAppSelector((state) => state.auth.user)
@@ -17,7 +18,10 @@ function App({ children }: any) {
     <>
       <GlobalStyle />
       <Navbar loggedMode={loggedNavbarMode} />
-      {children}
+      <main className="container">
+        <Outlet />
+        {children}
+      </main>
     </>
   )
 }

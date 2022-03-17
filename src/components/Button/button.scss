@@ -1,0 +1,24 @@
+@import '../../common/styles/variables';
+
+button {
+  border: none;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: $font-size-16;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: $spacing-8 $spacing-16;
+  cursor: pointer;
+  font-weight: $font-weight-medium;
+}
+
+.primary {
+  background-color: $dark-grey;
+  color: $beige;
+}
+
+.secondary {
+  background-color: $lily;
+}
