@@ -61,7 +61,9 @@ export const deleteStudySetThunk = createAsyncThunk(
 export const StudySetSlice = createSlice({
   name: 'studySetsSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addStudySet.pending, (state) => {
@@ -106,7 +108,7 @@ export const StudySetSlice = createSlice({
   },
 })
 
-export const {} = StudySetSlice.actions
+export const { reset } = StudySetSlice.actions
 
 export const selectStudySets = (state: RootState) => state.collections
 

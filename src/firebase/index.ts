@@ -9,7 +9,7 @@ import {
   editStudySetTerms,
   deleteStudySet,
 } from './api/studySetServices'
-import { signInWithGoogle, logOut } from './api/userServices'
+import { signInWithGoogle, logOut, signUpWithEmail, loginWithEmail, resetPassword } from './api/userServices'
 import { firebaseConfig } from './firebaseConfig'
 
 function initializeFirebase() {
@@ -23,8 +23,11 @@ function initializeFirebase() {
     editStudySetSummary,
     editStudySetTerms,
     deleteStudySet,
+    signUpWithEmail,
     signInWithGoogle,
+    loginWithEmail,
     logOut,
+    resetPassword,
   }
   return { app, auth, db, api }
 }
