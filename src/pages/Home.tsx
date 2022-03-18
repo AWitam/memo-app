@@ -2,13 +2,22 @@ import { useAppSelector } from '../app/hooks'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../app/routes'
 import { Collection } from './Collection'
-import { useCallback, useEffect } from 'react'
-import { fetchUserStudySets } from '../state/studySet/studySetsSlice'
+import { useEffect } from 'react'
+
 import { useDispatch } from 'react-redux'
+import { fetchUserStudySets } from '../state/studySet/studySetsSlice'
 
 export const Home = () => {
   const isLoading = useAppSelector((state) => state.collections.isLoading)
   const studySets = useAppSelector((state) => state.collections.studySets)
+  const user = useAppSelector((state) => state.auth.user)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (studySets.length < 1) {
+      user && dispatch(fetchUserStudySets(user.uid))
+    }
+  }, [user, studySets])
 
   return (
     <div>

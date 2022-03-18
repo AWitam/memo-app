@@ -1,7 +1,7 @@
 {
   "short_name": "Memo app",
   "name": "Language learning app built with React",
-  "start_url": ".",
+  "start_url": "/home",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

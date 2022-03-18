@@ -33,10 +33,13 @@ export const Navbar = ({ loggedMode }: { loggedMode: boolean }) => {
               <span id="logo">MEMO</span>
               {isMobile ? (
                 <div className="nav__links-right">
-                  <NavItem
-                    to={ROUTES.signUp}
-                    content={<Button type={ButtonType.primary}>Sign up</Button>}
-                  ></NavItem>
+                  {!loggedMode && (
+                    <NavItem
+                      to={ROUTES.signUp}
+                      content={<Button type={ButtonType.primary}>Sign up</Button>}
+                    ></NavItem>
+                  )}
+
                   <button onClick={() => setOpen(!isOpen)}>
                     {isOpen ? <CloseIcon /> : <IconMenu />}{' '}
                   </button>

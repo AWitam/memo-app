@@ -35,8 +35,8 @@ export const Routing = () => {
           <Route path={ROUTES.logOut} element={<LogOutPage />} />
         </Route>
 
-        <Route path={ROUTES.logIn} element={<LoginPage />} />
-        <Route path={ROUTES.signUp} element={<div>sign up </div>} />
+        <Route path={ROUTES.logIn} element={<LoginPage pageType={ROUTES.logIn} />} />
+        <Route path={ROUTES.signUp} element={<LoginPage pageType={ROUTES.signUp} />} />
         <Route path={ROUTES.landing} element={<LandingPage />} />
         <Route path="/*" element={<div>Not found!</div>} />
       </Route>
