@@ -27,5 +27,32 @@ section {
   display: grid;
   grid-template-columns: repeat(12, minmax(0px, 1fr));
   row-gap: 2rem;
-  padding: $spacing-48 $spacing-16;
+  padding: $spacing-48 $spacing-24;
+}
+
+.section__title {
+  grid-column-end: span 12;
+}
+
+.content {
+  grid-column-end: span 12;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content__center {
+  text-align: left;
+  width: 100%;
+  display: grid;
+  grid-column: 1;
+  gap: $spacing-32;
+
+  @include sm {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+
+  @include md {
+    gap: $spacing-48;
+  }
 }

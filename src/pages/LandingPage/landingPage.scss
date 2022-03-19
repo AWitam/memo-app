@@ -27,7 +27,7 @@
   width: 100%;
   position: relative;
   img {
-    max-width: calc(100% - $spacing-16);
+    max-width: calc(100% - $spacing-24);
     position: relative;
   }
 }
@@ -36,7 +36,7 @@
   display: block;
   content: '';
   position: absolute;
-  width: calc(100% - $spacing-16);
+  width: calc(100% - $spacing-24);
   height: 100%;
   top: $spacing-16;
   left: $spacing-16;

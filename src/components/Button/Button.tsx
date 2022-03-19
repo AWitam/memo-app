@@ -7,13 +7,14 @@ export enum ButtonType {
 
 interface Button {
   type?: ButtonType
-  children?: JSX.Element | string
+  children?: JSX.Element | JSX.Element[] | string
   onClick?: (e?: any) => void
+  className?: string
 }
 
-export const Button = ({ type, children, onClick }: Button) => {
+export const Button = ({ type, children, onClick, className }: Button) => {
   return (
-    <button className={type} onClick={onClick}>
+    <button className={className ? className : type} onClick={onClick}>
       {children}
     </button>
   )

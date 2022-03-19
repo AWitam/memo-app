@@ -1,7 +1,7 @@
 import { useAppSelector } from '../app/hooks'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../app/routes'
-import { Collection } from './Collection'
+import { CollectionPage } from './CollectionPage/CollectionPage'
 import { useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
@@ -24,7 +24,7 @@ export const Home = () => {
       <h2>Home</h2>
       {isLoading && <div>loading ...</div>}
       {studySets && studySets.length > 0 ? (
-        <Collection />
+        <CollectionPage />
       ) : (
         <div>
           {!isLoading && studySets.length === 0 && (

@@ -1,18 +1,5 @@
 @import '../../common/styles/shared';
 
-.content {
-  grid-column-end: span 12;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.content__center {
-  text-align: left;
-  width: 80%;
-}
-
 form {
   max-width: 100%;
   input {

@@ -69,36 +69,34 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
   return (
     <section>
       <div className="content">
-        <div className="content__center">
-          {renderTitle(pageType)}
-          <form>
-            <div className="form__body">
-              <div className="form__email">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="text"
-                  name="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="form__password">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="form__buttons">{renderButtons(pageType, handleAction)}</div>
+        {renderTitle(pageType)}
+        <form>
+          <div className="form__body">
+            <div className="form__email">
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                name="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
-          </form>
+            <div className="form__password">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="form__buttons">{renderButtons(pageType, handleAction)}</div>
+          </div>
+        </form>
 
-          <div className="content__social-login">{renderSocialLogin(pageType, handleAction)}</div>
-        </div>
+        <div className="content__social-login">{renderSocialLogin(pageType, handleAction)}</div>
       </div>
     </section>
   )

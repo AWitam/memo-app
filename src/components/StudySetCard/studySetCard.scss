@@ -1,0 +1,84 @@
+@import '../../common/styles/shared';
+
+$card-title-height: 3rem;
+
+.study-set__card {
+  outline: 2px solid $dark-grey;
+  padding: $spacing-16;
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  z-index: 20;
+  transition: scale 0.1s ease;
+  min-height: 8rem;
+
+  &:hover {
+    scale: 1.04;
+  }
+
+  &:hover:after {
+    box-shadow: $spacing-8 $spacing-8 $lily;
+  }
+
+  path {
+    fill: $dark-grey;
+  }
+}
+
+.study-set__card:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  box-shadow: 0 0 $lily;
+  transition: box-shadow 0.1s ease 0.1s;
+}
+
+.study-set__card--header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: $card-title-height;
+}
+
+.study-set__card--options {
+  position: absolute;
+  display: flex;
+  padding: $spacing-16;
+  justify-content: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - $card-title-height - $spacing-16);
+  background-color: $lily;
+  border-top: 2px solid $dark-grey;
+
+  .options__item {
+    display: flex;
+    align-items: center;
+    padding: 0 $spacing-16;
+    cursor: pointer;
+
+    span {
+      margin-left: $spacing-8;
+    }
+  }
+}
+
+.options__button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: $spacing-16;
+  z-index: 30;
+}
+
+.study-set__card--summary {
+  color: #666;
+  > div:not(:last-child) {
+    margin-bottom: $spacing-8;
+  }
+}

@@ -2,7 +2,7 @@ import { Routes, Route, Navigate, Outlet } from 'react-router'
 
 import { StudySetPage } from '../components/StudySet/StudySet'
 import { StudySetForm } from '../components/StudySetForm/StudySetForm'
-import { Collection } from '../pages/Collection'
+import { CollectionPage } from '../pages/CollectionPage/CollectionPage'
 import { Home } from '../pages/Home'
 import { LandingPage } from '../pages/LandingPage/LandingPage'
 import { LoginPage } from '../pages/LoginPage/LoginPage'
@@ -28,7 +28,7 @@ export const Routing = () => {
         <Route element={<RequireAuth />}>
           <Route path={ROUTES.root} element={<Home />} />
           <Route path={ROUTES.newStudySet} element={<StudySetForm />} />
-          <Route path={`${ROUTES.collection}`} element={<Collection />} />
+          <Route path={`${ROUTES.collection}`} element={<CollectionPage />} />
 
           <Route path={`${ROUTES.studySet}/:studySetId`} element={<StudySetPage />} />
           <Route path={`${ROUTES.studySet}/:studySetId/edit`} element={<StudySetForm />} />
