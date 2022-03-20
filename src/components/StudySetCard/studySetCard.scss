@@ -7,34 +7,14 @@ $card-title-height: 3rem;
   padding: $spacing-16;
   position: relative;
   background-color: #fff;
-  width: 100%;
+  width: calc(100% - 2px);
   z-index: 20;
   transition: scale 0.1s ease;
   min-height: 8rem;
 
-  &:hover {
-    scale: 1.04;
-  }
-
-  &:hover:after {
-    box-shadow: $spacing-8 $spacing-8 $lily;
-  }
-
   path {
     fill: $dark-grey;
   }
-}
-
-.study-set__card:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  box-shadow: 0 0 $lily;
-  transition: box-shadow 0.1s ease 0.1s;
 }
 
 .study-set__card--header {
@@ -77,7 +57,7 @@ $card-title-height: 3rem;
 }
 
 .study-set__card--summary {
-  color: #666;
+  color: $grey;
   > div:not(:last-child) {
     margin-bottom: $spacing-8;
   }

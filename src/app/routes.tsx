@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router'
 
-import { StudySetPage } from '../components/StudySet/StudySet'
+import { StudySetPage } from '../pages/StudySetPage/StudySetPage'
 import { StudySetForm } from '../components/StudySetForm/StudySetForm'
 import { CollectionPage } from '../pages/CollectionPage/CollectionPage'
 import { Home } from '../pages/Home'
@@ -19,6 +19,8 @@ export enum ROUTES {
   logIn = 'log-in',
   logOut = 'log-out',
   signUp = 'sign-up',
+  flashcardMode = 'flashcards',
+  quizMode = 'quiz',
 }
 
 export const Routing = () => {

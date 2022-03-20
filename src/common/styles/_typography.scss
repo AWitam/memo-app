@@ -13,7 +13,7 @@ h1 {
   position: relative;
   display: inline-block;
   z-index: 2;
-  margin-bottom: $spacing-32;
+  margin-bottom: $spacing-24;
 }
 
 h1::after {
@@ -30,18 +30,18 @@ h1::after {
 
 h2 {
   font-size: $font-size-26;
+  z-index: 2;
+  margin-bottom: $spacing-16;
+}
+
+h3 {
+  text-decoration: underline;
 }
 
 ul {
   list-style: none;
   padding: $spacing-16;
   margin: 0;
-  text-align: center;
-  // margin-block-start: 0;
-  // margin-block-end: 0;
-  // margin-inline-start: 0;
-  // margin-inline-end: 0;
-  // padding-inline-start: 0;
 }
 
 li {
