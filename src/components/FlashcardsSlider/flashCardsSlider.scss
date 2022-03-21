@@ -1,0 +1,133 @@
+@import '../../common/styles/shared';
+
+.flashcard__container {
+  margin: $spacing-24 auto;
+  max-width: 90%;
+  display: block;
+  height: auto;
+  position: relative;
+
+  @include sm {
+    max-width: 60%;
+  }
+}
+
+.flashcard__body {
+  width: 100%;
+  height: 13rem;
+  background-color: #fff;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  border: 2px solid $dark-grey;
+
+  &--front,
+  &--back,
+  &--congrats {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-26;
+  }
+
+  &--back {
+    transform: rotateY(180deg);
+    background-color: $lily;
+  }
+
+  &--congrats {
+    p,
+    span {
+      font-size: $font-size-16;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-left: $spacing-8;
+      }
+    }
+  }
+
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+
+  &.slide-next {
+    animation: 0.3s swipeNext;
+  }
+
+  &.slide-prev {
+    animation: 0.3s swipePrev;
+  }
+
+  @include sm {
+    min-height: 25vh;
+  }
+
+  @include md {
+    min-height: 30vh;
+  }
+}
+
+.slider__controls {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: $spacing-32 auto;
+  justify-content: space-between;
+
+  button:disabled {
+    path {
+      fill: $light-grey;
+    }
+  }
+}
+
+.finish-actions {
+  display: flex;
+  width: 90%;
+  justify-content: center;
+  padding: $spacing-24;
+  padding-bottom: 0;
+
+  button {
+    margin: $spacing-8;
+  }
+
+  @include sm {
+    justify-content: center;
+  }
+}
+
+@keyframes swipePrev {
+  0% {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 100;
+  }
+}
+
+@keyframes swipeNext {
+  0% {
+    transform: translateX(10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 100;
+  }
+}

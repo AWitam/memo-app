@@ -11,10 +11,6 @@ $card-title-height: 3rem;
   z-index: 20;
   transition: scale 0.1s ease;
   min-height: 8rem;
-
-  path {
-    fill: $dark-grey;
-  }
 }
 
 .study-set__card--header {

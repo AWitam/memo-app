@@ -38,6 +38,11 @@ h3 {
   text-decoration: underline;
 }
 
+h4,
+h5 {
+  margin-bottom: $spacing-8;
+}
+
 ul {
   list-style: none;
   padding: $spacing-16;
@@ -62,7 +67,8 @@ label {
 }
 
 p {
-  margin-bottom: $spacing-16;
+  font-size: $font-size-16;
+  margin-bottom: $spacing-8;
 }
 
 .action {

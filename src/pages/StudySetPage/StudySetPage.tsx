@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { FlashCardField, StudySet } from '../../common/types'
 import { fetchStudySetData } from '../../state/studySet/studySetsSlice'
-import { ReactComponent as RightArrowIcon } from '../../assets/icons/arrow-right.svg'
+import { ReactComponent as RightArrowIcon } from '../../assets/icons/short-right.svg'
 import { ReactComponent as StarIcon } from '../../assets/icons/star-outline.svg'
 import './studySetPage.scss'
 import { Link } from 'react-router-dom'
@@ -15,13 +15,16 @@ export const StudySetPage = () => {
   let { studySetId } = useParams()
   const isLoading = useAppSelector((state) => state.collections.isLoading)
   const currentStudySet = useAppSelector((state) =>
-    state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
+    state.collections.studySets.find(
+      (studySet: StudySet) => studySet.studySetId === studySetId
+    )
   )
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (!isLoading && !currentStudySet?.terms) {
-      currentStudySet && dispatch(fetchStudySetData(currentStudySet.summary.termsId))
+      currentStudySet &&
+        dispatch(fetchStudySetData(currentStudySet.summary.termsId))
     }
   }, [isLoading])
 

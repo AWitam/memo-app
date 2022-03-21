@@ -1,5 +1,5 @@
 import { Children, ReactChild, useEffect, useState } from 'react'
-import { NavLink, Outlet, To, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, To, useLocation } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
 import { Button, ButtonType } from '../Button/Button'
 import { ReactComponent as IconMenu } from '../../assets/icons/hamburger.svg'
@@ -30,13 +30,18 @@ export const Navbar = ({ loggedMode }: { loggedMode: boolean }) => {
         <div className="container">
           <nav>
             <div className="nav__wrapper">
-              <span id="logo">MEMO</span>
+              <Link to={`${ROUTES.root}`}>
+                <span id="logo">MEMO</span>
+              </Link>
+
               {isMobile ? (
                 <div className="nav__links-right">
                   {!loggedMode && (
                     <NavItem
                       to={ROUTES.signUp}
-                      content={<Button type={ButtonType.primary}>Sign up</Button>}
+                      content={
+                        <Button type={ButtonType.primary}>Sign up</Button>
+                      }
                     ></NavItem>
                   )}
 
@@ -62,7 +67,13 @@ export const Navbar = ({ loggedMode }: { loggedMode: boolean }) => {
   )
 }
 
-const NavLinks = ({ loggedMode, isMobile }: { loggedMode: boolean; isMobile?: boolean }) => (
+const NavLinks = ({
+  loggedMode,
+  isMobile,
+}: {
+  loggedMode: boolean
+  isMobile?: boolean
+}) => (
   <>
     <div className="nav__links-left">
       <NavItem to={loggedMode ? ROUTES.root : ROUTES.landing} content="Home" />
@@ -79,7 +90,10 @@ const NavLinks = ({ loggedMode, isMobile }: { loggedMode: boolean; isMobile?: bo
         </Button>
       ) : (
         <>
-          <NavItem to={ROUTES.logIn} content={<Button>Log in</Button>}></NavItem>
+          <NavItem
+            to={ROUTES.logIn}
+            content={<Button>Log in</Button>}
+          ></NavItem>
           {!isMobile && (
             <NavItem
               to={ROUTES.signUp}
@@ -92,7 +106,13 @@ const NavLinks = ({ loggedMode, isMobile }: { loggedMode: boolean; isMobile?: bo
   </>
 )
 
-const NavItem = ({ to, content }: { to: To; content: string | JSX.Element }) => (
+const NavItem = ({
+  to,
+  content,
+}: {
+  to: To
+  content: string | JSX.Element
+}) => (
   <li className="nav__links-item">
     <NavLink to={to}>{content}</NavLink>
   </li>

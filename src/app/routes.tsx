@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router'
-
 import { StudySetPage } from '../pages/StudySetPage/StudySetPage'
 import { StudySetForm } from '../components/StudySetForm/StudySetForm'
 import { CollectionPage } from '../pages/CollectionPage/CollectionPage'
@@ -9,6 +8,7 @@ import { LoginPage } from '../pages/LoginPage/LoginPage'
 import { LogOutPage } from '../pages/LogOutPage'
 import App from './App'
 import { useAppSelector } from './hooks'
+import { StudyModePage } from '../pages/StudyModePage/StudyModePage'
 
 export enum ROUTES {
   root = '/',
@@ -19,6 +19,7 @@ export enum ROUTES {
   logIn = 'log-in',
   logOut = 'log-out',
   signUp = 'sign-up',
+  edit = 'edit',
   flashcardMode = 'flashcards',
   quizMode = 'quiz',
 }
@@ -33,7 +34,14 @@ export const Routing = () => {
           <Route path={`${ROUTES.collection}`} element={<CollectionPage />} />
 
           <Route path={`${ROUTES.studySet}/:studySetId`} element={<StudySetPage />} />
-          <Route path={`${ROUTES.studySet}/:studySetId/edit`} element={<StudySetForm />} />
+          <Route
+            path={`${ROUTES.studySet}/:studySetId/${ROUTES.edit}`}
+            element={<StudySetForm />}
+          />
+          <Route
+            path={`${ROUTES.studySet}/:studySetId/${ROUTES.flashcardMode}`}
+            element={<StudyModePage mode={'flashcards'} />}
+          />
           <Route path={ROUTES.logOut} element={<LogOutPage />} />
         </Route>
 

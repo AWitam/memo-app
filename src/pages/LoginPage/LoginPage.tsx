@@ -27,7 +27,9 @@ enum AuthActions {
 export const LoginPage = ({ pageType }: LoginPageProps) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const isAuthorized = useAppSelector((state) => state.auth.authState.isAuthorized)
+  const isAuthorized = useAppSelector(
+    (state) => state.auth.authState.isAuthorized
+  )
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -92,11 +94,15 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="form__buttons">{renderButtons(pageType, handleAction)}</div>
+            <div className="form__buttons">
+              {renderButtons(pageType, handleAction)}
+            </div>
           </div>
         </form>
 
-        <div className="content__social-login">{renderSocialLogin(pageType, handleAction)}</div>
+        <div className="content__social-login">
+          {renderSocialLogin(pageType, handleAction)}
+        </div>
       </div>
     </section>
   )
@@ -106,7 +112,10 @@ const renderTitle = (pageType: string) => (
   <h2>{pageType == ROUTES.logIn ? 'Log in to MEMO' : 'Sign up to MEMO'}</h2>
 )
 
-const renderButtons = (pageType: string, handleAction: (e: any, action: AuthActions) => void) => {
+const renderButtons = (
+  pageType: string,
+  handleAction: (e: any, action: AuthActions) => void
+) => {
   return (
     <>
       {pageType === ROUTES.logIn && (
@@ -134,13 +143,21 @@ const renderButtons = (pageType: string, handleAction: (e: any, action: AuthActi
   )
 }
 
-const renderSocialLogin = (pageType: string, handleAction: (e: any, auth: AuthActions) => void) => {
+const renderSocialLogin = (
+  pageType: string,
+  handleAction: (e: any, auth: AuthActions) => void
+) => {
   return (
     <>
-      <p>{pageType == ROUTES.logIn ? 'Or log in using:' : 'Or sign up using:'}</p>
+      <p>
+        {pageType == ROUTES.logIn ? 'Or log in using:' : 'Or sign up using:'}
+      </p>
 
       <Button>
-        <IconGoogle onClick={(e) => handleAction(e, AuthActions.googleSignIn)} />
+        <IconGoogle
+          className="social-icon"
+          onClick={(e) => handleAction(e, AuthActions.googleSignIn)}
+        />
       </Button>
     </>
   )

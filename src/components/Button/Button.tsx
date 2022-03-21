@@ -10,11 +10,22 @@ interface Button {
   children?: JSX.Element | JSX.Element[] | string
   onClick?: (e?: any) => void
   className?: string
+  disabled?: boolean
 }
 
-export const Button = ({ type, children, onClick, className }: Button) => {
+export const Button = ({
+  type,
+  children,
+  onClick,
+  className,
+  disabled,
+}: Button) => {
   return (
-    <button className={className ? className : type} onClick={onClick}>
+    <button
+      disabled={disabled ? true : false}
+      className={className ? className : type}
+      onClick={onClick}
+    >
       {children}
     </button>
   )
