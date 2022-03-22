@@ -1,23 +1,48 @@
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { addStudySet, editStudySet, fetchStudySetData } from '../../state/studySet/studySetsSlice'
-
-import { FlashCardField, StudySet } from '../../common/types'
+import {
+  addStudySet,
+  editStudySetSummary,
+} from '../../state/studySet/studySetsSlice'
+import { editTerms, fetchTerms } from '../../state/studySet/termsSlice'
+import { TermItem, StudySet } from '../../common/types'
 import { WordsForm } from './WordsForm'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
-
 import { useAppSelector } from '../../app/hooks'
 import { useDispatch } from 'react-redux'
+import { Terms } from '../../state/types'
+
+// TODO: ogarnac ten burdel
 
 export const StudySetForm = () => {
   let { studySetId } = useParams()
   const isLoading = useAppSelector((state) => state.collections.isLoading)
+  const termsLoading = useAppSelector((state) => state.termsData.isLoading)
   const user = useAppSelector((state) => state.auth.user)
 
   const existingStudySet = useAppSelector((state) =>
-    state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
+    state.collections.studySets.find(
+      (studySet: StudySet) => studySet.studySetId === studySetId
+    )
   )
+
+  const termsInCurrentStudySet = useAppSelector(
+    (state) =>
+      state.termsData.terms.find(
+        (termsData: Terms) =>
+          termsData.termsId === existingStudySet?.summary.termsId
+      )?.termItems
+  )
+
+  useEffect(() => {
+    if (!termsLoading && !termsInCurrentStudySet) {
+      existingStudySet && dispatch(fetchTerms(existingStudySet.summary.termsId))
+    }
+    if (termsInCurrentStudySet) {
+      setFlashCardFields(termsInCurrentStudySet)
+    }
+  }, [termsInCurrentStudySet])
 
   const [isEditingMode, setEditingMode] = useState(false)
 
@@ -27,11 +52,15 @@ export const StudySetForm = () => {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [flashCardFields, setFlashCardFields] = useState<FlashCardField[]>([{ id: uuidv4(), term: '', definition: '' }])
+  const [flashCardFields, setFlashCardFields] = useState<TermItem[]>([
+    { id: uuidv4(), term: '', definition: '' },
+  ])
 
   const addCardInputs = (e: any) => {
     e.preventDefault()
-    setFlashCardFields(flashCardFields.concat({ id: uuidv4(), term: '', definition: '' }))
+    setFlashCardFields(
+      flashCardFields.concat({ id: uuidv4(), term: '', definition: '' })
+    )
   }
 
   const updateField = (id: string, term: string, definition: string) => {
@@ -52,11 +81,10 @@ export const StudySetForm = () => {
       setEditingMode(true)
       setTitle(existingStudySet.summary.title)
       setDescription(existingStudySet.summary.description)
-      if (!existingStudySet?.terms) {
-        studySetId && dispatch(fetchStudySetData(existingStudySet.summary.termsId))
-      }
-      if (existingStudySet.terms) {
-        setFlashCardFields(existingStudySet.terms)
+      if (!termsInCurrentStudySet) {
+        studySetId && dispatch(fetchTerms(existingStudySet.summary.termsId))
+      } else {
+        setFlashCardFields(termsInCurrentStudySet)
       }
     }
   }, [existingStudySet, isLoading])
@@ -64,7 +92,9 @@ export const StudySetForm = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (existingStudySet) {
-      handleUpdateStudySet()
+      handleUpdateStudySetSummary()
+      handleUpdateTerms()
+      navigate(`/${ROUTES.studySet}/${studySetId}`)
     } else {
       handleAddNewStudySet()
     }
@@ -81,31 +111,38 @@ export const StudySetForm = () => {
         creator: user && user.uid,
         termsId: uuidv4(),
       },
-      terms: flashCardFields,
     }
 
-    dispatch(addStudySet(newStudySet))
+    dispatch(addStudySet({ studySet: newStudySet, terms: flashCardFields }))
     navigate(`/${ROUTES.studySet}/${studySetId}`)
   }
 
-  const handleUpdateStudySet = () => {
-    if (existingStudySet) {
-      const updatedStudySet = {
-        ...existingStudySet,
-        summary: {
-          ...existingStudySet.summary,
-          numberOfItems: flashCardFields.length,
-        },
-        terms: flashCardFields,
-      }
-      dispatch(editStudySet(updatedStudySet))
-      navigate(`/${ROUTES.studySet}/${studySetId}`)
+  const handleUpdateStudySetSummary = () => {
+    const updatedStudySet = {
+      studySetId: existingStudySet!.studySetId,
+      summary: {
+        termsId: existingStudySet!.summary.termsId,
+        numberOfItems: existingStudySet!.summary.numberOfItems,
+        title: title,
+        description: title,
+      },
     }
+
+    dispatch(editStudySetSummary(updatedStudySet))
+  }
+
+  const handleUpdateTerms = () => {
+    dispatch(
+      editTerms({
+        termsId: existingStudySet?.summary.termsId,
+        termsToUpdate: flashCardFields,
+      })
+    )
   }
 
   return (
     <div>
-      {isLoading ? (
+      {isLoading || termsLoading ? (
         'loading ...'
       ) : (
         <>
@@ -128,7 +165,13 @@ export const StudySetForm = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            {title && <WordsForm flashCardsFields={flashCardFields} addNewField={addCardInputs} updateField={updateField} />}
+            {title && (
+              <WordsForm
+                flashCardsFields={flashCardFields}
+                addNewField={addCardInputs}
+                updateField={updateField}
+              />
+            )}
           </form>
         </>
       )}

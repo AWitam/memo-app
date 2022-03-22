@@ -2,31 +2,40 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
-import { FlashCardField, StudySet } from '../../common/types'
-import { fetchStudySetData } from '../../state/studySet/studySetsSlice'
+import { TermItem, StudySet } from '../../common/types'
+import { fetchTerms } from '../../state/studySet/termsSlice'
 import { ReactComponent as RightArrowIcon } from '../../assets/icons/short-right.svg'
 import { ReactComponent as StarIcon } from '../../assets/icons/star-outline.svg'
 import './studySetPage.scss'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
 import { StudySetCard } from '../../components/StudySetCard/StudySetCard'
+import { Terms } from '../../state/types'
 
 export const StudySetPage = () => {
   let { studySetId } = useParams()
   const isLoading = useAppSelector((state) => state.collections.isLoading)
+  const termsLoading = useAppSelector((state) => state.termsData.isLoading)
   const currentStudySet = useAppSelector((state) =>
     state.collections.studySets.find(
       (studySet: StudySet) => studySet.studySetId === studySetId
     )
   )
+  const termsInCurrentStudySet = useAppSelector(
+    (state) =>
+      state.termsData.terms.find(
+        (termsData: Terms) =>
+          termsData.termsId === currentStudySet?.summary.termsId
+      )?.termItems
+  )
+
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (!isLoading && !currentStudySet?.terms) {
-      currentStudySet &&
-        dispatch(fetchStudySetData(currentStudySet.summary.termsId))
+    if (!isLoading && !termsInCurrentStudySet) {
+      currentStudySet && dispatch(fetchTerms(currentStudySet.summary.termsId))
     }
-  }, [isLoading])
+  }, [termsInCurrentStudySet])
 
   return (
     <section id="study-set-page">
@@ -44,9 +53,9 @@ export const StudySetPage = () => {
       <div className="section__article">
         <h3>Terms in this set:</h3>
         <div className="terms__container">
-          {isLoading || !currentStudySet?.terms
+          {isLoading || !termsInCurrentStudySet
             ? 'loading'
-            : renderStudySetTerms(currentStudySet.terms)}
+            : renderStudySetTerms(termsInCurrentStudySet)}
         </div>
       </div>
     </section>
@@ -75,10 +84,10 @@ const renderStudyModes = () => {
   )
 }
 
-const renderStudySetTerms = (terms: FlashCardField[]) => {
+const renderStudySetTerms = (terms: TermItem[]) => {
   return (
     <>
-      {terms.map((item: FlashCardField) => (
+      {terms.map((item: TermItem) => (
         <div className="terms__item" key={item.id}>
           <div>
             <div className="terms__item--term">{item.term}</div>

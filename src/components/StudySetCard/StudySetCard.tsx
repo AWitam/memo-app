@@ -34,7 +34,9 @@ export const StudySetCard = ({
   return (
     <div className="study-set__card" key={title}>
       {displayAsLink ? (
-        <Link to={`/${ROUTES.studySet}/${studySetId}`}>{renderStudySetCardContent(studySet)}</Link>
+        <Link to={`/${ROUTES.studySet}/${studySetId}`}>
+          {renderStudySetCardContent(studySet)}
+        </Link>
       ) : (
         renderStudySetCardContent(studySet)
       )}
@@ -86,8 +88,14 @@ const renderStudySetCardContent = (studySet: StudySet) => {
         <h2>{title}</h2>
       </div>
       <div className="study-set__card--summary">
-        {description && <div className="summary--description">{studySet.summary.description}</div>}
-        <div className="summary--items-num">{getTermsFormat(numberOfItems)}</div>
+        {description && (
+          <div className="summary--description">
+            {studySet.summary.description}
+          </div>
+        )}
+        <div className="summary--items-num">
+          {getTermsFormat(numberOfItems)}
+        </div>
       </div>
     </div>
   )

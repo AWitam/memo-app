@@ -1,5 +1,5 @@
 import { FirebaseError } from 'firebase/app'
-import { StudySet } from '../../common/types'
+import { StudySet, TermItem } from '../../common/types'
 
 export interface StudySetsState {
   studySets: Array<StudySet>
@@ -47,4 +47,14 @@ export interface loginPayload {
 
 export interface passWordResetAsyncThunkConfig {
   rejectValue: string
+}
+
+export interface Terms {
+  termsId: string
+  termItems: Array<TermItem>
+}
+
+export interface TermsState {
+  terms: Terms[]
+  isLoading: boolean
 }

@@ -1,14 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
-import {
-  fetchUserStudySets,
-  getStudySetData,
-  addStudySet,
-  editStudySetSummary,
-  editStudySetTerms,
-  deleteStudySet,
-} from './api/studySetServices'
+import { fetchUserStudySets, addStudySet, editStudySetSummary, deleteStudySet } from './api/studySetServices'
+import { editStudySetTerms, getStudySetTerms } from './api/termsServices'
 import { signInWithGoogle, logOut, signUpWithEmail, loginWithEmail, resetPassword } from './api/userServices'
 import { firebaseConfig } from './firebaseConfig'
 
@@ -17,7 +11,7 @@ function initializeFirebase() {
   const db = getFirestore()
   const auth = getAuth(app)
   const api = {
-    getStudySetData,
+    getStudySetTerms,
     fetchUserStudySets,
     addStudySet,
     editStudySetSummary,

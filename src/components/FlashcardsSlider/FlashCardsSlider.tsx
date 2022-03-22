@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { FlashCardField } from '../../common/types'
+import { TermItem } from '../../common/types'
 import { Button, ButtonType } from '../Button/Button'
 import { ReactComponent as PreviousIcon } from '../../assets/icons/long-left.svg'
 import { ReactComponent as NextIcon } from '../../assets/icons/long-right.svg'
@@ -7,7 +7,7 @@ import { ReactComponent as RepeatIcon } from '../../assets/icons/repeat.svg'
 import './flashCardsSlider.scss'
 
 interface FlashCardsSliderProps {
-  terms: FlashCardField[]
+  terms: TermItem[]
   finish: () => void
 }
 

@@ -1,4 +1,4 @@
-export interface FlashCardField {
+export interface TermItem {
   id: string
   term: string
   definition: string
@@ -13,6 +13,5 @@ export interface StudySetSummary {
 
 export type StudySet = {
   studySetId: string
-  terms?: Array<FlashCardField>
   summary: StudySetSummary
 }
