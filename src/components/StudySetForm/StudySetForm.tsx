@@ -53,13 +53,18 @@ export const StudySetForm = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [flashCardFields, setFlashCardFields] = useState<TermItem[]>([
-    { id: uuidv4(), term: '', definition: '' },
+    { id: uuidv4(), term: '', definition: '', isFavorite: false },
   ])
 
   const addCardInputs = (e: any) => {
     e.preventDefault()
     setFlashCardFields(
-      flashCardFields.concat({ id: uuidv4(), term: '', definition: '' })
+      flashCardFields.concat({
+        id: uuidv4(),
+        term: '',
+        definition: '',
+        isFavorite: false,
+      })
     )
   }
 
@@ -124,7 +129,7 @@ export const StudySetForm = () => {
         termsId: existingStudySet!.summary.termsId,
         numberOfItems: existingStudySet!.summary.numberOfItems,
         title: title,
-        description: title,
+        description: description,
       },
     }
 

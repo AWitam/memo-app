@@ -6,9 +6,14 @@ import { Terms, TermsState } from '../types'
 import { updateTermsCount } from './studySetsSlice'
 
 export const fetchTerms = createAsyncThunk('termsSlice/fetchTerms', async (termsId: string) => {
-  const data = (await firebaseValue.api.getStudySetTerms(termsId)) as TermItem[]
+  const items = await firebaseValue.api.getStudySetTerms(termsId)
+  console.log(items)
+  const preparedData = []
+  for (let key in items) {
+    preparedData.push({ id: key, ...items[key] })
+  }
 
-  return { termsId, data }
+  return { termsId, items: preparedData }
 })
 
 type AsyncThunkConfig = {
@@ -30,6 +35,15 @@ export const editTerms = createAsyncThunk<any, any, AsyncThunkConfig>(
   }
 )
 
+export const toggleFavorite = createAsyncThunk<any, any, AsyncThunkConfig>(
+  'termsSlice/toggleFavorite',
+  async ({ termsId, termId, value }: any, { dispatch }) => {
+    await firebaseValue.api.toggleFavorite(termsId, termId, value)
+
+    dispatch(toggledFavorite({ termsId, termId }))
+  }
+)
+
 const initialState: TermsState = {
   terms: [],
   isLoading: false,
@@ -38,15 +52,29 @@ const initialState: TermsState = {
 export const TermsSlice = createSlice({
   name: 'termsSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    toggledFavorite: (state, action) => {
+      const { termsId, termId } = action.payload
+      const termsById = state.terms.find((terms: Terms) => terms.termsId === termsId)
+      if (termsById) {
+        const itemToUpdate = termsById?.termItems.findIndex((term: TermItem) => term.id === termId)
+        termsById.termItems[itemToUpdate].isFavorite = !termsById.termItems[itemToUpdate].isFavorite
+      }
+    },
+    termsAdded: (state, action) => {
+      const { termsId, terms } = action.payload
+      state.terms.push({ termsId, termItems: terms })
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTerms.pending, (state) => {
         state.isLoading = true
       })
       .addCase(fetchTerms.fulfilled, (state, action) => {
-        const { termsId, data } = action.payload
-        state.terms.push({ termsId, termItems: data })
+        const { termsId, items } = action.payload
+        //@ts-ignore
+        state.terms.push({ termsId, termItems: items })
         state.isLoading = false
       })
       .addCase(editTerms.fulfilled, (state, action) => {
@@ -60,7 +88,7 @@ export const TermsSlice = createSlice({
   },
 })
 
-export const {} = TermsSlice.actions
+export const { toggledFavorite, termsAdded } = TermsSlice.actions
 
 export const selectTermsData = (state: RootState) => state.termsData
 

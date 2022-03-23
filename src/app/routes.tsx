@@ -33,7 +33,10 @@ export const Routing = () => {
           <Route path={ROUTES.newStudySet} element={<StudySetForm />} />
           <Route path={`${ROUTES.collection}`} element={<CollectionPage />} />
 
-          <Route path={`${ROUTES.studySet}/:studySetId`} element={<StudySetPage />} />
+          <Route
+            path={`${ROUTES.studySet}/:studySetId`}
+            element={<StudySetPage />}
+          />
           <Route
             path={`${ROUTES.studySet}/:studySetId/${ROUTES.edit}`}
             element={<StudySetForm />}
@@ -42,11 +45,21 @@ export const Routing = () => {
             path={`${ROUTES.studySet}/:studySetId/${ROUTES.flashcardMode}`}
             element={<StudyModePage mode={'flashcards'} />}
           />
+          <Route
+            path={`${ROUTES.studySet}/:studySetId/${ROUTES.flashcardMode}/fav`}
+            element={<StudyModePage mode={'flashcards'} onlyFavorites={true} />}
+          />
           <Route path={ROUTES.logOut} element={<LogOutPage />} />
         </Route>
 
-        <Route path={ROUTES.logIn} element={<LoginPage pageType={ROUTES.logIn} />} />
-        <Route path={ROUTES.signUp} element={<LoginPage pageType={ROUTES.signUp} />} />
+        <Route
+          path={ROUTES.logIn}
+          element={<LoginPage pageType={ROUTES.logIn} />}
+        />
+        <Route
+          path={ROUTES.signUp}
+          element={<LoginPage pageType={ROUTES.signUp} />}
+        />
         <Route path={ROUTES.landing} element={<LandingPage />} />
         <Route path="/*" element={<div>Not found!</div>} />
       </Route>

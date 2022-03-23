@@ -7,7 +7,13 @@ import { FlashCardsSlider } from '../../components/FlashcardsSlider/FlashCardsSl
 import { Terms } from '../../state/types'
 import { capitalize } from '../../utils/capitalize'
 
-export const StudyModePage = ({ mode }: { mode: string }) => {
+export const StudyModePage = ({
+  mode,
+  onlyFavorites,
+}: {
+  mode: string
+  onlyFavorites?: boolean
+}) => {
   const { studySetId } = useParams()
   const isLoading = useAppSelector((state) => state.collections.isLoading)
 
@@ -25,8 +31,11 @@ export const StudyModePage = ({ mode }: { mode: string }) => {
       )?.termItems
   )
   const navigate = useNavigate()
-
   const redirectOnFinish = () => navigate(`/${ROUTES.studySet}/${studySetId}`)
+
+  const filteredItems = termsInCurrentStudySet!.filter(
+    (item) => item.isFavorite
+  )
 
   return (
     <section>
@@ -40,7 +49,7 @@ export const StudyModePage = ({ mode }: { mode: string }) => {
       <div className="content">
         {termsInCurrentStudySet && mode === 'flashcards' && (
           <FlashCardsSlider
-            terms={termsInCurrentStudySet}
+            terms={onlyFavorites ? filteredItems : termsInCurrentStudySet}
             finish={redirectOnFinish}
           />
         )}

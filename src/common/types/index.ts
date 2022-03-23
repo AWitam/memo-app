@@ -2,6 +2,7 @@ export interface TermItem {
   id: string
   term: string
   definition: string
+  isFavorite: boolean
 }
 
 export interface StudySetSummary {

@@ -3,6 +3,7 @@ import { RootState } from '../../app/store'
 import { StudySetsState, UserStudySetPayload } from '../types'
 import { firebaseValue } from '../../firebase'
 import { StudySet, TermItem } from '../../common/types'
+import { termsAdded } from './termsSlice'
 
 const initialState: StudySetsState = {
   studySets: [],
@@ -14,8 +15,9 @@ export const fetchUserStudySets = createAsyncThunk('studySetsSlice/fetchUserStud
   return response
 })
 
-export const addStudySet = createAsyncThunk('studySetsSlice/addStudySet', async ({ studySet, terms }: any) => {
+export const addStudySet = createAsyncThunk('studySetsSlice/addStudySet', async ({ studySet, terms }: any, { dispatch }) => {
   await firebaseValue.api.addStudySet(studySet, terms)
+  dispatch(termsAdded({ termsId: studySet.summary.termsId, terms }))
   return studySet
 })
 
