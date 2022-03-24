@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 import { fetchUserStudySets, addStudySet, editStudySetSummary, deleteStudySet } from './api/studySetServices'
 import { editStudySetTerms, getStudySetTerms, toggleFavorite } from './api/termsServices'
-import { signInWithGoogle, logOut, signUpWithEmail, loginWithEmail, resetPassword } from './api/userServices'
+import { signInWithGoogle, logOut, signUpWithEmail, loginWithEmail, resetPassword, getUserStreakData } from './api/userServices'
 import { firebaseConfig } from './firebaseConfig'
 
 function initializeFirebase() {
@@ -23,6 +23,7 @@ function initializeFirebase() {
     loginWithEmail,
     logOut,
     resetPassword,
+    getUserStreakData,
   }
   return { app, auth, db, api }
 }

@@ -1,15 +1,5 @@
 @import '../../common/styles/shared';
 
-.content__left,
-.content__right {
-  grid-column-end: span 12;
-  align-self: center;
-
-  @include md {
-    grid-column-end: span 6;
-  }
-}
-
 .content__text {
   display: grid;
   grid-template-columns: repeat(6, minmax(0px, 1fr));

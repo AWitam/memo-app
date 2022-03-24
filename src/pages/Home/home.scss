@@ -1,0 +1,45 @@
+@import '../../common/styles/shared';
+
+#home {
+  .section__column {
+    grid-column-end: span 12;
+
+    @include sm {
+      grid-column: 1/8;
+    }
+
+    @include lg {
+      grid-column: 1/9;
+    }
+
+    article > div {
+      margin-bottom: $spacing-32;
+    }
+  }
+
+  .section__sidebar {
+    grid-column-end: span 12;
+    grid-row: 2;
+
+    @include md {
+      grid-column: 10/13;
+    }
+
+    @include xl {
+      grid-column: 10/13;
+    }
+  }
+
+  article {
+    margin-bottom: $spacing-32;
+    .article__end {
+      margin: $spacing-16 0;
+      text-align: right;
+
+      .icon-link {
+        display: inline-flex;
+        align-items: ce;
+      }
+    }
+  }
+}

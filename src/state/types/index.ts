@@ -18,9 +18,11 @@ export interface User {
   displayName: string
   email: string
   uid: string
+  streakData: number[]
 }
 
 export interface AuthState {
+  isLoading: boolean
   isAuthorized: boolean
   errorMessage?: string
   uiMessage?: string

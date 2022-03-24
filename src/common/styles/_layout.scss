@@ -63,3 +63,13 @@ section {
     gap: $spacing-48;
   }
 }
+
+.content__left,
+.content__right {
+  grid-column-end: span 12;
+  align-self: center;
+
+  @include md {
+    grid-column-end: span 6;
+  }
+}

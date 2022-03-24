@@ -1,0 +1,53 @@
+@import '../../common/styles/shared';
+
+.streak-box {
+  border: 2px solid $dark-grey;
+  background-color: #fff;
+
+  &__header {
+    text-align: center;
+    background-color: $lily;
+    padding: $spacing-16;
+
+    h4 {
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+  }
+
+  &__content {
+    padding: $spacing-16;
+
+    .week-container {
+      display: flex;
+      justify-content: space-between;
+      padding-top: $spacing-16;
+    }
+
+    .day {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      height: $spacing-24;
+      width: $spacing-24;
+      border: 2px solid $lily;
+      text-align: center;
+      margin: auto 0;
+      position: relative;
+
+      &#today {
+        border-style: dashed;
+      }
+
+      &__streak {
+        @extend .day;
+        background-color: rgb(220, 185, 255, 0.5);
+      }
+
+      @include md {
+        height: $spacing-32;
+        width: $spacing-32;
+      }
+    }
+  }
+}

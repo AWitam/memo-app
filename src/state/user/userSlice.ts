@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
 import { firebaseValue } from '../../firebase'
 import { FirebaseError } from 'firebase/app'
@@ -8,6 +8,7 @@ import { AuthError, loginPayload, LoginWithEmailAsyncThunkConfig, passWordResetA
 const initialState: UserState = {
   user: null,
   authState: {
+    isLoading: false,
     isAuthorized: false,
   },
 }
@@ -38,9 +39,10 @@ export const loginWithEmail = createAsyncThunk<User | AuthError | unknown, login
     const response = await firebaseValue.api.loginWithEmail(email, password)
     if (response instanceof FirebaseError) {
       return rejectWithValue({ user: null, error: response })
+    } else {
+      const { displayName, email, uid } = response
+      return { displayName, email, uid }
     }
-
-    return response
   }
 )
 
@@ -71,6 +73,11 @@ export const passwordReset = createAsyncThunk<string, { email: string }, passWor
   }
 )
 
+export const getUserStreakData = createAsyncThunk('userSlice/getStreakData', async (uid: string) => {
+  const data = await firebaseValue.api.getUserStreakData(uid)
+  return data
+})
+
 export const UserSlice = createSlice({
   name: 'userSlice',
   initialState,
@@ -91,9 +98,11 @@ export const UserSlice = createSlice({
     builder
       .addCase(signInWithGoogle.fulfilled, (state, action) => {
         state.user = action.payload as User
+        state.authState.isLoading = false
       })
       .addCase(singUpWithEmail.fulfilled, (state, action) => {
         state.user = action.payload as User
+        state.authState.isLoading = false
       })
       .addCase(loginWithEmail.rejected, (state, action) => {
         if (action.payload) {
@@ -112,6 +121,15 @@ export const UserSlice = createSlice({
       })
       .addCase(passwordReset.fulfilled, (state, action) => {
         state.authState.uiMessage = action.payload
+      })
+      .addCase(getUserStreakData.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.streakData = action.payload as number[]
+          state.authState.isLoading = false
+        }
+      })
+      .addMatcher(isAnyOf(verifyAuth.pending, signInWithGoogle.pending, loginWithEmail.pending, getUserStreakData.pending), (state) => {
+        state.authState.isLoading = true
       })
   },
 })
