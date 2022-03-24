@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { ROUTES } from '../../app/routes'
 import { StudySet } from '../../common/types'
+import { Button, ButtonType } from '../../components/Button/Button'
 import { StudySetCard } from '../../components/StudySetCard/StudySetCard'
 import './collectionPage.scss'
 
@@ -22,7 +23,7 @@ export const CollectionPage = () => {
             <div>
               <h2>No study sets yet!</h2>{' '}
               <Link to={`/${ROUTES.newStudySet}`}>
-                <button>Create study set</button>
+                <Button type={ButtonType.primary}>Create study set</Button>
               </Link>
             </div>
           )}

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router'
+import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router'
 import { StudySetPage } from '../pages/StudySetPage/StudySetPage'
 import { StudySetForm } from '../components/StudySetForm/StudySetForm'
 import { CollectionPage } from '../pages/CollectionPage/CollectionPage'
@@ -9,6 +9,7 @@ import { LogOutPage } from '../pages/LogOutPage'
 import App from './App'
 import { useAppSelector } from './hooks'
 import { StudyModePage } from '../pages/StudyModePage/StudyModePage'
+import { StudySetFormPage } from '../pages/StudySetFormPage/StudySetFormPage'
 
 export enum ROUTES {
   root = '/',
@@ -25,12 +26,13 @@ export enum ROUTES {
 }
 
 export const Routing = () => {
+  const location = useLocation()
   return (
     <Routes>
       <Route element={<App />}>
         <Route element={<RequireAuth />}>
           <Route path={ROUTES.root} element={<Home />} />
-          <Route path={ROUTES.newStudySet} element={<StudySetForm />} />
+          <Route path={ROUTES.newStudySet} element={<StudySetFormPage />} />
           <Route path={`${ROUTES.collection}`} element={<CollectionPage />} />
 
           <Route
@@ -39,7 +41,7 @@ export const Routing = () => {
           />
           <Route
             path={`${ROUTES.studySet}/:studySetId/${ROUTES.edit}`}
-            element={<StudySetForm />}
+            element={<StudySetFormPage key={location.key} />}
           />
           <Route
             path={`${ROUTES.studySet}/:studySetId/${ROUTES.flashcardMode}`}
