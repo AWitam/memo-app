@@ -4,12 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { ROUTES } from '../../app/routes'
 import './loginPage.scss'
-import {
-  loginWithEmail,
-  passwordReset,
-  signInWithGoogle,
-  singUpWithEmail,
-} from '../../state/user/userSlice'
+import { loginWithEmail, passwordReset, signInWithGoogle, singUpWithEmail } from '../../state/user/userSlice'
 import { Button, ButtonType } from '../../components/Button/Button'
 import { ReactComponent as IconGoogle } from '../../assets/icons/icon-google.svg'
 
@@ -27,9 +22,7 @@ enum AuthActions {
 export const LoginPage = ({ pageType }: LoginPageProps) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const isAuthorized = useAppSelector(
-    (state) => state.auth.authState.isAuthorized
-  )
+  const isAuthorized = useAppSelector((state) => state.auth.authState.isAuthorized)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -63,26 +56,15 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
     }
   }, [isAuthorized])
 
-  /*  todo:
-   different logic for sign up and login in?
-   implement rest of auth: different signup methods, password reset
-   */
-
   return (
-    <section>
+    <section id="login-page">
       <div className="content">
         {renderTitle(pageType)}
         <form>
           <div className="form__body">
             <div className="form__email">
               <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <input type="text" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="form__password">
               <label htmlFor="password">Password</label>
@@ -94,36 +76,24 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="form__buttons">
-              {renderButtons(pageType, handleAction)}
-            </div>
+            <div className="form__buttons">{renderButtons(pageType, handleAction)}</div>
           </div>
         </form>
 
-        <div className="content__social-login">
-          {renderSocialLogin(pageType, handleAction)}
-        </div>
+        <div className="content__social-login">{renderSocialLogin(pageType, handleAction)}</div>
       </div>
     </section>
   )
 }
 
-const renderTitle = (pageType: string) => (
-  <h2>{pageType == ROUTES.logIn ? 'Log in to MEMO' : 'Sign up to MEMO'}</h2>
-)
+const renderTitle = (pageType: string) => <h2>{pageType == ROUTES.logIn ? 'Log in to MEMO' : 'Sign up to MEMO'}</h2>
 
-const renderButtons = (
-  pageType: string,
-  handleAction: (e: any, action: AuthActions) => void
-) => {
+const renderButtons = (pageType: string, handleAction: (e: any, action: AuthActions) => void) => {
   return (
     <>
       {pageType === ROUTES.logIn && (
         <>
-          <Button
-            type={ButtonType.secondary}
-            onClick={(e) => handleAction(e, AuthActions.emailLogin)}
-          >
+          <Button type={ButtonType.secondary} onClick={(e) => handleAction(e, AuthActions.emailLogin)}>
             Login
           </Button>
           <Button onClick={(e) => handleAction(e, AuthActions.forgotPassword)}>
@@ -132,10 +102,7 @@ const renderButtons = (
         </>
       )}
       {pageType === ROUTES.signUp && (
-        <Button
-          type={ButtonType.secondary}
-          onClick={(e) => handleAction(e, AuthActions.emailSignUp)}
-        >
+        <Button type={ButtonType.secondary} onClick={(e) => handleAction(e, AuthActions.emailSignUp)}>
           Sign up
         </Button>
       )}
@@ -143,21 +110,13 @@ const renderButtons = (
   )
 }
 
-const renderSocialLogin = (
-  pageType: string,
-  handleAction: (e: any, auth: AuthActions) => void
-) => {
+const renderSocialLogin = (pageType: string, handleAction: (e: any, auth: AuthActions) => void) => {
   return (
     <>
-      <p>
-        {pageType == ROUTES.logIn ? 'Or log in using:' : 'Or sign up using:'}
-      </p>
+      <p>{pageType == ROUTES.logIn ? 'Or log in using:' : 'Or sign up using:'}</p>
 
       <Button>
-        <IconGoogle
-          className="social-icon"
-          onClick={(e) => handleAction(e, AuthActions.googleSignIn)}
-        />
+        <IconGoogle className="social-icon" onClick={(e) => handleAction(e, AuthActions.googleSignIn)} />
       </Button>
     </>
   )

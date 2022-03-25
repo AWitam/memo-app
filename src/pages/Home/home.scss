@@ -1,6 +1,8 @@
 @import '../../common/styles/shared';
 
 #home {
+  gap: 0;
+
   .section__column {
     grid-column-end: span 12;
 
@@ -21,17 +23,22 @@
     grid-column-end: span 12;
     grid-row: 2;
 
-    @include md {
-      grid-column: 10/13;
+    @include sm {
+      grid-column: 9/13;
     }
 
-    @include xl {
+    @include lg {
       grid-column: 10/13;
     }
   }
 
   article {
-    margin-bottom: $spacing-32;
+    margin-bottom: $spacing-48;
+
+    h2 {
+      margin-bottom: $spacing-24;
+    }
+
     .article__end {
       margin: $spacing-16 0;
       text-align: right;

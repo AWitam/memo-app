@@ -1,5 +1,16 @@
 @import '../../common/styles/shared';
 
+#login-page {
+  margin: 0 auto;
+  @include sm {
+    max-width: 70%;
+  }
+
+  @include md {
+    max-width: 50%;
+  }
+}
+
 form {
   max-width: 100%;
   input {
