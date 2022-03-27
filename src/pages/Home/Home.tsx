@@ -39,6 +39,7 @@ export const Home = () => {
       <div className="section__column">
         <article>
           <h2>Your collection</h2>
+          {isLoading && 'Loading...'}
           {studySets && studySets.length > 0 ? (
             <>
               {studySets.slice(0, 3).map((studySet: StudySet) => (
@@ -54,7 +55,6 @@ export const Home = () => {
             </>
           ) : (
             <>
-              {' '}
               {!isLoading && studySets.length === 0 && (
                 <div>
                   <h4>You dont have any study sets yet !</h4>

@@ -30,6 +30,7 @@ export const StudySetPage = () => {
   const dispatch = useDispatch()
   const [filteredItems, setFilteredItems] = useState<any>(null)
   const [selected, setSelected] = useState('all')
+
   useEffect(() => {
     if (!termsLoading && !termsInCurrentStudySet) {
       currentStudySet && dispatch(fetchTerms(currentStudySet.summary.termsId))
@@ -56,7 +57,7 @@ export const StudySetPage = () => {
     if (selected == 'all' && termsInCurrentStudySet) {
       setFilteredItems(null)
     }
-  }, [selected])
+  }, [selected, termsInCurrentStudySet])
 
   return (
     <section id="study-set-page">
