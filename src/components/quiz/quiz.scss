@@ -14,6 +14,38 @@
     max-width: 60%;
     margin: 0 auto;
   }
+
+  h4 {
+    color: $grey;
+  }
+
+  #term {
+    color: $dark-grey;
+    font-size: $font-size-20;
+  }
+
+  .item__choices {
+    .answer {
+      margin: $spacing-8 0;
+      padding: $spacing-8 0;
+      font-weight: $font-weight-medium;
+      display: block;
+
+      &.wrong {
+        @extend .answer;
+        color: $red-100;
+      }
+
+      &.correct {
+        @extend .answer;
+        color: $blue-100;
+      }
+    }
+  }
+
+  #quiz__progress {
+    text-align: center;
+  }
 }
 
 .choices__container {
@@ -37,11 +69,21 @@
     }
 
     &.correct {
-      border: 2px solid rgb(74, 144, 190);
+      border: 2px solid $blue-100;
+      background-color: $blue-200;
+
+      &:hover {
+        outline: none;
+      }
     }
 
     &.wrong {
-      border: 2px solid $error;
+      border: 2px solid $red-100;
+      background-color: $red-200;
+
+      &:hover {
+        outline: none;
+      }
     }
   }
 }

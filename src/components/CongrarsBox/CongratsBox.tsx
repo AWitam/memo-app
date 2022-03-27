@@ -13,7 +13,7 @@ export const CongratsBox = (props: CongratsBox) => {
   const { numberOfTerms, score, finish, repeat } = props
   return (
     <div className="congrats__box">
-      <h5>Congratulations 🎉</h5>
+      <h4>Congratulations 🎉</h4>
       {!score && <p>You just studied {numberOfTerms} terms!</p>}
 
       {(score || score == 0) && (

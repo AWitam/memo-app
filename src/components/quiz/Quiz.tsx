@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TermItem } from '../../common/types'
 import { CongratsBox } from '../CongrarsBox/CongratsBox'
 import './quiz.scss'
@@ -13,16 +13,21 @@ export const Quiz = (props: QuizProps) => {
   const [currentItem, setCurrentItem] = useState(0)
   const [score, setScore] = useState(0)
   const [showCongrats, setShowCongrats] = useState(false)
-  const [UIMessage, setUIMessage] = useState('')
-  const allDefinitionsInTerms = terms.map((item) => item.definition)
+  const [answer, setAnswer] = useState({ message: '', className: '' })
+  const [choices, setChoices] = useState<string[]>([''])
 
   const shuffle = (items: string[]) => items.sort(() => 0.5 - Math.random())
+
+  useEffect(() => {
+    setChoices(getChoices())
+  }, [currentItem])
 
   /* 
   renders 2 possible choices if there's less than 4 items in study set,
   otherwise renders 4 possible choices from given study set items definitions
   */
   const getChoices = () => {
+    const allDefinitionsInTerms = terms.map((item) => item.definition)
     const amount = terms.length <= 4 ? 1 : 3
     const correctAnswer = terms[currentItem].definition
     const shuffledAllPossibleChoices = shuffle(
@@ -37,17 +42,16 @@ export const Quiz = (props: QuizProps) => {
     const userChoice = e.target.getAttribute('data-choice')
     if (userChoice === terms[currentItem].definition) {
       e.target.classList.add('correct')
-      setUIMessage('Correct!')
+      setAnswer({ message: 'Correct!', className: 'correct' })
       setScore(score + 1)
-      transitionNext(e)
     } else {
       e.target.classList.add('wrong')
-      setUIMessage('Wrong')
-      transitionNext(e)
+      setAnswer({ message: 'Wrong', className: 'wrong' })
     }
+    transitionNext(e)
   }
 
-  const next = (e: any) => {
+  const next = () => {
     if (currentItem !== terms.length - 1) {
       setCurrentItem(currentItem + 1)
     } else {
@@ -59,8 +63,8 @@ export const Quiz = (props: QuizProps) => {
     setTimeout(() => {
       e.target.classList.remove('correct')
       e.target.classList.remove('wrong')
-      setUIMessage('')
-      next(e)
+      setAnswer({ message: '', className: '' })
+      next()
     }, 1000)
   }
 
@@ -78,21 +82,21 @@ export const Quiz = (props: QuizProps) => {
         ) : (
           <>
             <div className="item__term">
-              <h5>Term:</h5>
-              {terms[currentItem].term}
+              <h4>Term:</h4>
+              <h4 id="term">{terms[currentItem].term}</h4>
             </div>
             <div className="item__choices">
-              <h5>Choose matching definition:</h5>
-              {UIMessage}
+              <h4>Choose matching definition:</h4>
+              <span className={`answer ${answer.className}`}>{answer.message}</span>
               <div className="choices__container">
-                {getChoices().map((choice) => (
+                {choices.map((choice) => (
                   <div key={choice} onClick={(e) => checkAnswer(e)} className="item__choice" data-choice={choice}>
                     {choice}
                   </div>
                 ))}
               </div>
-              {`${currentItem + 1} / ${terms.length}`}
             </div>
+            <span id="quiz__progress">{`${currentItem + 1} / ${terms.length}`}</span>
           </>
         )}
       </div>
