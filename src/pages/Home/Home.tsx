@@ -20,13 +20,16 @@ export const Home = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (studySets.length < 1) {
-      user && dispatch(fetchUserStudySets(user.uid))
-    }
     if (user && !user.streakData) {
       dispatch(getUserStreakData(user.uid))
     }
-  }, [user, studySets])
+  }, [user])
+
+  useEffect(() => {
+    if (studySets.length < 1) {
+      user && dispatch(fetchUserStudySets(user.uid))
+    }
+  }, [studySets])
 
   return (
     <section id="home">
