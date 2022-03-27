@@ -87,7 +87,7 @@ const updateLoginStreak = async (uid: string) => {
   await checkPreviousData(uid)
   const loginTime = new Date()
 
-  const weekDay = loginTime.getDay()
+  const weekDay = loginTime.getDay() === 0 ? 7 : loginTime.getDay() + 1
   const userDocRef = doc(firebaseValue.db, 'users', uid)
 
   await updateDoc(userDocRef, {
