@@ -22,12 +22,12 @@ export const StudySetForm = ({
   const user = useAppSelector((state) => state.auth.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const emptyTermField = { id: uuidv4(), term: '', definition: '', isFavorite: false }
+  const getEmptyTermField = () => ({ id: uuidv4(), term: '', definition: '', isFavorite: false })
 
   const [title, setTitle] = useState(existingStudySet ? existingStudySet.summary.title : '')
   const [description, setDescription] = useState(existingStudySet ? existingStudySet.summary.description : '')
   const [flashCardFields, setFlashCardFields] = useState<TermItem[]>(
-    termsInCurrentStudySet ? termsInCurrentStudySet : [emptyTermField]
+    termsInCurrentStudySet ? termsInCurrentStudySet : [getEmptyTermField(), getEmptyTermField()]
   )
 
   // todo: improve form ux, validation, state etc
@@ -63,6 +63,10 @@ export const StudySetForm = ({
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+    if (flashCardFields.length < 2) {
+      return setMessage('Study set must have at least two items!')
+    }
+
     if (existingStudySet) {
       handleUpdateStudySetSummary()
       handleUpdateTerms()
@@ -114,8 +118,8 @@ export const StudySetForm = ({
 
   const handleDeleteCardInput = (id: string) => {
     const updatedFlashCardFields = flashCardFields.filter((item) => item.id !== id)
-    if (updatedFlashCardFields.length < 1) {
-      setMessage('Study set must have at least one item!')
+    if (updatedFlashCardFields.length < 2) {
+      setMessage("Can't delete - study set must have at least two items!")
     } else {
       setFlashCardFields(updatedFlashCardFields)
     }

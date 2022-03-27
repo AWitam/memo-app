@@ -43,22 +43,6 @@
     background-color: $lily;
   }
 
-  &--congrats {
-    p,
-    span {
-      font-size: $font-size-16;
-    }
-
-    button {
-      display: flex;
-      align-items: center;
-
-      span {
-        margin-left: $spacing-8;
-      }
-    }
-  }
-
   &.flipped {
     transform: rotateY(180deg);
   }
@@ -91,22 +75,6 @@
     path {
       fill: $light-grey;
     }
-  }
-}
-
-.finish-actions {
-  display: flex;
-  width: 90%;
-  justify-content: center;
-  padding: $spacing-24;
-  padding-bottom: 0;
-
-  button {
-    margin: $spacing-8;
-  }
-
-  @include sm {
-    justify-content: center;
   }
 }
 

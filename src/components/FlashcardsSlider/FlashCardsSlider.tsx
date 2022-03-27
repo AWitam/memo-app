@@ -3,8 +3,8 @@ import { TermItem } from '../../common/types'
 import { Button, ButtonType } from '../Button/Button'
 import { ReactComponent as PreviousIcon } from '../../assets/icons/long-left.svg'
 import { ReactComponent as NextIcon } from '../../assets/icons/long-right.svg'
-import { ReactComponent as RepeatIcon } from '../../assets/icons/repeat.svg'
 import './flashCardsSlider.scss'
+import { CongratsBox } from '../CongrarsBox/CongratsBox'
 
 interface FlashCardsSliderProps {
   terms: TermItem[]
@@ -87,10 +87,7 @@ export const FlashCardsSlider = (props: FlashCardsSliderProps) => {
 
     return () => {
       if (flashCardBody.current) {
-        flashCardBody.current.removeEventListener(
-          'touchstart',
-          handleTouchStart
-        )
+        flashCardBody.current.removeEventListener('touchstart', handleTouchStart)
         flashCardBody.current.removeEventListener('touchend', handleTouchEnd)
       }
     }
@@ -116,34 +113,18 @@ export const FlashCardsSlider = (props: FlashCardsSliderProps) => {
   return (
     <div className="slider">
       <div className="flashcard__container">
-        <div
-          ref={flashCardBody}
-          className="flashcard__body"
-          onClick={flip}
-          onAnimationEnd={removeClass}
-        >
+        <div ref={flashCardBody} className="flashcard__body" onClick={flip} onAnimationEnd={removeClass}>
           {showCongrats ? (
-            <CongratsFlashcard
-              numberOfTerms={terms.length}
-              finish={finish}
-              repeat={repeat}
-            />
+            <CongratsBox numberOfTerms={terms.length} finish={finish} repeat={repeat} />
           ) : (
             <>
-              <div className="flashcard__body--front">
-                {terms[currentIndex].term}
-              </div>
-              <div className="flashcard__body--back">
-                {terms[currentIndex].definition}
-              </div>
+              <div className="flashcard__body--front">{terms[currentIndex].term}</div>
+              <div className="flashcard__body--back">{terms[currentIndex].definition}</div>
             </>
           )}
         </div>
         <div className="slider__controls">
-          <Button
-            disabled={terms.length === 1 || currentIndex === 0}
-            onClick={prev}
-          >
+          <Button disabled={terms.length === 1 || currentIndex === 0} onClick={prev}>
             <PreviousIcon />
           </Button>
           {`${currentIndex + 1} / ${terms.length}`}
@@ -151,34 +132,6 @@ export const FlashCardsSlider = (props: FlashCardsSliderProps) => {
             <NextIcon />
           </Button>
         </div>
-      </div>
-    </div>
-  )
-}
-
-interface CongratsFlashCard {
-  numberOfTerms: number
-  finish: () => void
-  repeat: () => void
-}
-
-const CongratsFlashcard = (props: CongratsFlashCard) => {
-  const { numberOfTerms, finish, repeat } = props
-  return (
-    <div className="flashcard__body--congrats">
-      <h5>Congratulations 🎉</h5>
-      <p>
-        You just studied {numberOfTerms} {numberOfTerms >= 2 ? 'terms' : 'term'}
-        !
-      </p>
-      <div className="finish-actions">
-        <Button type={ButtonType.secondary} onClick={repeat}>
-          <RepeatIcon />
-          <span>Study again</span>
-        </Button>
-        <Button type={ButtonType.primary} onClick={finish}>
-          Finish
-        </Button>
       </div>
     </div>
   )

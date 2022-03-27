@@ -48,6 +48,12 @@ export const Routing = () => {
             path={`${ROUTES.studySet}/:studySetId/${ROUTES.flashcardMode}/fav`}
             element={<StudyModePage mode={'flashcards'} onlyFavorites={true} />}
           />
+
+          <Route path={`${ROUTES.studySet}/:studySetId/${ROUTES.quizMode}`} element={<StudyModePage mode={'quiz'} />} />
+          <Route
+            path={`${ROUTES.studySet}/:studySetId/${ROUTES.quizMode}/fav`}
+            element={<StudyModePage mode={'quiz'} onlyFavorites={true} />}
+          />
           <Route path={ROUTES.logOut} element={<LogOutPage />} />
         </Route>
 
