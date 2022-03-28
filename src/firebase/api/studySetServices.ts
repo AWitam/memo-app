@@ -19,7 +19,9 @@ export const addStudySet = async (studySet: StudySet, terms: TermItem[]) => {
   const { studySetId, summary } = studySet
   const studySetRef = doc(firebaseValue.db, `studySets/${studySetId}`)
   const termsRef = doc(firebaseValue.db, 'terms', summary.termsId)
-  const termsMap: any = {}
+  const termsMap: any = {
+    studySetId: studySetId,
+  }
   terms.forEach((item) => {
     termsMap[item.id] = { term: item.term, definition: item.definition, isFavorite: false }
   })

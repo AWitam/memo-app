@@ -1,0 +1,31 @@
+@import '../../common/styles/shared';
+
+footer {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  font-size: $font-size-14;
+}
+
+.footer__content {
+  margin-top: $spacing-32;
+  padding: $spacing-16;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  vertical-align: middle;
+  font-weight: $font-weight-thin;
+  line-height: $font-size-20;
+
+  span {
+    display: inline;
+    vertical-align: baseline;
+    font-weight: $font-weight-medium;
+  }
+
+  a {
+    display: block;
+    color: $light-grey;
+    font-weight: $font-weight-thin;
+  }
+}

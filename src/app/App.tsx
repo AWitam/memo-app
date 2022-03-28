@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { verifyAuth } from '../state/user/userSlice'
+import { Footer } from '../components/Footer/Footer'
 
 function App({ children }: any) {
   const user = useAppSelector((state) => state.auth.user)
@@ -27,6 +28,7 @@ function App({ children }: any) {
         <Outlet />
         {children}
       </main>
+      <Footer />
     </>
   )
 }

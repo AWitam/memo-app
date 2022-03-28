@@ -23,6 +23,7 @@ export enum ROUTES {
   edit = 'edit',
   flashcardMode = 'flashcards',
   quizMode = 'quiz',
+  favorites = 'fav',
 }
 
 export const Routing = () => {
@@ -45,13 +46,13 @@ export const Routing = () => {
             element={<StudyModePage mode={'flashcards'} />}
           />
           <Route
-            path={`${ROUTES.studySet}/:studySetId/${ROUTES.flashcardMode}/fav`}
+            path={`${ROUTES.studySet}/:studySetId/${ROUTES.flashcardMode}/${ROUTES.favorites}`}
             element={<StudyModePage mode={'flashcards'} onlyFavorites={true} />}
           />
 
           <Route path={`${ROUTES.studySet}/:studySetId/${ROUTES.quizMode}`} element={<StudyModePage mode={'quiz'} />} />
           <Route
-            path={`${ROUTES.studySet}/:studySetId/${ROUTES.quizMode}/fav`}
+            path={`${ROUTES.studySet}/:studySetId/${ROUTES.quizMode}/${ROUTES.favorites}`}
             element={<StudyModePage mode={'quiz'} onlyFavorites={true} />}
           />
           <Route path={ROUTES.logOut} element={<LogOutPage />} />
