@@ -48,6 +48,7 @@ export const StudySetForm = ({
   }
 
   const updateField = (id: string, term: string, definition: string) => {
+    setMessage('')
     const fieldToUpdate = flashCardFields.findIndex((field) => field.id === id)
 
     const updatedFlashCardFields = [...flashCardFields]
@@ -62,8 +63,14 @@ export const StudySetForm = ({
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+
     if (flashCardFields.length < 2) {
       return setMessage('Study set must have at least two items!')
+    }
+
+    if (flashCardFields.some((item) => !item.term || !item.definition)) {
+      setMessage('Please add terms and definitions')
+      return
     }
 
     if (existingStudySet) {
@@ -155,9 +162,9 @@ export const StudySetForm = ({
             addNewField={addCardInputs}
             updateField={updateField}
             onDelete={handleDeleteCardInput}
+            message={message}
           />
         )}
-        {message && <span className="study-set-form__message">{message}</span>}
       </form>
     </>
   )

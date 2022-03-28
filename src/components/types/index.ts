@@ -5,6 +5,7 @@ export interface TermsFormProp {
   addNewField: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   updateField: (id: string, term: string, definition: string) => void
   onDelete: (id: string) => void
+  message: string
 }
 
 export interface InputGroupProps {

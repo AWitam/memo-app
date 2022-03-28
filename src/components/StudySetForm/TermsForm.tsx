@@ -2,13 +2,14 @@ import { Button, ButtonType } from '../Button/Button'
 import { TermsFormProp } from '../types'
 import { InputGroup } from './InputGroup'
 
-export const TermsForm = ({ flashCardsFields, addNewField, updateField, onDelete }: TermsFormProp) => {
+export const TermsForm = ({ flashCardsFields, addNewField, updateField, onDelete, message }: TermsFormProp) => {
   return (
     <div className="study-set-form__items">
       <h4>Add Terms and definitions</h4>
       {flashCardsFields.map((field, i) => (
         <InputGroup key={field.id} field={field} updateField={updateField} onDelete={onDelete} count={i} />
       ))}
+      {message && <span className="study-set-form__message">{message}</span>}
       <div className="study-set-form__buttons">
         <Button type={ButtonType.secondary} onClick={(e) => addNewField(e)}>
           + add card

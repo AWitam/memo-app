@@ -4,11 +4,12 @@ footer {
   bottom: 0;
   position: fixed;
   width: 100%;
+  display: block;
   font-size: $font-size-14;
+  background-color: $beige;
 }
 
 .footer__content {
-  margin-top: $spacing-32;
   padding: $spacing-16;
   display: flex;
   align-content: center;

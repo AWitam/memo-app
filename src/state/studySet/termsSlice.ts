@@ -7,7 +7,6 @@ import { updateTermsCount } from './studySetsSlice'
 
 export const fetchTerms = createAsyncThunk('termsSlice/fetchTerms', async (termsId: string) => {
   const items = await firebaseValue.api.getStudySetTerms(termsId)
-  console.log(items)
   const preparedData = []
   for (const key in items) {
     preparedData.push({ id: key, ...items[key] })
