@@ -8,7 +8,7 @@ import { fetchTerms } from '../../state/studySet/termsSlice'
 import { Terms } from '../../state/types'
 
 export const StudySetFormPage = () => {
-  let { studySetId } = useParams()
+  const { studySetId } = useParams()
   const isLoading = useAppSelector((state) => state.collections.isLoading)
   const termsLoading = useAppSelector((state) => state.termsData.isLoading)
 

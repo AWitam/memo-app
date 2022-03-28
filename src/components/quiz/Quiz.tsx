@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { TermItem } from '../../common/types'
-import { CongratsBox } from '../CongrarsBox/CongratsBox'
+import { CongratsBox } from '../CongratsBox/CongratsBox'
 import './quiz.scss'
 
 interface QuizProps {

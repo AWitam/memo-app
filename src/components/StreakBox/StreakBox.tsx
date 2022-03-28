@@ -22,7 +22,7 @@ export const StreakBox = ({ data }: StreakBoxProps) => {
             const dayInStreak = data.includes(i + 1)
 
             return (
-              <div className={`day${dayInStreak ? '__streak' : ''}`} id={i + 1 === today ? 'today' : ''}>
+              <div key={day + i} className={`day${dayInStreak ? '__streak' : ''}`} id={i + 1 === today ? 'today' : ''}>
                 <span>{day}</span>
               </div>
             )

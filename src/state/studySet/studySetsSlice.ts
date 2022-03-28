@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
-import { StudySetsState, UserStudySetPayload } from '../types'
+import { StudySetsState } from '../types'
 import { firebaseValue } from '../../firebase'
-import { StudySet, TermItem } from '../../common/types'
+import { StudySet } from '../../common/types'
 import { termsAdded } from './termsSlice'
 
 const initialState: StudySetsState = {
@@ -81,7 +81,7 @@ export const StudySetSlice = createSlice({
       })
 
       .addCase(deleteStudySetThunk.fulfilled, (state, action) => {
-        let studySetIndex = state.studySets.findIndex((studySet: StudySet) => studySet.studySetId === action.payload)
+        const studySetIndex = state.studySets.findIndex((studySet: StudySet) => studySet.studySetId === action.payload)
         state.studySets.splice(studySetIndex, 1)
       })
       .addCase(editStudySetSummary.fulfilled, (state, action) => {

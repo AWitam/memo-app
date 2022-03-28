@@ -7,12 +7,13 @@ module.exports = {
     sourceType: 'module',
   },
 
-  //extends: ['plugin:@typescript-eslint/recommended'],
+  extends: ['plugin:@typescript-eslint/recommended'],
 
   rules: {
-    // '@typescript-eslint/indent': ['error', 2],
-    // '@typescript-eslint/no-unused-vars': 'error',
-    // '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-ts-comment': 'error',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 }

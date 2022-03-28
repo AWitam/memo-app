@@ -1,5 +1,5 @@
-import { Children, ReactChild, useEffect, useState } from 'react'
-import { Link, NavLink, Outlet, To, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, To, useLocation } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
 import { Button, ButtonType } from '../Button/Button'
 import { ReactComponent as IconMenu } from '../../assets/icons/hamburger.svg'
@@ -37,17 +37,10 @@ export const Navbar = ({ loggedMode }: { loggedMode: boolean }) => {
               {isMobile ? (
                 <div className="nav__links-right">
                   {!loggedMode && (
-                    <NavItem
-                      to={ROUTES.signUp}
-                      content={
-                        <Button type={ButtonType.primary}>Sign up</Button>
-                      }
-                    ></NavItem>
+                    <NavItem to={ROUTES.signUp} content={<Button type={ButtonType.primary}>Sign up</Button>}></NavItem>
                   )}
 
-                  <button onClick={() => setOpen(!isOpen)}>
-                    {isOpen ? <CloseIcon /> : <IconMenu />}{' '}
-                  </button>
+                  <button onClick={() => setOpen(!isOpen)}>{isOpen ? <CloseIcon /> : <IconMenu />} </button>
                 </div>
               ) : (
                 <ul className={`nav__links`}>
@@ -67,21 +60,12 @@ export const Navbar = ({ loggedMode }: { loggedMode: boolean }) => {
   )
 }
 
-const NavLinks = ({
-  loggedMode,
-  isMobile,
-}: {
-  loggedMode: boolean
-  isMobile?: boolean
-}) => (
+const NavLinks = ({ loggedMode, isMobile }: { loggedMode: boolean; isMobile?: boolean }) => (
   <>
     <div className="nav__links-left">
       <NavItem to={loggedMode ? ROUTES.root : ROUTES.landing} content="Home" />
       {loggedMode && <NavItem to={ROUTES.collection} content="Collection" />}
-      <NavItem
-        to={ROUTES.newStudySet}
-        content={<Button type={ButtonType.secondary}>New Study Set</Button>}
-      ></NavItem>
+      <NavItem to={ROUTES.newStudySet} content={<Button type={ButtonType.secondary}>New Study Set</Button>}></NavItem>
     </div>
     <div className="nav__links-right">
       {loggedMode ? (
@@ -90,15 +74,9 @@ const NavLinks = ({
         </Button>
       ) : (
         <>
-          <NavItem
-            to={ROUTES.logIn}
-            content={<Button>Log in</Button>}
-          ></NavItem>
+          <NavItem to={ROUTES.logIn} content={<Button>Log in</Button>}></NavItem>
           {!isMobile && (
-            <NavItem
-              to={ROUTES.signUp}
-              content={<Button type={ButtonType.primary}>Sign up</Button>}
-            ></NavItem>
+            <NavItem to={ROUTES.signUp} content={<Button type={ButtonType.primary}>Sign up</Button>}></NavItem>
           )}
         </>
       )}
@@ -106,13 +84,7 @@ const NavLinks = ({
   </>
 )
 
-const NavItem = ({
-  to,
-  content,
-}: {
-  to: To
-  content: string | JSX.Element
-}) => (
+const NavItem = ({ to, content }: { to: To; content: string | JSX.Element }) => (
   <li className="nav__links-item">
     <NavLink to={to}>{content}</NavLink>
   </li>

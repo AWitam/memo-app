@@ -25,6 +25,10 @@ form {
   &__password {
     width: 100%;
     margin: $spacing-16 0;
+
+    #error-message {
+      color: $red-100;
+    }
   }
 
   &__buttons {

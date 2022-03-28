@@ -1,17 +1,14 @@
 import { FirebaseError } from 'firebase/app'
 import {
   Auth,
-  AuthError,
-  AuthErrorCodes,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  User,
 } from 'firebase/auth'
-import { arrayUnion, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from 'firebase/firestore'
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 import { firebaseValue } from '..'
 import { getWeekRange } from '../utils/dateUtils'
 
@@ -33,9 +30,6 @@ export const signInWithGoogle = async () => {
     prompt: 'select_account',
   })
   const result = await signInWithPopup(auth, provider)
-
-  const credential = GoogleAuthProvider.credentialFromResult(result)
-  const token = credential?.accessToken
   const user = result.user
   await addUserInfoToDb(user.uid)
   await updateLoginStreak(user.uid)

@@ -1,7 +1,6 @@
 import { useAppSelector } from '../../app/hooks'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
-import { CollectionPage } from '../CollectionPage/CollectionPage'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchUserStudySets } from '../../state/studySet/studySetsSlice'

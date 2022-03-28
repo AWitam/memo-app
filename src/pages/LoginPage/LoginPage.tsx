@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { ROUTES } from '../../app/routes'
 import './loginPage.scss'
@@ -25,10 +25,11 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
   const isAuthorized = useAppSelector((state) => state.auth.authState.isAuthorized)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const uiMessage = useAppSelector((state) => state.auth.authState.uiMessage)
 
   //todo : better inputs validation (maybe while typing), error handling
 
-  const handleAction = async (e: any, action: AuthActions) => {
+  const handleAction = async (e: React.MouseEvent<SVGSVGElement, MouseEvent>, action: AuthActions) => {
     e.preventDefault()
 
     switch (action) {
@@ -77,6 +78,7 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
               />
             </div>
             <div className="form__buttons">{renderButtons(pageType, handleAction)}</div>
+            <span id="error-message">{uiMessage}</span>
           </div>
         </form>
 
@@ -88,7 +90,10 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
 
 const renderTitle = (pageType: string) => <h2>{pageType == ROUTES.logIn ? 'Log in to MEMO' : 'Sign up to MEMO'}</h2>
 
-const renderButtons = (pageType: string, handleAction: (e: any, action: AuthActions) => void) => {
+const renderButtons = (
+  pageType: string,
+  handleAction: (e: React.MouseEvent<SVGSVGElement, MouseEvent>, action: AuthActions) => void
+) => {
   return (
     <>
       {pageType === ROUTES.logIn && (
@@ -110,7 +115,10 @@ const renderButtons = (pageType: string, handleAction: (e: any, action: AuthActi
   )
 }
 
-const renderSocialLogin = (pageType: string, handleAction: (e: any, auth: AuthActions) => void) => {
+const renderSocialLogin = (
+  pageType: string,
+  handleAction: (e: React.MouseEvent<SVGSVGElement, MouseEvent>, auth: AuthActions) => void
+) => {
   return (
     <>
       <p>{pageType == ROUTES.logIn ? 'Or log in using:' : 'Or sign up using:'}</p>

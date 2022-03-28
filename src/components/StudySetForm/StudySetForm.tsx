@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { addStudySet, editStudySetSummary } from '../../state/studySet/studySetsSlice'
-import { editTerms, fetchTerms } from '../../state/studySet/termsSlice'
+import { editTerms } from '../../state/studySet/termsSlice'
 import { TermItem, StudySet } from '../../common/types'
 import { TermsForm } from './TermsForm'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
 import { useAppSelector } from '../../app/hooks'
 import { useDispatch } from 'react-redux'
@@ -18,7 +18,6 @@ export const StudySetForm = ({
   termsInCurrentStudySet?: TermItem[]
 }) => {
   const studySetId = existingStudySet?.studySetId
-  const [isEditingMode, setEditingMode] = useState(!!studySetId)
   const user = useAppSelector((state) => state.auth.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -49,9 +48,9 @@ export const StudySetForm = ({
   }
 
   const updateField = (id: string, term: string, definition: string) => {
-    let fieldToUpdate = flashCardFields.findIndex((field) => field.id === id)
+    const fieldToUpdate = flashCardFields.findIndex((field) => field.id === id)
 
-    let updatedFlashCardFields = [...flashCardFields]
+    const updatedFlashCardFields = [...flashCardFields]
     updatedFlashCardFields[fieldToUpdate] = {
       ...updatedFlashCardFields[fieldToUpdate],
       term: term,

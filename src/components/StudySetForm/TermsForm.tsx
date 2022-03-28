@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react'
 import { Button, ButtonType } from '../Button/Button'
 import { TermsFormProp } from '../types'
 import { InputGroup } from './InputGroup'

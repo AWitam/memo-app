@@ -14,7 +14,7 @@ import { StudySetCard } from '../../components/StudySetCard/StudySetCard'
 import { Terms } from '../../state/types'
 
 export const StudySetPage = () => {
-  let { studySetId } = useParams()
+  const { studySetId } = useParams()
 
   const isLoading = useAppSelector((state) => state.collections.isLoading)
   const termsLoading = useAppSelector((state) => state.termsData.isLoading)
@@ -28,7 +28,7 @@ export const StudySetPage = () => {
   )
 
   const dispatch = useDispatch()
-  const [filteredItems, setFilteredItems] = useState<any>(null)
+  const [filteredItems, setFilteredItems] = useState<TermItem[] | null>(null)
   const [selected, setSelected] = useState('all')
 
   useEffect(() => {
@@ -47,11 +47,11 @@ export const StudySetPage = () => {
     )
   }
 
-  const handleSelectItems = (e: any) => setSelected(e.target.value)
+  const handleSelectItems = (e: React.ChangeEvent<HTMLSelectElement>) => setSelected(e.target.value)
 
   useEffect(() => {
     if (selected == 'favorites' && termsInCurrentStudySet) {
-      setFilteredItems(termsInCurrentStudySet.filter((item: any) => item.isFavorite))
+      setFilteredItems(termsInCurrentStudySet.filter((item: TermItem) => item.isFavorite))
     }
 
     if (selected == 'all' && termsInCurrentStudySet) {
@@ -107,7 +107,7 @@ const renderStudyModes = (onlyFavorites: boolean) => {
   )
 }
 
-const renderStudySetTerms = (terms: TermItem[], onToggleFavorite: any) => {
+const renderStudySetTerms = (terms: TermItem[], onToggleFavorite: (id: string, option: boolean) => void) => {
   return (
     <>
       {terms.map((item: TermItem) => (
@@ -129,7 +129,7 @@ const renderStudySetTerms = (terms: TermItem[], onToggleFavorite: any) => {
   )
 }
 
-const renderTermsFilter = (selected: string, selectItems: any) => {
+const renderTermsFilter = (selected: string, selectItems: (e: React.ChangeEvent<HTMLSelectElement>) => void) => {
   return (
     <div className="terms__filter">
       <select name="terms-filter" id="terms-filter" value={selected} onChange={selectItems}>

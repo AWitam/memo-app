@@ -3,7 +3,7 @@ import { RootState } from '../../app/store'
 import { firebaseValue } from '../../firebase'
 import { FirebaseError } from 'firebase/app'
 import { reset } from '../studySet/studySetsSlice'
-import { AuthError, loginPayload, LoginWithEmailAsyncThunkConfig, passWordResetAsyncThunkConfig, User, UserState } from '../types'
+import { loginPayload, LoginWithEmailAsyncThunkConfig, passWordResetAsyncThunkConfig, User, UserState } from '../types'
 
 const initialState: UserState = {
   user: null,
@@ -33,15 +33,22 @@ export const singUpWithEmail = createAsyncThunk(
   }
 )
 
-export const loginWithEmail = createAsyncThunk<User | AuthError | unknown, loginPayload, LoginWithEmailAsyncThunkConfig>(
+export const loginWithEmail = createAsyncThunk<User, loginPayload, LoginWithEmailAsyncThunkConfig>(
   'userSlice/loginWithEmail',
   async ({ email, password }, { rejectWithValue }) => {
     const response = await firebaseValue.api.loginWithEmail(email, password)
     if (response instanceof FirebaseError) {
-      return rejectWithValue({ user: null, error: response })
+      let uiMessage = ''
+      if (response.code === 'auth/wrong-password') {
+        uiMessage = 'Please check the password'
+      }
+      if (response.code === 'auth/user-not-found') {
+        uiMessage = 'Please check the Email'
+      }
+      return rejectWithValue({ user: null, error: uiMessage })
     } else {
       const { displayName, email, uid } = response
-      return { displayName, email, uid }
+      return { displayName, email, uid } as User
     }
   }
 )
@@ -106,15 +113,16 @@ export const UserSlice = createSlice({
       })
       .addCase(loginWithEmail.rejected, (state, action) => {
         if (action.payload) {
-          const { user, error } = action.payload
+          const { error } = action.payload
           if (error) {
             state.authState.isAuthorized = false
-            state.authState.errorMessage = error.message
-          } else {
-            state.user = user
-            state.authState.isAuthorized = true
+            state.authState.uiMessage = error
           }
         }
+      })
+      .addCase(loginWithEmail.fulfilled, (state, action) => {
+        state.user = action.payload
+        state.authState.isAuthorized = true
       })
       .addCase(passwordReset.rejected, (state, action) => {
         state.authState.uiMessage = action.payload

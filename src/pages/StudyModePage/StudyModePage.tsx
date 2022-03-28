@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { ROUTES } from '../../app/routes'

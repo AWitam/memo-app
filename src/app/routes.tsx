@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router'
 import { StudySetPage } from '../pages/StudySetPage/StudySetPage'
-import { StudySetForm } from '../components/StudySetForm/StudySetForm'
 import { CollectionPage } from '../pages/CollectionPage/CollectionPage'
 import { Home } from '../pages/Home/Home'
 import { LandingPage } from '../pages/LandingPage/LandingPage'

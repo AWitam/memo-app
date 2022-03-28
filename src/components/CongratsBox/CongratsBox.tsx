@@ -9,7 +9,7 @@ interface CongratsBox {
   repeat: () => void
 }
 
-export const CongratsBox = (props: CongratsBox) => {
+export const CongratsBox: React.FC<CongratsBox> = (props) => {
   const { numberOfTerms, score, finish, repeat } = props
   return (
     <div className="congrats__box">

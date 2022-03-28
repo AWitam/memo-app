@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { TermItem } from '../../common/types'
-import { Button, ButtonType } from '../Button/Button'
+import { Button } from '../Button/Button'
 import { ReactComponent as PreviousIcon } from '../../assets/icons/long-left.svg'
 import { ReactComponent as NextIcon } from '../../assets/icons/long-right.svg'
 import './flashCardsSlider.scss'
-import { CongratsBox } from '../CongrarsBox/CongratsBox'
+import { CongratsBox } from '../CongratsBox/CongratsBox'
 
 interface FlashCardsSliderProps {
   terms: TermItem[]

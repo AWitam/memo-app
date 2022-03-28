@@ -9,7 +9,7 @@ export const fetchTerms = createAsyncThunk('termsSlice/fetchTerms', async (terms
   const items = await firebaseValue.api.getStudySetTerms(termsId)
   console.log(items)
   const preparedData = []
-  for (let key in items) {
+  for (const key in items) {
     preparedData.push({ id: key, ...items[key] })
   }
 
@@ -73,7 +73,6 @@ export const TermsSlice = createSlice({
       })
       .addCase(fetchTerms.fulfilled, (state, action) => {
         const { termsId, items } = action.payload
-        //@ts-ignore
         state.terms.push({ termsId, termItems: items })
         state.isLoading = false
       })

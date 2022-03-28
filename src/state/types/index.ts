@@ -1,4 +1,3 @@
-import { FirebaseError } from 'firebase/app'
 import { StudySet, TermItem } from '../../common/types'
 
 export interface StudySetsState {
@@ -35,7 +34,7 @@ export interface UserState {
 
 export interface AuthError {
   user: null
-  error: FirebaseError
+  error: string
 }
 
 export type LoginWithEmailAsyncThunkConfig = {

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../app/routes'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { deleteStudySetThunk } from '../../state/studySet/studySetsSlice'
 import { useDispatch } from 'react-redux'
 import { StudySet } from '../../common/types'
@@ -12,13 +12,7 @@ import { Button } from '../Button/Button'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { getTermsFormat } from '../../utils/getTermsFormat'
 
-export const StudySetCard = ({
-  studySet,
-  displayAsLink,
-}: {
-  studySet: StudySet
-  displayAsLink?: boolean
-}) => {
+export const StudySetCard = ({ studySet, displayAsLink }: { studySet: StudySet; displayAsLink?: boolean }) => {
   const {
     summary: { title, termsId },
     studySetId,
@@ -34,9 +28,7 @@ export const StudySetCard = ({
   return (
     <div className="study-set__card" key={title}>
       {displayAsLink ? (
-        <Link to={`/${ROUTES.studySet}/${studySetId}`}>
-          {renderStudySetCardContent(studySet)}
-        </Link>
+        <Link to={`/${ROUTES.studySet}/${studySetId}`}>{renderStudySetCardContent(studySet)}</Link>
       ) : (
         renderStudySetCardContent(studySet)
       )}
@@ -88,14 +80,8 @@ const renderStudySetCardContent = (studySet: StudySet) => {
         <h2>{title}</h2>
       </div>
       <div className="study-set__card--summary">
-        {description && (
-          <div className="summary--description">
-            {studySet.summary.description}
-          </div>
-        )}
-        <div className="summary--items-num">
-          {getTermsFormat(numberOfItems)}
-        </div>
+        {description && <div className="summary--description">{studySet.summary.description}</div>}
+        <div className="summary--items-num">{getTermsFormat(numberOfItems)}</div>
       </div>
     </div>
   )

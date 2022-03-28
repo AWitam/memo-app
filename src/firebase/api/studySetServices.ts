@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, DocumentData, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
+import { collection, deleteDoc, doc, DocumentData, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
 import { firebaseValue } from '..'
 import { StudySet, TermItem } from '../../common/types'
 
@@ -15,13 +15,22 @@ export const fetchUserStudySets = async (userId: string) => {
   return userStudySetsData
 }
 
+interface TermInfo {
+  [key: string]: {
+    term: string
+    definition: string
+    isFavorite: boolean
+  }
+}
+
+type TermMap = TermInfo & { studySetId: string }
+
 export const addStudySet = async (studySet: StudySet, terms: TermItem[]) => {
   const { studySetId, summary } = studySet
   const studySetRef = doc(firebaseValue.db, `studySets/${studySetId}`)
   const termsRef = doc(firebaseValue.db, 'terms', summary.termsId)
-  const termsMap: any = {
-    studySetId: studySetId,
-  }
+  const termsMap = { studySetId: studySetId } as TermMap
+
   terms.forEach((item) => {
     termsMap[item.id] = { term: item.term, definition: item.definition, isFavorite: false }
   })
