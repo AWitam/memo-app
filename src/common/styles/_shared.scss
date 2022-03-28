@@ -1,0 +1,60 @@
+@import './variables';
+@import './breakpoints';
+@import './typography';
+@import './layout';
+
+body,
+html {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Space Grotesk';
+  font-size: 100%;
+  background-color: $beige;
+  color: $dark-grey;
+  height: 100%;
+  background-color: $beige;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: local('Space Grotesk'), url('../../assets/fonts/SpaceGrotesk-Light.woff2') format('woff2');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: local('Space Grotesk'), url('../../assets/fonts/SpaceGrotesk-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: local('Space Grotesk'), url('../../assets/fonts/SpaceGrotesk-Medium.woff2') format('woff2');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: local('Space Grotesk'), url('../../assets/fonts/SpaceGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+}
+
+svg:not(.social-icon) {
+  path {
+    fill: $dark-grey;
+  }
+}

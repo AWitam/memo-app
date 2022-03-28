@@ -1,0 +1,89 @@
+@import '../../common/styles/shared';
+
+.quiz__container {
+  width: 100%;
+  background-color: #fff;
+  border: 2px solid $dark-grey;
+  padding: $spacing-32 $spacing-16;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-24;
+  transition: all 1s ease;
+
+  @include sm {
+    max-width: 60%;
+    margin: 0 auto;
+  }
+
+  h4 {
+    color: $grey;
+  }
+
+  #term {
+    color: $dark-grey;
+    font-size: $font-size-20;
+  }
+
+  .item__choices {
+    .answer {
+      margin: $spacing-8 0;
+      padding: $spacing-8 0;
+      font-weight: $font-weight-medium;
+      display: block;
+
+      &.wrong {
+        @extend .answer;
+        color: $red-100;
+      }
+
+      &.correct {
+        @extend .answer;
+        color: $blue-100;
+      }
+    }
+  }
+
+  #quiz__progress {
+    text-align: center;
+  }
+}
+
+.choices__container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $spacing-24;
+
+  .item__choice {
+    grid-column: span 2;
+    background-color: rgb(220, 185, 255, 0.5);
+    cursor: pointer;
+    padding: $spacing-8;
+    text-align: center;
+
+    @include sm {
+      grid-column: auto;
+    }
+
+    &:hover {
+      outline: 2px solid $lily;
+    }
+
+    &.correct {
+      border: 2px solid $blue-100;
+      background-color: $blue-200;
+
+      &:hover {
+        outline: none;
+      }
+    }
+
+    &.wrong {
+      border: 2px solid $red-100;
+      background-color: $red-200;
+
+      &:hover {
+        outline: none;
+      }
+    }
+  }
+}

@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
-import { StudySetsState, UserStudySetPayload } from '../types'
+import { StudySetsState } from '../types'
 import { firebaseValue } from '../../firebase'
 import { StudySet } from '../../common/types'
+import { termsAdded } from './termsSlice'
 
 const initialState: StudySetsState = {
   studySets: [],
@@ -14,14 +15,9 @@ export const fetchUserStudySets = createAsyncThunk('studySetsSlice/fetchUserStud
   return response
 })
 
-export const fetchStudySetData = createAsyncThunk('studySetsSlice/getStudySetData', async (termsId: string) => {
-  const data = (await firebaseValue.api.getStudySetData(termsId)) as StudySet
-
-  return { termsId, data }
-})
-
-export const addStudySet = createAsyncThunk('studySetsSlice/addStudySet', async (studySet: StudySet) => {
-  await firebaseValue.api.addStudySet(studySet)
+export const addStudySet = createAsyncThunk('studySetsSlice/addStudySet', async ({ studySet, terms }: any, { dispatch }) => {
+  await firebaseValue.api.addStudySet(studySet, terms)
+  dispatch(termsAdded({ termsId: studySet.summary.termsId, terms }))
   return studySet
 })
 
@@ -29,8 +25,8 @@ type AsyncThunkConfig = {
   state: RootState
 }
 
-export const editStudySet = createAsyncThunk<StudySet, StudySet, AsyncThunkConfig>(
-  'studySetSlice/editStudySet',
+export const editStudySetSummary = createAsyncThunk<StudySet, StudySet, AsyncThunkConfig>(
+  'studySetSlice/editStudySetSummary',
   async (studySet, { getState }) => {
     const state = getState()
     const existingStudySet = state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySet.studySetId)
@@ -40,10 +36,6 @@ export const editStudySet = createAsyncThunk<StudySet, StudySet, AsyncThunkConfi
       existingStudySet?.summary.description !== studySet.summary.description
     ) {
       await firebaseValue.api.editStudySetSummary(studySet)
-    }
-
-    if (existingStudySet?.terms !== studySet.terms) {
-      await firebaseValue.api.editStudySetTerms(studySet)
     }
 
     return studySet
@@ -61,7 +53,16 @@ export const deleteStudySetThunk = createAsyncThunk(
 export const StudySetSlice = createSlice({
   name: 'studySetsSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState,
+    updateTermsCount: (state, action) => {
+      const { termsId, count } = action.payload
+      const countToUpdate = state.studySets.find((studySet) => studySet.summary.termsId === termsId)
+      if (countToUpdate) {
+        countToUpdate.summary.numberOfItems = count
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addStudySet.pending, (state) => {
@@ -78,35 +79,27 @@ export const StudySetSlice = createSlice({
         action.payload.forEach((item: StudySet) => state.studySets.push(item))
         state.isLoading = false
       })
-      .addCase(fetchStudySetData.fulfilled, (state, action) => {
-        const { termsId, data } = action.payload
-        let existingStudySet = state.studySets.findIndex((studySet: StudySet) => studySet.summary.termsId === termsId)
-        if (!state.studySets[existingStudySet].terms) {
-          state.studySets[existingStudySet].terms = []
-        }
-        state.studySets[existingStudySet].terms = data.terms
-      })
+
       .addCase(deleteStudySetThunk.fulfilled, (state, action) => {
-        let studySetIndex = state.studySets.findIndex((studySet: StudySet) => studySet.studySetId === action.payload)
+        const studySetIndex = state.studySets.findIndex((studySet: StudySet) => studySet.studySetId === action.payload)
         state.studySets.splice(studySetIndex, 1)
       })
-      .addCase(editStudySet.fulfilled, (state, action) => {
-        const { studySetId, summary, terms } = action.payload
+      .addCase(editStudySetSummary.fulfilled, (state, action) => {
+        const { studySetId, summary } = action.payload
         const existingStudySet = state.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
         if (existingStudySet) {
           existingStudySet.summary = {
             termsId: existingStudySet.summary.termsId,
-            numberOfItems: summary.numberOfItems,
+            numberOfItems: existingStudySet.summary.numberOfItems,
             title: summary.title,
             description: summary.description,
           }
-          existingStudySet.terms = terms
         }
       })
   },
 })
 
-export const {} = StudySetSlice.actions
+export const { reset, updateTermsCount } = StudySetSlice.actions
 
 export const selectStudySets = (state: RootState) => state.collections
 

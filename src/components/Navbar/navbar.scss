@@ -1,0 +1,75 @@
+@import '../../common/styles/shared';
+
+header {
+  border-bottom: 2px solid $dark-grey;
+  margin-bottom: $spacing-16;
+
+  @include md {
+    margin-bottom: $spacing-24;
+  }
+}
+
+nav {
+  justify-content: space-between;
+  position: relative;
+}
+
+.nav__links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: $font-weight-medium;
+  position: relative;
+  width: 100%;
+
+  &--open {
+    position: fixed;
+    padding-top: $spacing-32;
+    background: $beige;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    border-top: 2px solid $dark-grey;
+    z-index: 50;
+  }
+
+  &-right,
+  &-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-item {
+    padding: $spacing-8 $spacing-16;
+  }
+
+  @include md {
+    flex-direction: row;
+    &-right,
+    &-left {
+      flex-direction: row;
+    }
+  }
+}
+
+.nav__wrapper {
+  padding: $spacing-16 $spacing-24;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .nav__links-right,
+  .nav__links-left {
+    align-items: center;
+    flex-direction: row;
+  }
+}
+
+#logo {
+  align-self: center;
+  font-size: $font-size-26;
+  font-weight: $font-weight-bold;
+  margin-right: $spacing-16;
+}

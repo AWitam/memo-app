@@ -1,0 +1,112 @@
+@import '../../common/styles/shared';
+
+#study-set-page {
+  .section__study-set-overview {
+    grid-column-end: span 12;
+
+    @include sm {
+      grid-column: 6/13;
+    }
+
+    @include md {
+      grid-column: 5/13;
+    }
+
+    .study-set__card {
+      margin-bottom: $spacing-16;
+    }
+  }
+
+  .overview__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .section__sidebar {
+    grid-column-end: span 12;
+
+    @include sm {
+      grid-column: 1/5;
+      grid-row: 2 /4;
+    }
+
+    .selection-badge {
+      display: inline-block;
+      background-color: rgb(220, 185, 255, 0.5);
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: $font-weight-medium;
+      padding: $spacing-8;
+      margin: $spacing-8 0;
+      border: 2px solid $lily;
+    }
+  }
+
+  .section__article {
+    grid-column-end: span 12;
+
+    .terms__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      #terms-filter {
+        padding: $spacing-8;
+        border: none;
+        outline: none;
+        font-family: inherit;
+        font-size: $font-size-16;
+        background-color: transparent;
+        max-width: 7rem;
+      }
+    }
+
+    @include sm {
+      grid-column: 6/13;
+      grid-row: 3;
+    }
+
+    @include md {
+      grid-column: 5/13;
+    }
+  }
+
+  .study-mode__list {
+    &--item {
+      margin-top: $spacing-16;
+
+      a {
+        display: flex;
+        align-items: center;
+      }
+
+      svg {
+        margin-right: $spacing-8;
+      }
+
+      :hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .terms__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-16;
+    background-color: #fff;
+    border: 2px solid $dark-grey;
+    margin: $spacing-32 0;
+    box-shadow: $spacing-8 $spacing-8 0 $lily;
+
+    &--term {
+      font-weight: $font-weight-medium;
+      margin-bottom: $spacing-8;
+    }
+
+    &--definition {
+      color: $grey;
+    }
+  }
+}

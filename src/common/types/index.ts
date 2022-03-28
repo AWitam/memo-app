@@ -1,7 +1,8 @@
-export interface FlashCardField {
+export interface TermItem {
   id: string
   term: string
   definition: string
+  isFavorite: boolean
 }
 
 export interface StudySetSummary {
@@ -13,6 +14,5 @@ export interface StudySetSummary {
 
 export type StudySet = {
   studySetId: string
-  terms?: Array<FlashCardField>
   summary: StudySetSummary
 }

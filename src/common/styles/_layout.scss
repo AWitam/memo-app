@@ -1,0 +1,76 @@
+@import './breakpoints';
+@import './variables';
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+
+  @include md {
+    width: calc($screen-md-min - $spacing-16);
+  }
+
+  @include lg {
+    width: calc($screen-lg-min - $spacing-16);
+  }
+
+  @include xl {
+    width: calc($screen-xl-min - $spacing-48);
+  }
+
+  @include xxl {
+    width: calc($screen-xxl-min - $spacing-48);
+  }
+}
+
+section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0px, 1fr));
+  row-gap: 1.5rem;
+  column-gap: 1rem;
+  padding: $spacing-24;
+
+  @include md {
+    padding: $spacing-48 $spacing-24;
+    row-gap: 2rem;
+    column-gap: 2rem;
+  }
+}
+
+.section__title {
+  grid-column-end: span 12;
+}
+
+.content {
+  grid-column-end: span 12;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content__center {
+  text-align: left;
+  width: 100%;
+  display: grid;
+  grid-column: 1;
+  gap: $spacing-32;
+
+  @include sm {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+
+  @include md {
+    gap: $spacing-48;
+  }
+}
+
+.content__left,
+.content__right {
+  grid-column-end: span 12;
+  align-self: center;
+
+  @include md {
+    grid-column-end: span 6;
+  }
+}

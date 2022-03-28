@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import studySetsReducer from '../state/studySet/studySetsSlice'
+import termsReducer from '../state/studySet/termsSlice'
 import userReducer from '../state/user/userSlice'
 
 export const store = configureStore({
   reducer: {
     collections: studySetsReducer,
+    termsData: termsReducer,
     auth: userReducer,
   },
 })
