@@ -1,4 +1,3 @@
-import GlobalStyle from '../theme/GlobalStyles'
 import { Navbar } from '../components/Navbar/Navbar'
 import { useAppSelector } from './hooks'
 import { useEffect, useState } from 'react'
@@ -22,7 +21,6 @@ function App() {
 
   return (
     <>
-      <GlobalStyle />
       <Navbar loggedMode={loggedNavbarMode} />
       <main className="container">
         <Outlet />

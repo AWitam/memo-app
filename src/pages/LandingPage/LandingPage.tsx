@@ -11,8 +11,8 @@ export const LandingPage = () => {
         <h1>Learn anything</h1>
         <div className="content__text">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae eleifend sapien.
-            Aenean massa sem, congue eget vehicula nec, suscipit nec lectus.
+            <b>MEMO</b> is a simple learning app that lets you study anything. Create your own study sets and learn from
+            flashcards and quizes.
           </p>
         </div>
         <Button type={ButtonType.primary}>
