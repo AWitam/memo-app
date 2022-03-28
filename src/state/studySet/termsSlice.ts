@@ -9,7 +9,9 @@ export const fetchTerms = createAsyncThunk('termsSlice/fetchTerms', async (terms
   const items = await firebaseValue.api.getStudySetTerms(termsId)
   const preparedData = []
   for (const key in items) {
-    preparedData.push({ id: key, ...items[key] })
+    if (key !== 'studySetId') {
+      preparedData.push({ id: key, ...items[key] })
+    }
   }
 
   return { termsId, items: preparedData }
