@@ -12,7 +12,7 @@ export const LandingPage = () => {
         <div className="content__text">
           <p>
             <b>MEMO</b> is a simple learning app that lets you study anything. Create your own study sets and learn from
-            flashcards and quizes.
+            flashcards and quizzes.
           </p>
         </div>
         <Button type={ButtonType.primary}>
