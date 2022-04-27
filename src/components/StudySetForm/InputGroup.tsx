@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
-import { InputGroupProps } from '../types'
-import { ReactComponent as TrashIcons } from '../../assets/icons/trash.svg'
+import { useEffect, useState } from 'react';
+import { InputGroupProps } from '../types';
+import { ReactComponent as TrashIcons } from '../../assets/icons/trash.svg';
 
 export const InputGroup = ({ field, updateField, onDelete, count }: InputGroupProps) => {
-  const { id, term, definition } = field
+  const { id, term, definition } = field;
 
-  const [termValue, setTermValue] = useState(term)
-  const [definitionValue, setDescriptionValue] = useState(definition)
+  const [termValue, setTermValue] = useState(term);
+  const [definitionValue, setDescriptionValue] = useState(definition);
 
   useEffect(() => {
-    updateField(id, termValue, definitionValue)
-  }, [termValue, definitionValue])
+    updateField(id, termValue, definitionValue);
+  }, [termValue, definitionValue]);
 
   return (
     <div className="item">
@@ -37,5 +37,5 @@ export const InputGroup = ({ field, updateField, onDelete, count }: InputGroupPr
         />
       </div>
     </div>
-  )
-}
+  );
+};

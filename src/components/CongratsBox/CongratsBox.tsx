@@ -1,16 +1,16 @@
-import { Button, ButtonType } from '../Button/Button'
-import { ReactComponent as RepeatIcon } from '../../assets/icons/repeat.svg'
-import './congratsBox.scss'
+import { Button, ButtonType } from '../Button/Button';
+import { ReactComponent as RepeatIcon } from '../../assets/icons/repeat.svg';
+import './congratsBox.scss';
 
 interface CongratsBox {
-  numberOfTerms: number
-  score?: number
-  finish: () => void
-  repeat: () => void
+  numberOfTerms: number;
+  score?: number;
+  finish: () => void;
+  repeat: () => void;
 }
 
 export const CongratsBox: React.FC<CongratsBox> = (props) => {
-  const { numberOfTerms, score, finish, repeat } = props
+  const { numberOfTerms, score, finish, repeat } = props;
   return (
     <div className="congrats__box">
       <h4>Congratulations 🎉</h4>
@@ -31,5 +31,5 @@ export const CongratsBox: React.FC<CongratsBox> = (props) => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};

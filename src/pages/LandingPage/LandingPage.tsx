@@ -1,8 +1,8 @@
-import './landingPage.scss'
-import landingPic from '../../assets/img/landing-pic.jpg'
-import { Button, ButtonType } from '../../components/Button/Button'
-import { Link } from 'react-router-dom'
-import { ROUTES } from '../../app/routes'
+import './landingPage.scss';
+import landingPic from '../../assets/img/landing-pic.jpg';
+import { Button, ButtonType } from '../../components/Button/Button';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../app/routes';
 
 export const LandingPage = () => {
   return (
@@ -25,5 +25,5 @@ export const LandingPage = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

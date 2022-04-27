@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { logOut } from '../state/user/userSlice'
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../state/user/userSlice';
 
 export const LogOutPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(logOut())
-  }, [])
+    dispatch(logOut());
+  }, []);
 
-  return <div>Log out</div>
-}
+  return <div>Log out</div>;
+};

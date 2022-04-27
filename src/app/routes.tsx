@@ -1,14 +1,14 @@
-import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router'
-import { StudySetPage } from '../pages/StudySetPage/StudySetPage'
-import { CollectionPage } from '../pages/CollectionPage/CollectionPage'
-import { Home } from '../pages/Home/Home'
-import { LandingPage } from '../pages/LandingPage/LandingPage'
-import { LoginPage } from '../pages/LoginPage/LoginPage'
-import { LogOutPage } from '../pages/LogOutPage'
-import App from './App'
-import { useAppSelector } from './hooks'
-import { StudyModePage } from '../pages/StudyModePage/StudyModePage'
-import { StudySetFormPage } from '../pages/StudySetFormPage/StudySetFormPage'
+import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router';
+import { StudySetPage } from '../pages/StudySetPage/StudySetPage';
+import { CollectionPage } from '../pages/CollectionPage/CollectionPage';
+import { Home } from '../pages/Home/Home';
+import { LandingPage } from '../pages/LandingPage/LandingPage';
+import { LoginPage } from '../pages/LoginPage/LoginPage';
+import { LogOutPage } from '../pages/LogOutPage';
+import App from './App';
+import { useAppSelector } from './hooks';
+import { StudyModePage } from '../pages/StudyModePage/StudyModePage';
+import { StudySetFormPage } from '../pages/StudySetFormPage/StudySetFormPage';
 
 export enum ROUTES {
   root = '/',
@@ -26,7 +26,7 @@ export enum ROUTES {
 }
 
 export const Routing = () => {
-  const location = useLocation()
+  const location = useLocation();
   return (
     <Routes>
       <Route element={<App />}>
@@ -63,15 +63,15 @@ export const Routing = () => {
         <Route path="/*" element={<div>Not found!</div>} />
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
 const RequireAuth = () => {
-  const user = useAppSelector((state) => state.auth.user)
+  const user = useAppSelector((state) => state.auth.user);
 
   if (!user) {
-    return <Navigate to={ROUTES.logIn} />
+    return <Navigate to={ROUTES.logIn} />;
   }
 
-  return <Outlet />
-}
+  return <Outlet />;
+};

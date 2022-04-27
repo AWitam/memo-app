@@ -12,4 +12,4 @@ export const firebaseConfig = {
   storageBucket: 'memo-app-5781e.appspot.com',
   messagingSenderId: '779142340001',
   appId: '1:779142340001:web:7c88e8a1e6def55e63ffe0',
-}
+};

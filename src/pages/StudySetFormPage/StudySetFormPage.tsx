@@ -1,34 +1,34 @@
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks'
-import { StudySet } from '../../common/types'
-import { StudySetForm } from '../../components/StudySetForm/StudySetForm'
-import { fetchTerms } from '../../state/studySet/termsSlice'
-import { Terms } from '../../state/types'
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
+import { StudySet } from '../../common/types';
+import { StudySetForm } from '../../components/StudySetForm/StudySetForm';
+import { fetchTerms } from '../../state/studySet/termsSlice';
+import { Terms } from '../../state/types';
 
 export const StudySetFormPage = () => {
-  const { studySetId } = useParams()
-  const isLoading = useAppSelector((state) => state.collections.isLoading)
-  const termsLoading = useAppSelector((state) => state.termsData.isLoading)
+  const { studySetId } = useParams();
+  const isLoading = useAppSelector((state) => state.collections.isLoading);
+  const termsLoading = useAppSelector((state) => state.termsData.isLoading);
 
   const existingStudySet = useAppSelector((state) =>
     state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
-  )
+  );
 
   const termsInCurrentStudySet = useAppSelector(
     (state) =>
       state.termsData.terms.find((termsData: Terms) => termsData.termsId === existingStudySet?.summary.termsId)
         ?.termItems
-  )
+  );
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!termsLoading && !termsInCurrentStudySet) {
-      existingStudySet && dispatch(fetchTerms(existingStudySet.summary.termsId))
+      existingStudySet && dispatch(fetchTerms(existingStudySet.summary.termsId));
     }
-  }, [termsInCurrentStudySet, studySetId])
+  }, [termsInCurrentStudySet, studySetId]);
 
   return (
     <section>
@@ -45,5 +45,5 @@ export const StudySetFormPage = () => {
         </>
       )}
     </section>
-  )
-}
+  );
+};

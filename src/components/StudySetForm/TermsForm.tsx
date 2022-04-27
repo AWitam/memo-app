@@ -1,6 +1,6 @@
-import { Button, ButtonType } from '../Button/Button'
-import { TermsFormProp } from '../types'
-import { InputGroup } from './InputGroup'
+import { Button, ButtonType } from '../Button/Button';
+import { TermsFormProp } from '../types';
+import { InputGroup } from './InputGroup';
 
 export const TermsForm = ({ flashCardsFields, addNewField, updateField, onDelete, message }: TermsFormProp) => {
   return (
@@ -19,5 +19,5 @@ export const TermsForm = ({ flashCardsFields, addNewField, updateField, onDelete
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};

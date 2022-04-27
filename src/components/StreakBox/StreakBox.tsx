@@ -1,12 +1,12 @@
-import './streakBox.scss'
+import './streakBox.scss';
 
 interface StreakBoxProps {
-  data: number[]
+  data: number[];
 }
 
 export const StreakBox = ({ data }: StreakBoxProps) => {
-  const today = new Date().getDay()
-  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+  const today = new Date().getDay();
+  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
   return (
     <div className="streak-box">
@@ -19,16 +19,16 @@ export const StreakBox = ({ data }: StreakBoxProps) => {
         </div>
         <div className="week-container">
           {days.map((day, i) => {
-            const dayInStreak = data.includes(i + 1)
+            const dayInStreak = data.includes(i + 1);
 
             return (
               <div key={day + i} className={`day${dayInStreak ? '__streak' : ''}`} id={i + 1 === today ? 'today' : ''}>
                 <span>{day}</span>
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

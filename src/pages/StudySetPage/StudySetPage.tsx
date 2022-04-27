@@ -1,41 +1,41 @@
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks'
-import { TermItem, StudySet } from '../../common/types'
-import { fetchTerms, toggleFavorite } from '../../state/studySet/termsSlice'
-import { ReactComponent as RightArrowIcon } from '../../assets/icons/short-right.svg'
-import { ReactComponent as StarIconOutlined } from '../../assets/icons/star-outline.svg'
-import { ReactComponent as StarIconFilled } from '../../assets/icons/star-filled.svg'
-import './studySetPage.scss'
-import { Link } from 'react-router-dom'
-import { ROUTES } from '../../app/routes'
-import { StudySetCard } from '../../components/StudySetCard/StudySetCard'
-import { Terms } from '../../state/types'
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
+import { TermItem, StudySet } from '../../common/types';
+import { fetchTerms, toggleFavorite } from '../../state/studySet/termsSlice';
+import { ReactComponent as RightArrowIcon } from '../../assets/icons/short-right.svg';
+import { ReactComponent as StarIconOutlined } from '../../assets/icons/star-outline.svg';
+import { ReactComponent as StarIconFilled } from '../../assets/icons/star-filled.svg';
+import './studySetPage.scss';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../app/routes';
+import { StudySetCard } from '../../components/StudySetCard/StudySetCard';
+import { Terms } from '../../state/types';
 
 export const StudySetPage = () => {
-  const { studySetId } = useParams()
+  const { studySetId } = useParams();
 
-  const isLoading = useAppSelector((state) => state.collections.isLoading)
-  const termsLoading = useAppSelector((state) => state.termsData.isLoading)
+  const isLoading = useAppSelector((state) => state.collections.isLoading);
+  const termsLoading = useAppSelector((state) => state.termsData.isLoading);
   const currentStudySet = useAppSelector((state) =>
     state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
-  )
+  );
   const termsInCurrentStudySet = useAppSelector(
     (state) =>
       state.termsData.terms.find((termsData: Terms) => termsData.termsId === currentStudySet?.summary.termsId)
         ?.termItems
-  )
+  );
 
-  const dispatch = useDispatch()
-  const [filteredItems, setFilteredItems] = useState<TermItem[] | null>(null)
-  const [selected, setSelected] = useState('all')
+  const dispatch = useDispatch();
+  const [filteredItems, setFilteredItems] = useState<TermItem[] | null>(null);
+  const [selected, setSelected] = useState('all');
 
   useEffect(() => {
     if (!termsLoading && !termsInCurrentStudySet) {
-      currentStudySet && dispatch(fetchTerms(currentStudySet.summary.termsId))
+      currentStudySet && dispatch(fetchTerms(currentStudySet.summary.termsId));
     }
-  }, [termsLoading])
+  }, [termsLoading]);
 
   const handleToggleFavorite = (termId: string, value: boolean) => {
     dispatch(
@@ -44,20 +44,20 @@ export const StudySetPage = () => {
         termId,
         value,
       })
-    )
-  }
+    );
+  };
 
-  const handleSelectItems = (e: React.ChangeEvent<HTMLSelectElement>) => setSelected(e.target.value)
+  const handleSelectItems = (e: React.ChangeEvent<HTMLSelectElement>) => setSelected(e.target.value);
 
   useEffect(() => {
     if (selected == 'favorites' && termsInCurrentStudySet) {
-      setFilteredItems(termsInCurrentStudySet.filter((item: TermItem) => item.isFavorite))
+      setFilteredItems(termsInCurrentStudySet.filter((item: TermItem) => item.isFavorite));
     }
 
     if (selected == 'all' && termsInCurrentStudySet) {
-      setFilteredItems(null)
+      setFilteredItems(null);
     }
-  }, [selected, termsInCurrentStudySet])
+  }, [selected, termsInCurrentStudySet]);
 
   return (
     <section id="study-set-page">
@@ -81,8 +81,8 @@ export const StudySetPage = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 const renderStudyModes = (onlyFavorites: boolean) => {
   return (
@@ -104,8 +104,8 @@ const renderStudyModes = (onlyFavorites: boolean) => {
         </li>
       </ul>
     </div>
-  )
-}
+  );
+};
 
 const renderStudySetTerms = (terms: TermItem[], onToggleFavorite: (id: string, option: boolean) => void) => {
   return (
@@ -126,8 +126,8 @@ const renderStudySetTerms = (terms: TermItem[], onToggleFavorite: (id: string, o
         </div>
       ))}
     </>
-  )
-}
+  );
+};
 
 const renderTermsFilter = (selected: string, selectItems: (e: React.ChangeEvent<HTMLSelectElement>) => void) => {
   return (
@@ -137,5 +137,5 @@ const renderTermsFilter = (selected: string, selectItems: (e: React.ChangeEvent<
         <option value="favorites">Favorites</option>
       </select>
     </div>
-  )
-}
+  );
+};

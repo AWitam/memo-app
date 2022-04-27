@@ -1,29 +1,29 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { ROUTES } from '../../app/routes'
-import { useRef, useState } from 'react'
-import { deleteStudySetThunk } from '../../state/studySet/studySetsSlice'
-import { useDispatch } from 'react-redux'
-import { StudySet } from '../../common/types'
-import { ReactComponent as DotsIcon } from '../../assets/icons/dots.svg'
-import { ReactComponent as TrashIcon } from '../../assets/icons/trash.svg'
-import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg'
-import './studySetCard.scss'
-import { Button } from '../Button/Button'
-import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { getTermsFormat } from '../../utils/getTermsFormat'
+import { Link, useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../app/routes';
+import { useRef, useState } from 'react';
+import { deleteStudySetThunk } from '../../state/studySet/studySetsSlice';
+import { useDispatch } from 'react-redux';
+import { StudySet } from '../../common/types';
+import { ReactComponent as DotsIcon } from '../../assets/icons/dots.svg';
+import { ReactComponent as TrashIcon } from '../../assets/icons/trash.svg';
+import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg';
+import './studySetCard.scss';
+import { Button } from '../Button/Button';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { getTermsFormat } from '../../utils/getTermsFormat';
 
 export const StudySetCard = ({ studySet, displayAsLink }: { studySet: StudySet; displayAsLink?: boolean }) => {
   const {
     summary: { title, termsId },
     studySetId,
-  } = studySet
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  } = studySet;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDelete = (studySetId: string, termsId: string) => {
-    dispatch(deleteStudySetThunk({ studySetId, termsId }))
-    navigate(`/${ROUTES.collection}`)
-  }
+    dispatch(deleteStudySetThunk({ studySetId, termsId }));
+    navigate(`/${ROUTES.collection}`);
+  };
 
   return (
     <div className="study-set__card" key={title}>
@@ -38,14 +38,14 @@ export const StudySetCard = ({ studySet, displayAsLink }: { studySet: StudySet; 
         onEdit={() => navigate(`/${ROUTES.studySet}/${studySetId}/edit`)}
       />
     </div>
-  )
-}
+  );
+};
 
 const SettingsModal = ({ onDelete, onEdit }: any) => {
-  const optionsRef = useRef<HTMLDivElement>(null)
-  const [isOpen, setOpen] = useState(false)
-  const handleOutsideClick = () => setOpen(false)
-  useOutsideClick(optionsRef, handleOutsideClick)
+  const optionsRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setOpen] = useState(false);
+  const handleOutsideClick = () => setOpen(false);
+  useOutsideClick(optionsRef, handleOutsideClick);
 
   return (
     <div ref={optionsRef}>
@@ -66,13 +66,13 @@ const SettingsModal = ({ onDelete, onEdit }: any) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 const renderStudySetCardContent = (studySet: StudySet) => {
   const {
     summary: { title, description, numberOfItems },
-  } = studySet
+  } = studySet;
 
   return (
     <div className="study-set__card--content">
@@ -84,5 +84,5 @@ const renderStudySetCardContent = (studySet: StudySet) => {
         <div className="summary--items-num">{getTermsFormat(numberOfItems)}</div>
       </div>
     </div>
-  )
-}
+  );
+};

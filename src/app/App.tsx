@@ -1,23 +1,23 @@
-import { Navbar } from '../components/Navbar/Navbar'
-import { useAppSelector } from './hooks'
-import { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { verifyAuth } from '../state/user/userSlice'
-import { Footer } from '../components/Footer/Footer'
+import { Navbar } from '../components/Navbar/Navbar';
+import { useAppSelector } from './hooks';
+import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { verifyAuth } from '../state/user/userSlice';
+import { Footer } from '../components/Footer/Footer';
 
 function App() {
-  const user = useAppSelector((state) => state.auth.user)
-  const [loggedNavbarMode, setNavbarMode] = useState(false)
-  const dispatch = useDispatch()
+  const user = useAppSelector((state) => state.auth.user);
+  const [loggedNavbarMode, setNavbarMode] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(verifyAuth())
-  }, [])
+    dispatch(verifyAuth());
+  }, []);
 
   useEffect(() => {
-    setNavbarMode(!!user)
-  }, [user])
+    setNavbarMode(!!user);
+  }, [user]);
 
   return (
     <>
@@ -27,7 +27,7 @@ function App() {
       </main>
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

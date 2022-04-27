@@ -1,78 +1,78 @@
-import { useEffect, useState } from 'react'
-import { TermItem } from '../../common/types'
-import { CongratsBox } from '../CongratsBox/CongratsBox'
-import './quiz.scss'
+import { useEffect, useState } from 'react';
+import { TermItem } from '../../common/types';
+import { CongratsBox } from '../CongratsBox/CongratsBox';
+import './quiz.scss';
 
 interface QuizProps {
-  terms: TermItem[]
-  finish: () => void
+  terms: TermItem[];
+  finish: () => void;
 }
 
 export const Quiz = (props: QuizProps) => {
-  const { terms, finish } = props
-  const [currentItem, setCurrentItem] = useState(0)
-  const [score, setScore] = useState(0)
-  const [showCongrats, setShowCongrats] = useState(false)
-  const [answer, setAnswer] = useState({ message: '', className: '' })
-  const [choices, setChoices] = useState<string[]>([''])
+  const { terms, finish } = props;
+  const [currentItem, setCurrentItem] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showCongrats, setShowCongrats] = useState(false);
+  const [answer, setAnswer] = useState({ message: '', className: '' });
+  const [choices, setChoices] = useState<string[]>(['']);
 
-  const shuffle = (items: string[]) => items.sort(() => 0.5 - Math.random())
+  const shuffle = (items: string[]) => items.sort(() => 0.5 - Math.random());
 
   useEffect(() => {
-    setChoices(getChoices())
-  }, [currentItem])
+    setChoices(getChoices());
+  }, [currentItem]);
 
   /* 
   renders 2 possible choices if there's less than 4 items in study set,
   otherwise renders 4 possible choices from given study set items definitions
   */
   const getChoices = () => {
-    const allDefinitionsInTerms = terms.map((item) => item.definition)
-    const amount = terms.length <= 4 ? 1 : 3
-    const correctAnswer = terms[currentItem].definition
+    const allDefinitionsInTerms = terms.map((item) => item.definition);
+    const amount = terms.length <= 4 ? 1 : 3;
+    const correctAnswer = terms[currentItem].definition;
     const shuffledAllPossibleChoices = shuffle(
       allDefinitionsInTerms.filter((definition) => definition !== correctAnswer)
-    )
+    );
 
-    const narrowToAmount = shuffledAllPossibleChoices.slice(0, amount)
-    return shuffle([...narrowToAmount, correctAnswer])
-  }
+    const narrowToAmount = shuffledAllPossibleChoices.slice(0, amount);
+    return shuffle([...narrowToAmount, correctAnswer]);
+  };
 
   const checkAnswer = (e: any) => {
-    const userChoice = e.target.getAttribute('data-choice')
+    const userChoice = e.target.getAttribute('data-choice');
     if (userChoice === terms[currentItem].definition) {
-      e.target.classList.add('correct')
-      setAnswer({ message: 'Correct!', className: 'correct' })
-      setScore(score + 1)
+      e.target.classList.add('correct');
+      setAnswer({ message: 'Correct!', className: 'correct' });
+      setScore(score + 1);
     } else {
-      e.target.classList.add('wrong')
-      setAnswer({ message: 'Wrong', className: 'wrong' })
+      e.target.classList.add('wrong');
+      setAnswer({ message: 'Wrong', className: 'wrong' });
     }
-    transitionNext(e)
-  }
+    transitionNext(e);
+  };
 
   const next = () => {
     if (currentItem !== terms.length - 1) {
-      setCurrentItem(currentItem + 1)
+      setCurrentItem(currentItem + 1);
     } else {
-      setShowCongrats(true)
+      setShowCongrats(true);
     }
-  }
+  };
 
   const transitionNext = (e: any) => {
     setTimeout(() => {
-      e.target.classList.remove('correct')
-      e.target.classList.remove('wrong')
-      setAnswer({ message: '', className: '' })
-      next()
-    }, 1000)
-  }
+      e.target.classList.remove('correct');
+      e.target.classList.remove('wrong');
+      setAnswer({ message: '', className: '' });
+      next();
+    }, 1000);
+  };
 
   const handleRepeat = () => {
-    setShowCongrats(false)
-    setCurrentItem(0)
-    setScore(0)
-  }
+    setShowCongrats(false);
+    setCurrentItem(0);
+    setScore(0);
+  };
 
   return (
     <div className="quiz">
@@ -101,5 +101,5 @@ export const Quiz = (props: QuizProps) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};

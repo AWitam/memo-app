@@ -1,29 +1,29 @@
-import { useNavigate, useParams } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks'
-import { ROUTES } from '../../app/routes'
-import { StudySet } from '../../common/types'
-import { FlashCardsSlider } from '../../components/FlashcardsSlider/FlashCardsSlider'
-import { Quiz } from '../../components/quiz/Quiz'
-import { Terms } from '../../state/types'
-import { capitalize } from '../../utils/capitalize'
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
+import { ROUTES } from '../../app/routes';
+import { StudySet } from '../../common/types';
+import { FlashCardsSlider } from '../../components/FlashcardsSlider/FlashCardsSlider';
+import { Quiz } from '../../components/Quiz/Quiz';
+import { Terms } from '../../state/types';
+import { capitalize } from '../../utils/capitalize';
 
 export const StudyModePage = ({ mode, onlyFavorites }: { mode: string; onlyFavorites?: boolean }) => {
-  const { studySetId } = useParams()
-  const isLoading = useAppSelector((state) => state.collections.isLoading)
+  const { studySetId } = useParams();
+  const isLoading = useAppSelector((state) => state.collections.isLoading);
 
   const currentStudySet = useAppSelector((state) =>
     state.collections.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId)
-  )
+  );
 
   const termsInCurrentStudySet = useAppSelector(
     (state) =>
       state.termsData.terms.find((termsData: Terms) => termsData.termsId === currentStudySet?.summary.termsId)
         ?.termItems
-  )
-  const navigate = useNavigate()
-  const redirectOnFinish = () => navigate(`/${ROUTES.studySet}/${studySetId}`)
+  );
+  const navigate = useNavigate();
+  const redirectOnFinish = () => navigate(`/${ROUTES.studySet}/${studySetId}`);
 
-  const filteredItems = termsInCurrentStudySet!.filter((item) => item.isFavorite)
+  const filteredItems = termsInCurrentStudySet!.filter((item) => item.isFavorite);
 
   return (
     <section>
@@ -43,5 +43,5 @@ export const StudyModePage = ({ mode, onlyFavorites }: { mode: string; onlyFavor
         )}
       </div>
     </section>
-  )
-}
+  );
+};

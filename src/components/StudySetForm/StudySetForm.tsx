@@ -1,39 +1,39 @@
-import { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import { addStudySet, editStudySetSummary } from '../../state/studySet/studySetsSlice'
-import { editTerms } from '../../state/studySet/termsSlice'
-import { TermItem, StudySet } from '../../common/types'
-import { TermsForm } from './TermsForm'
-import { useNavigate } from 'react-router-dom'
-import { ROUTES } from '../../app/routes'
-import { useAppSelector } from '../../app/hooks'
-import { useDispatch } from 'react-redux'
-import './studySetForm.scss'
+import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { addStudySet, editStudySetSummary } from '../../state/studySet/studySetsSlice';
+import { editTerms } from '../../state/studySet/termsSlice';
+import { TermItem, StudySet } from '../../common/types';
+import { TermsForm } from './TermsForm';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../app/routes';
+import { useAppSelector } from '../../app/hooks';
+import { useDispatch } from 'react-redux';
+import './studySetForm.scss';
 
 export const StudySetForm = ({
   existingStudySet,
   termsInCurrentStudySet,
 }: {
-  existingStudySet?: StudySet
-  termsInCurrentStudySet?: TermItem[]
+  existingStudySet?: StudySet;
+  termsInCurrentStudySet?: TermItem[];
 }) => {
-  const studySetId = existingStudySet?.studySetId
-  const user = useAppSelector((state) => state.auth.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const getEmptyTermField = () => ({ id: uuidv4(), term: '', definition: '', isFavorite: false })
+  const studySetId = existingStudySet?.studySetId;
+  const user = useAppSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const getEmptyTermField = () => ({ id: uuidv4(), term: '', definition: '', isFavorite: false });
 
-  const [title, setTitle] = useState(existingStudySet ? existingStudySet.summary.title : '')
-  const [description, setDescription] = useState(existingStudySet ? existingStudySet.summary.description : '')
+  const [title, setTitle] = useState(existingStudySet ? existingStudySet.summary.title : '');
+  const [description, setDescription] = useState(existingStudySet ? existingStudySet.summary.description : '');
   const [flashCardFields, setFlashCardFields] = useState<TermItem[]>(
     termsInCurrentStudySet ? termsInCurrentStudySet : [getEmptyTermField(), getEmptyTermField()]
-  )
+  );
 
   // todo: improve form ux, validation, state etc
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
 
   const addCardInputs = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     setFlashCardFields(
       flashCardFields.concat({
         id: uuidv4(),
@@ -41,49 +41,49 @@ export const StudySetForm = ({
         definition: '',
         isFavorite: false,
       })
-    )
+    );
     if (flashCardFields.length >= 1) {
-      setMessage('')
+      setMessage('');
     }
-  }
+  };
 
   const updateField = (id: string, term: string, definition: string) => {
-    setMessage('')
-    const fieldToUpdate = flashCardFields.findIndex((field) => field.id === id)
+    setMessage('');
+    const fieldToUpdate = flashCardFields.findIndex((field) => field.id === id);
 
-    const updatedFlashCardFields = [...flashCardFields]
+    const updatedFlashCardFields = [...flashCardFields];
     updatedFlashCardFields[fieldToUpdate] = {
       ...updatedFlashCardFields[fieldToUpdate],
       term: term,
       definition: definition,
-    }
+    };
 
-    setFlashCardFields(updatedFlashCardFields)
-  }
+    setFlashCardFields(updatedFlashCardFields);
+  };
 
   const handleSubmit = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (flashCardFields.length < 2) {
-      return setMessage('Study set must have at least two items!')
+      return setMessage('Study set must have at least two items!');
     }
 
     if (flashCardFields.some((item) => !item.term || !item.definition)) {
-      setMessage('Please add terms and definitions')
-      return
+      setMessage('Please add terms and definitions');
+      return;
     }
 
     if (existingStudySet) {
-      handleUpdateStudySetSummary()
-      handleUpdateTerms()
-      navigate(`/${ROUTES.studySet}/${studySetId}`)
+      handleUpdateStudySetSummary();
+      handleUpdateTerms();
+      navigate(`/${ROUTES.studySet}/${studySetId}`);
     } else {
-      handleAddNewStudySet()
+      handleAddNewStudySet();
     }
-  }
+  };
 
   const handleAddNewStudySet = () => {
-    const studySetId = uuidv4()
+    const studySetId = uuidv4();
     const newStudySet = {
       studySetId,
       summary: {
@@ -93,11 +93,11 @@ export const StudySetForm = ({
         creator: user && user.uid,
         termsId: uuidv4(),
       },
-    }
+    };
 
-    dispatch(addStudySet({ studySet: newStudySet, terms: flashCardFields }))
-    navigate(`/${ROUTES.studySet}/${studySetId}`)
-  }
+    dispatch(addStudySet({ studySet: newStudySet, terms: flashCardFields }));
+    navigate(`/${ROUTES.studySet}/${studySetId}`);
+  };
 
   const handleUpdateStudySetSummary = () => {
     const updatedStudySet = {
@@ -108,10 +108,10 @@ export const StudySetForm = ({
         title: title,
         description: description,
       },
-    }
+    };
 
-    dispatch(editStudySetSummary(updatedStudySet))
-  }
+    dispatch(editStudySetSummary(updatedStudySet));
+  };
 
   const handleUpdateTerms = () => {
     dispatch(
@@ -119,17 +119,17 @@ export const StudySetForm = ({
         termsId: existingStudySet?.summary.termsId,
         termsToUpdate: flashCardFields,
       })
-    )
-  }
+    );
+  };
 
   const handleDeleteCardInput = (id: string) => {
-    const updatedFlashCardFields = flashCardFields.filter((item) => item.id !== id)
+    const updatedFlashCardFields = flashCardFields.filter((item) => item.id !== id);
     if (updatedFlashCardFields.length < 2) {
-      setMessage("Can't delete - study set must have at least two items!")
+      setMessage("Can't delete - study set must have at least two items!");
     } else {
-      setFlashCardFields(updatedFlashCardFields)
+      setFlashCardFields(updatedFlashCardFields);
     }
-  }
+  };
 
   return (
     <>
@@ -167,5 +167,5 @@ export const StudySetForm = ({
         )}
       </form>
     </>
-  )
-}
+  );
+};

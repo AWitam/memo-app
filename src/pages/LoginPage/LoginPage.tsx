@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks'
-import { ROUTES } from '../../app/routes'
-import './loginPage.scss'
-import { loginWithEmail, passwordReset, signInWithGoogle, singUpWithEmail } from '../../state/user/userSlice'
-import { Button, ButtonType } from '../../components/Button/Button'
-import { ReactComponent as IconGoogle } from '../../assets/icons/icon-google.svg'
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
+import { ROUTES } from '../../app/routes';
+import './loginPage.scss';
+import { loginWithEmail, passwordReset, signInWithGoogle, singUpWithEmail } from '../../state/user/userSlice';
+import { Button, ButtonType } from '../../components/Button/Button';
+import { ReactComponent as IconGoogle } from '../../assets/icons/icon-google.svg';
 
 type LoginPageProps = {
-  pageType: ROUTES.signUp | ROUTES.logIn
-}
+  pageType: ROUTES.signUp | ROUTES.logIn;
+};
 
 enum AuthActions {
   googleSignIn,
@@ -20,42 +20,42 @@ enum AuthActions {
 }
 
 export const LoginPage = ({ pageType }: LoginPageProps) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const isAuthorized = useAppSelector((state) => state.auth.authState.isAuthorized)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const uiMessage = useAppSelector((state) => state.auth.authState.uiMessage)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const isAuthorized = useAppSelector((state) => state.auth.authState.isAuthorized);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const uiMessage = useAppSelector((state) => state.auth.authState.uiMessage);
 
   //todo : better inputs validation (maybe while typing), error handling
 
   const handleAction = async (e: React.MouseEvent<SVGSVGElement, MouseEvent>, action: AuthActions) => {
-    e.preventDefault()
+    e.preventDefault();
 
     switch (action) {
       case AuthActions.googleSignIn:
-        dispatch(signInWithGoogle())
-        break
+        dispatch(signInWithGoogle());
+        break;
       case AuthActions.emailSignUp:
-        dispatch(singUpWithEmail({ email, password }))
-        break
+        dispatch(singUpWithEmail({ email, password }));
+        break;
       case AuthActions.emailLogin:
-        dispatch(loginWithEmail({ email, password }))
-        break
+        dispatch(loginWithEmail({ email, password }));
+        break;
       case AuthActions.forgotPassword:
-        dispatch(passwordReset({ email }))
-        break
+        dispatch(passwordReset({ email }));
+        break;
 
       default:
-        break
+        break;
     }
-  }
+  };
 
   useEffect(() => {
     if (isAuthorized) {
-      navigate(ROUTES.root)
+      navigate(ROUTES.root);
     }
-  }, [isAuthorized])
+  }, [isAuthorized]);
 
   return (
     <section id="login-page">
@@ -85,10 +85,10 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
         <div className="content__social-login">{renderSocialLogin(pageType, handleAction)}</div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-const renderTitle = (pageType: string) => <h2>{pageType == ROUTES.logIn ? 'Log in to MEMO' : 'Sign up to MEMO'}</h2>
+const renderTitle = (pageType: string) => <h2>{pageType == ROUTES.logIn ? 'Log in to MEMO' : 'Sign up to MEMO'}</h2>;
 
 const renderButtons = (
   pageType: string,
@@ -112,8 +112,8 @@ const renderButtons = (
         </Button>
       )}
     </>
-  )
-}
+  );
+};
 
 const renderSocialLogin = (
   pageType: string,
@@ -127,5 +127,5 @@ const renderSocialLogin = (
         <IconGoogle className="social-icon" onClick={(e) => handleAction(e, AuthActions.googleSignIn)} />
       </Button>
     </>
-  )
-}
+  );
+};

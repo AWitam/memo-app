@@ -1,28 +1,28 @@
-import { useEffect, useState } from 'react'
-import { Link, NavLink, To, useLocation } from 'react-router-dom'
-import { ROUTES } from '../../app/routes'
-import { Button, ButtonType } from '../Button/Button'
-import { ReactComponent as IconMenu } from '../../assets/icons/hamburger.svg'
-import { ReactComponent as CloseIcon } from '../../assets/icons/close_big.svg'
-import './navbar.scss'
+import { useEffect, useState } from 'react';
+import { Link, NavLink, To, useLocation } from 'react-router-dom';
+import { ROUTES } from '../../app/routes';
+import { Button, ButtonType } from '../Button/Button';
+import { ReactComponent as IconMenu } from '../../assets/icons/hamburger.svg';
+import { ReactComponent as CloseIcon } from '../../assets/icons/close_big.svg';
+import './navbar.scss';
 
 export const Navbar = ({ loggedMode }: { loggedMode: boolean }) => {
-  const location = useLocation()
-  const [isOpen, setOpen] = useState(false)
-  const [isMobile, setMobile] = useState(window.innerWidth < 768)
+  const location = useLocation();
+  const [isOpen, setOpen] = useState(false);
+  const [isMobile, setMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
-    setOpen(false)
+    setOpen(false);
     const changeWidth = () => {
-      setMobile(window.innerWidth < 768)
-    }
+      setMobile(window.innerWidth < 768);
+    };
 
-    window.addEventListener('resize', changeWidth)
+    window.addEventListener('resize', changeWidth);
 
     return () => {
-      window.removeEventListener('resize', changeWidth)
-    }
-  }, [location, isMobile])
+      window.removeEventListener('resize', changeWidth);
+    };
+  }, [location, isMobile]);
 
   return (
     <>
@@ -57,8 +57,8 @@ export const Navbar = ({ loggedMode }: { loggedMode: boolean }) => {
         </div>
       </header>
     </>
-  )
-}
+  );
+};
 
 const NavLinks = ({ loggedMode, isMobile }: { loggedMode: boolean; isMobile?: boolean }) => (
   <>
@@ -82,10 +82,10 @@ const NavLinks = ({ loggedMode, isMobile }: { loggedMode: boolean; isMobile?: bo
       )}
     </div>
   </>
-)
+);
 
 const NavItem = ({ to, content }: { to: To; content: string | JSX.Element }) => (
   <li className="nav__links-item">
     <NavLink to={to}>{content}</NavLink>
   </li>
-)
+);

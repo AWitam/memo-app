@@ -1,114 +1,114 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { TermItem } from '../../common/types'
-import { Button } from '../Button/Button'
-import { ReactComponent as PreviousIcon } from '../../assets/icons/long-left.svg'
-import { ReactComponent as NextIcon } from '../../assets/icons/long-right.svg'
-import './flashCardsSlider.scss'
-import { CongratsBox } from '../CongratsBox/CongratsBox'
+import React, { useEffect, useRef, useState } from 'react';
+import { TermItem } from '../../common/types';
+import { Button } from '../Button/Button';
+import { ReactComponent as PreviousIcon } from '../../assets/icons/long-left.svg';
+import { ReactComponent as NextIcon } from '../../assets/icons/long-right.svg';
+import './flashCardsSlider.scss';
+import { CongratsBox } from '../CongratsBox/CongratsBox';
 
 interface FlashCardsSliderProps {
-  terms: TermItem[]
-  finish: () => void
+  terms: TermItem[];
+  finish: () => void;
 }
 
 export const FlashCardsSlider = (props: FlashCardsSliderProps) => {
-  const { terms, finish } = props
-  const flashCardBody = useRef<HTMLDivElement>(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [showCongrats, setShowCongrats] = useState(false)
+  const { terms, finish } = props;
+  const flashCardBody = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showCongrats, setShowCongrats] = useState(false);
 
   // todo extract swipe logic to separate hook
-  const [touchStart, setTouchStart] = useState(0)
-  const [touchEnd, setTouchEnd] = useState(0)
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   const flip = () => {
     if (flashCardBody.current) {
-      flashCardBody.current.style.transition = 'transform 0.8s'
-      !showCongrats && flashCardBody.current.classList.toggle('flipped')
+      flashCardBody.current.style.transition = 'transform 0.8s';
+      !showCongrats && flashCardBody.current.classList.toggle('flipped');
     }
-  }
+  };
 
   const prev = () => {
     if (currentIndex !== 0 && flashCardBody.current) {
-      flashCardBody.current.classList.add('slide-prev')
+      flashCardBody.current.classList.add('slide-prev');
     }
-    preventTransition()
+    preventTransition();
     if (showCongrats) {
-      setShowCongrats(false)
-      return
+      setShowCongrats(false);
+      return;
     }
 
     if (currentIndex !== 0) {
-      setCurrentIndex(currentIndex - 1)
+      setCurrentIndex(currentIndex - 1);
     }
-  }
+  };
 
   const next = () => {
     if (currentIndex !== terms.length - 1 && flashCardBody.current) {
-      flashCardBody.current.classList.add('slide-next')
+      flashCardBody.current.classList.add('slide-next');
     }
-    preventTransition()
+    preventTransition();
     if (currentIndex === terms.length - 1) {
-      setShowCongrats(true)
+      setShowCongrats(true);
     } else {
-      setShowCongrats(false)
-      setCurrentIndex(currentIndex + 1)
+      setShowCongrats(false);
+      setCurrentIndex(currentIndex + 1);
     }
-  }
+  };
 
   const preventTransition = () => {
     if (flashCardBody.current) {
-      flashCardBody.current.style.transition = 'none'
-      flashCardBody.current.classList.remove('flipped')
+      flashCardBody.current.style.transition = 'none';
+      flashCardBody.current.classList.remove('flipped');
     }
-  }
+  };
 
   const repeat = () => {
-    preventTransition()
-    setShowCongrats(false)
-    setCurrentIndex(0)
-  }
+    preventTransition();
+    setShowCongrats(false);
+    setCurrentIndex(0);
+  };
 
   const handleTouchStart = (e: any) => {
-    setTouchStart(e.changedTouches[0].clientX)
-  }
+    setTouchStart(e.changedTouches[0].clientX);
+  };
 
   const handleTouchEnd = (e: any) => {
     if (e.changedTouches && e.changedTouches.length > 0) {
-      setTouchEnd(e.changedTouches[0].clientX)
+      setTouchEnd(e.changedTouches[0].clientX);
     }
-  }
+  };
 
   useEffect(() => {
     if (flashCardBody.current) {
-      flashCardBody.current.addEventListener('touchstart', handleTouchStart)
-      flashCardBody.current.addEventListener('touchend', handleTouchEnd)
+      flashCardBody.current.addEventListener('touchstart', handleTouchStart);
+      flashCardBody.current.addEventListener('touchend', handleTouchEnd);
     }
 
     return () => {
       if (flashCardBody.current) {
-        flashCardBody.current.removeEventListener('touchstart', handleTouchStart)
-        flashCardBody.current.removeEventListener('touchend', handleTouchEnd)
+        flashCardBody.current.removeEventListener('touchstart', handleTouchStart);
+        flashCardBody.current.removeEventListener('touchend', handleTouchEnd);
       }
-    }
-  }, [flashCardBody])
+    };
+  }, [flashCardBody]);
 
   useEffect(() => {
     if (Math.abs(touchEnd - touchStart) > 5) {
       if (touchEnd > touchStart) {
-        prev()
+        prev();
       } else {
-        next()
+        next();
       }
     }
-  }, [touchEnd])
+  }, [touchEnd]);
 
   const removeClass = () => {
     if (flashCardBody.current) {
-      flashCardBody.current.classList.remove('slide-next')
-      flashCardBody.current.classList.remove('slide-prev')
+      flashCardBody.current.classList.remove('slide-next');
+      flashCardBody.current.classList.remove('slide-prev');
     }
-  }
+  };
 
   return (
     <div className="slider">
@@ -134,5 +134,5 @@ export const FlashCardsSlider = (props: FlashCardsSliderProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

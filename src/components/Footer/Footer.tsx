@@ -1,4 +1,4 @@
-import './footer.scss'
+import './footer.scss';
 
 export const Footer = () => {
   return (
@@ -7,5 +7,5 @@ export const Footer = () => {
         <span>MEMO</span>&nbsp;|&nbsp; <a href="https://github.com/AWitam/memo-app"> See source code</a>
       </div>
     </footer>
-  )
-}
+  );
+};

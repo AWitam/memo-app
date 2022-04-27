@@ -1,34 +1,34 @@
-import { useAppSelector } from '../../app/hooks'
-import { Link } from 'react-router-dom'
-import { ROUTES } from '../../app/routes'
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { fetchUserStudySets } from '../../state/studySet/studySetsSlice'
-import { getUserStreakData } from '../../state/user/userSlice'
-import { StreakBox } from '../../components/StreakBox/StreakBox'
-import './home.scss'
-import { StudySet } from '../../common/types'
-import { StudySetCard } from '../../components/StudySetCard/StudySetCard'
-import { Button, ButtonType } from '../../components/Button/Button'
-import { ReactComponent as ArrowRight } from '../../assets/icons/short-right.svg'
+import { useAppSelector } from '../../app/hooks';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../app/routes';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchUserStudySets } from '../../state/studySet/studySetsSlice';
+import { getUserStreakData } from '../../state/user/userSlice';
+import { StreakBox } from '../../components/StreakBox/StreakBox';
+import './home.scss';
+import { StudySet } from '../../common/types';
+import { StudySetCard } from '../../components/StudySetCard/StudySetCard';
+import { Button, ButtonType } from '../../components/Button/Button';
+import { ReactComponent as ArrowRight } from '../../assets/icons/short-right.svg';
 
 export const Home = () => {
-  const isLoading = useAppSelector((state) => state.auth.authState.isLoading)
-  const studySets = useAppSelector((state) => state.collections.studySets)
-  const user = useAppSelector((state) => state.auth.user)
-  const dispatch = useDispatch()
+  const isLoading = useAppSelector((state) => state.auth.authState.isLoading);
+  const studySets = useAppSelector((state) => state.collections.studySets);
+  const user = useAppSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user && !user.streakData) {
-      dispatch(getUserStreakData(user.uid))
+      dispatch(getUserStreakData(user.uid));
     }
-  }, [user])
+  }, [user]);
 
   useEffect(() => {
     if (studySets.length < 1) {
-      user && dispatch(fetchUserStudySets(user.uid))
+      user && dispatch(fetchUserStudySets(user.uid));
     }
-  }, [studySets])
+  }, [studySets]);
 
   return (
     <section id="home">
@@ -73,5 +73,5 @@ export const Home = () => {
         </article>
       </div>
     </section>
-  )
-}
+  );
+};

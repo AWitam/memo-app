@@ -1,13 +1,13 @@
-import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks'
-import { ROUTES } from '../../app/routes'
-import { StudySet } from '../../common/types'
-import { Button, ButtonType } from '../../components/Button/Button'
-import { StudySetCard } from '../../components/StudySetCard/StudySetCard'
-import './collectionPage.scss'
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
+import { ROUTES } from '../../app/routes';
+import { StudySet } from '../../common/types';
+import { Button, ButtonType } from '../../components/Button/Button';
+import { StudySetCard } from '../../components/StudySetCard/StudySetCard';
+import './collectionPage.scss';
 
 export const CollectionPage = () => {
-  const studySets = useAppSelector((state) => state.collections.studySets)
+  const studySets = useAppSelector((state) => state.collections.studySets);
   return (
     <section id="collection-page">
       <div className="section__title">
@@ -30,5 +30,5 @@ export const CollectionPage = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
