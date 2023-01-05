@@ -11,13 +11,14 @@ import './studySetCard.scss';
 import { Button } from '../Button/Button';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { getTermsFormat } from '../../utils/getTermsFormat';
+import { AppDispatch } from '../../app/store';
 
 export const StudySetCard = ({ studySet, displayAsLink }: { studySet: StudySet; displayAsLink?: boolean }) => {
   const {
     summary: { title, termsId },
     studySetId,
   } = studySet;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const handleDelete = (studySetId: string, termsId: string) => {

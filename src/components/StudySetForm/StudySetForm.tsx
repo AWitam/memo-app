@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { addStudySet, editStudySetSummary } from '../../state/studySet/studySetsSlice';
 import { editTerms } from '../../state/studySet/termsSlice';
-import { TermItem, StudySet } from '../../common/types';
+import type { TermItem, StudySet } from '../../common/types';
 import { TermsForm } from './TermsForm';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../app/routes';
 import { useAppSelector } from '../../app/hooks';
 import { useDispatch } from 'react-redux';
 import './studySetForm.scss';
+import type { AppDispatch } from '../../app/store';
 
 export const StudySetForm = ({
   existingStudySet,
@@ -19,7 +20,7 @@ export const StudySetForm = ({
 }) => {
   const studySetId = existingStudySet?.studySetId;
   const user = useAppSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const getEmptyTermField = () => ({ id: uuidv4(), term: '', definition: '', isFavorite: false });
 

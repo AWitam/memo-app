@@ -11,12 +11,13 @@ import { StudySet } from '../../common/types';
 import { StudySetCard } from '../../components/StudySetCard/StudySetCard';
 import { Button, ButtonType } from '../../components/Button/Button';
 import { ReactComponent as ArrowRight } from '../../assets/icons/short-right.svg';
+import { AppDispatch } from '../../app/store';
 
 export const Home = () => {
   const isLoading = useAppSelector((state) => state.auth.authState.isLoading);
   const studySets = useAppSelector((state) => state.collections.studySets);
   const user = useAppSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (user && !user.streakData) {

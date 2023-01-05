@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { TermItem, StudySet } from '../../common/types';
+import type { TermItem, StudySet } from '../../common/types';
 import { fetchTerms, toggleFavorite } from '../../state/studySet/termsSlice';
 import { ReactComponent as RightArrowIcon } from '../../assets/icons/short-right.svg';
 import { ReactComponent as StarIconOutlined } from '../../assets/icons/star-outline.svg';
@@ -11,7 +11,8 @@ import './studySetPage.scss';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../app/routes';
 import { StudySetCard } from '../../components/StudySetCard/StudySetCard';
-import { Terms } from '../../state/types';
+import type { Terms } from '../../state/types';
+import type { AppDispatch } from '../../app/store';
 
 export const StudySetPage = () => {
   const { studySetId } = useParams();
@@ -27,7 +28,7 @@ export const StudySetPage = () => {
         ?.termItems
   );
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [filteredItems, setFilteredItems] = useState<TermItem[] | null>(null);
   const [selected, setSelected] = useState('all');
 

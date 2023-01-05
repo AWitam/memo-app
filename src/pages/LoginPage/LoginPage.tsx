@@ -7,6 +7,7 @@ import './loginPage.scss';
 import { loginWithEmail, passwordReset, signInWithGoogle, singUpWithEmail } from '../../state/user/userSlice';
 import { Button, ButtonType } from '../../components/Button/Button';
 import { ReactComponent as IconGoogle } from '../../assets/icons/icon-google.svg';
+import type { AppDispatch } from '../../app/store';
 
 type LoginPageProps = {
   pageType: ROUTES.signUp | ROUTES.logIn;
@@ -24,7 +25,7 @@ export const LoginPage = ({ pageType }: LoginPageProps) => {
   const [password, setPassword] = useState('');
   const isAuthorized = useAppSelector((state) => state.auth.authState.isAuthorized);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const uiMessage = useAppSelector((state) => state.auth.authState.uiMessage);
 
   //todo : better inputs validation (maybe while typing), error handling

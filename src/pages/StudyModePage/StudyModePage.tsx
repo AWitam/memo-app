@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { ROUTES } from '../../app/routes';
-import { StudySet } from '../../common/types';
+import type { StudySet } from '../../common/types';
 import { FlashCardsSlider } from '../../components/FlashcardsSlider/FlashCardsSlider';
-import { Quiz } from '../../components/Quiz/Quiz';
-import { Terms } from '../../state/types';
+import { Quiz } from '../../components/quiz/Quiz'
+import type  { Terms } from '../../state/types';
 import { capitalize } from '../../utils/capitalize';
 
 export const StudyModePage = ({ mode, onlyFavorites }: { mode: string; onlyFavorites?: boolean }) => {

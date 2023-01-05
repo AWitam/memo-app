@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { StudySet } from '../../common/types';
+import type { AppDispatch } from '../../app/store';
+import type { Terms } from '../../state/types';
+import type { StudySet } from '../../common/types';
 import { StudySetForm } from '../../components/StudySetForm/StudySetForm';
 import { fetchTerms } from '../../state/studySet/termsSlice';
-import { Terms } from '../../state/types';
 
 export const StudySetFormPage = () => {
   const { studySetId } = useParams();
@@ -22,7 +23,7 @@ export const StudySetFormPage = () => {
         ?.termItems
   );
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (!termsLoading && !termsInCurrentStudySet) {

@@ -1,4 +1,5 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import type { ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import studySetsReducer from '../state/studySet/studySetsSlice';
 import termsReducer from '../state/studySet/termsSlice';
 import userReducer from '../state/user/userSlice';
