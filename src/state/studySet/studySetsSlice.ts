@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
-import { StudySetsState } from '../types';
+import type { RootState } from '../../app/store';
+import type { StudySetsState } from '../types';
 import { firebaseValue } from '../../firebase';
-import { StudySet } from '../../common/types';
+import type { StudySet } from '../../common/types';
 import { termsAdded } from './termsSlice';
+import type { ProgressRecord } from '../../firebase/api/userProgressServices';
 
 const initialState: StudySetsState = {
   studySets: [],
@@ -47,6 +48,21 @@ export const deleteStudySetThunk = createAsyncThunk(
   async ({ studySetId, termsId }: { studySetId: string; termsId: string }) => {
     await firebaseValue.api.deleteStudySet(studySetId, termsId);
     return studySetId;
+  }
+);
+
+export const getUserStudySetProgress = createAsyncThunk(
+  'studySetsSlice/getUserStudySetProgress',
+  async ({ userId, studySetId }: { userId: string; studySetId: string }) => {
+    return await firebaseValue.api.getPreviousStudySetProgress(userId, studySetId);
+  }
+);
+
+export const updateUserStudySetProgress = createAsyncThunk(
+  'studySetsSlice/recordUserStudySetProgress',
+  async ({ userId, studySetId, newProgressRecord }: { userId: string; studySetId: string; newProgressRecord: ProgressRecord }) => {
+    await firebaseValue.api.updateUserProgressForStudySet(userId, studySetId, newProgressRecord);
+    return { userId, studySetId, newProgressRecord };
   }
 );
 
@@ -94,6 +110,13 @@ export const StudySetSlice = createSlice({
             title: summary.title,
             description: summary.description,
           };
+        }
+      })
+      .addCase(updateUserStudySetProgress.fulfilled, (state, action) => {
+        const { studySetId, newProgressRecord } = action.payload;
+        const existingStudySet = state.studySets.find((studySet: StudySet) => studySet.studySetId === studySetId);
+        if (existingStudySet) {
+          existingStudySet.progress = newProgressRecord;
         }
       });
   },

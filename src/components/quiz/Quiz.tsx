@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TermItem } from '../../common/types';
+import type { TermItem } from '../../common/types';
 import { CongratsBox } from '../CongratsBox/CongratsBox';
 import './quiz.scss';
 
