@@ -3,6 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { fetchUserStudySets, addStudySet, editStudySetSummary, deleteStudySet } from './api/studySetServices';
 import { editStudySetTerms, getStudySetTerms, toggleFavorite } from './api/termsServices';
+import { getPreviousStudySetProgress, updateUserProgressForStudySet } from './api/userProgressServices';
 import { signInWithGoogle, logOut, signUpWithEmail, loginWithEmail, resetPassword, getUserStreakData } from './api/userServices';
 import { firebaseConfig } from './firebaseConfig';
 
@@ -24,6 +25,8 @@ function initializeFirebase() {
     logOut,
     resetPassword,
     getUserStreakData,
+    getPreviousStudySetProgress,
+    updateUserProgressForStudySet
   };
   return { app, auth, db, api };
 }

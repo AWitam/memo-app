@@ -3,7 +3,7 @@ import { useAppSelector } from '../../app/hooks';
 import { ROUTES } from '../../app/routes';
 import type { StudySet } from '../../common/types';
 import { FlashCardsSlider } from '../../components/FlashcardsSlider/FlashCardsSlider';
-import { Quiz } from '../../components/quiz/Quiz'
+import { Quiz } from '../../components/Quiz/Quiz'
 import type  { Terms } from '../../state/types';
 import { capitalize } from '../../utils/capitalize';
 

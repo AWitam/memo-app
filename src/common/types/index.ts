@@ -1,3 +1,5 @@
+import type { ProgressRecord } from "../../firebase/api/userProgressServices";
+
 export interface TermItem {
   id: string;
   term: string;
@@ -15,4 +17,5 @@ export interface StudySetSummary {
 export type StudySet = {
   studySetId: string;
   summary: StudySetSummary;
+  progress?: ProgressRecord;
 };

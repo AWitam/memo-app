@@ -54,3 +54,5 @@ export const deleteStudySet = async (studySetId: string, termsId: string) => {
 
   Promise.all([deleteDoc(termsRef), deleteDoc(studySetRef)]);
 };
+
+

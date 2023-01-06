@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import type { RootState } from '../../app/store';
 import { firebaseValue } from '../../firebase';
 import { FirebaseError } from 'firebase/app';
 import { reset } from '../studySet/studySetsSlice';
-import { loginPayload, LoginWithEmailAsyncThunkConfig, passWordResetAsyncThunkConfig, User, UserState } from '../types';
+import type { loginPayload, LoginWithEmailAsyncThunkConfig, passWordResetAsyncThunkConfig, User, UserState } from '../types';
 
 const initialState: UserState = {
   user: null,

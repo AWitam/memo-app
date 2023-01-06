@@ -1,6 +1,6 @@
-import { FirebaseError } from 'firebase/app';
+import type { FirebaseError } from 'firebase/app';
+import type { Auth } from 'firebase/auth';
 import {
-  Auth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   sendPasswordResetEmail,
@@ -103,3 +103,5 @@ const checkPreviousData = async (uid: string) => {
     });
   }
 };
+
+

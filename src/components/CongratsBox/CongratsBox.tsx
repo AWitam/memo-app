@@ -1,6 +1,7 @@
 import { Button, ButtonType } from '../Button/Button';
 import { ReactComponent as RepeatIcon } from '../../assets/icons/repeat.svg';
 import './congratsBox.scss';
+import { useRecordProgress } from '../../hooks/useRecordProgress';
 
 interface CongratsBox {
   numberOfTerms: number;
@@ -11,6 +12,10 @@ interface CongratsBox {
 
 export const CongratsBox: React.FC<CongratsBox> = (props) => {
   const { numberOfTerms, score, finish, repeat } = props;
+  if (score) {
+    useRecordProgress(numberOfTerms, score);
+  }
+
   return (
     <div className="congrats__box">
       <h4>Congratulations 🎉</h4>

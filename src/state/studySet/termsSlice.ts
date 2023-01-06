@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import type { RootState } from '../../app/store';
 import { firebaseValue } from '../../firebase';
-import { TermItem } from '../../common/types/index';
-import { Terms, TermsState } from '../types';
+import type { TermItem } from '../../common/types/index';
+import type { Terms, TermsState } from '../types';
 import { updateTermsCount } from './studySetsSlice';
 
 export const fetchTerms = createAsyncThunk('termsSlice/fetchTerms', async (termsId: string) => {
