@@ -1,6 +1,7 @@
 import { collection, deleteDoc, doc, DocumentData, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { firebaseValue } from '..';
 import { StudySet, TermItem } from '../../common/types';
+import { getPreviousStudySetProgress } from './userProgressServices';
 
 export const fetchUserStudySets = async (userId: string) => {
   const studySetsRef = collection(firebaseValue.db, 'studySets');
@@ -11,6 +12,11 @@ export const fetchUserStudySets = async (userId: string) => {
   querySnapshot.forEach((doc) => {
     userStudySetsData.push({ studySetId: doc.id, summary: doc.data() });
   });
+
+  for (const studySet of userStudySetsData) {
+    const progress = await getPreviousStudySetProgress(userId, studySet.studySetId);
+    studySet.progress = progress ?? []
+  }
 
   return userStudySetsData;
 };
@@ -54,5 +60,3 @@ export const deleteStudySet = async (studySetId: string, termsId: string) => {
 
   Promise.all([deleteDoc(termsRef), deleteDoc(studySetRef)]);
 };
-
-
