@@ -35,10 +35,4 @@ export const useUserData = () => {
   }, [studySets]);
 
   return { isLoadingData, user, studySets };
-
-  // useEffect(() => {
-  //   if (studySets.length < 1) {
-  //     user && dispatch(fetchUserStudySets(user.uid));
-  //   }
-  // }, [studySets]);
 };
