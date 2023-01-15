@@ -10,3 +10,16 @@ export const getWeekRange = () => {
 
   return { firstDay, lastDay };
 };
+
+
+export const getNextRepetitionDate = (nextRepetition: number) => {
+  const now = new Date().getDate()
+  return new Date().setDate(now + nextRepetition)
+}
+
+export const getDayMonthFormat = (time: number) => {
+  const date = new Date(time)
+  const day = date.getDate()
+  const month = date.toLocaleString('default', { month: 'long' });
+  return `${day} ${month}`
+}

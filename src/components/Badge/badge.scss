@@ -1,0 +1,18 @@
+@import '../../common/styles/shared';
+
+.badge {
+  background-color: $yellow;
+  padding: $spacing-8 $spacing-12;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+
+  svg {
+    height: 16px;
+    width: 16px;
+    align-self: baseline;
+  }
+}

@@ -6,10 +6,12 @@ import type { StudySet } from '../../common/types';
 import { StudySetCard } from '../../components/StudySetCard/StudySetCard';
 import { Button, ButtonType } from '../../components/Button/Button';
 import { ReactComponent as ArrowRight } from '../../assets/icons/short-right.svg';
-import { useUserData } from '../../hooks/useUserData';
+import { useStudySetsData } from '../../hooks/useStudySetsData';
 
 export const Home = () => {
-  const { isLoadingData, user, studySets } = useUserData();
+  const { isLoading, studySets } = useStudySetsData();
+
+
 
   return (
     <section id="home">
@@ -19,8 +21,8 @@ export const Home = () => {
       <div className="section__column">
         <article>
           <h2>Your collection</h2>
-          {isLoadingData && 'Loading...'}
-          {studySets && studySets.length > 0 ? (
+          {isLoading && 'Loading...'}
+          {!isLoading && studySets && studySets.length > 0 ? (
             <>
               {studySets.slice(0, 3).map((studySet: StudySet) => (
                 <StudySetCard key={studySet.studySetId} studySet={studySet} displayAsLink={true} />
@@ -35,7 +37,7 @@ export const Home = () => {
             </>
           ) : (
             <>
-              {!isLoadingData && studySets.length === 0 && (
+              {!isLoading && studySets.length === 0 && (
                 <div>
                   <h4>You dont have any study sets yet !</h4>
                   <Link to={ROUTES.newStudySet}>
@@ -50,7 +52,7 @@ export const Home = () => {
       <div className="section__sidebar">
         <article>
           <h2>Your activity</h2>
-          {user?.streakData && <StreakBox data={user.streakData} />}
+          {<StreakBox />}
         </article>
       </div>
     </section>

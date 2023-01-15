@@ -15,9 +15,9 @@ $card-title-height: 3rem;
 
 .study-set__card--header {
   display: flex;
-  justify-content: space-between;
+  gap: $spacing-16;
+  align-items: flex-start;
   width: 100%;
-  height: $card-title-height;
 }
 
 .study-set__card--options {

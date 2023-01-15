@@ -10,6 +10,9 @@ import { Button } from '../Button/Button';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { getTermsFormat } from '../../utils/getTermsFormat';
 import { useDeleteStudySet } from '../../hooks/useDeleteStudySet';
+import { getDayMonthFormat, getNextRepetitionDate } from '../../firebase/utils/dateUtils';
+import { Badge } from '../Badge/Badge';
+import { IconRepeat } from '@tabler/icons';
 
 interface StudySetCardProps {
   studySet: StudySet;
@@ -67,18 +70,6 @@ const SettingsModal = ({ onDelete, onEdit }: any) => {
     </div>
   );
 };
-interface BadgeProps {
-  icon?: React.ReactNode;
-  content: string | number;
-}
-const Badge = ({ icon, content }: BadgeProps) => {
-  return (
-    <div>
-      {icon}
-      <span>{content}</span>
-    </div>
-  );
-};
 
 const renderStudySetCardContent = (studySet: StudySet) => {
   const {
@@ -86,11 +77,14 @@ const renderStudySetCardContent = (studySet: StudySet) => {
     progress,
   } = studySet;
 
+  const nextRepetition =
+    progress?.interval && progress.interval > 0 ? getDayMonthFormat(getNextRepetitionDate(progress.interval)) : null;
+
   return (
     <div className="study-set__card--content">
       <div className="study-set__card--header">
         <h2>{title}</h2>
-        {progress?.interval && <Badge content={progress.interval} />}
+        {nextRepetition && <Badge icon={<IconRepeat />} content={nextRepetition} />}
       </div>
       <div className="study-set__card--summary">
         {description && <div className="summary--description">{studySet.summary.description}</div>}
