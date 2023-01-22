@@ -1,9 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../app/routes';
 import { useRef, useState } from 'react';
-import { deleteStudySetThunk } from '../../state/studySet/studySetsSlice';
-import { useDispatch } from 'react-redux';
-import { StudySet } from '../../common/types';
+import type { StudySet } from '../../common/types';
 import { ReactComponent as DotsIcon } from '../../assets/icons/dots.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/trash.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg';
@@ -11,20 +9,23 @@ import './studySetCard.scss';
 import { Button } from '../Button/Button';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { getTermsFormat } from '../../utils/getTermsFormat';
-import { AppDispatch } from '../../app/store';
+import { useDeleteStudySet } from '../../hooks/useDeleteStudySet';
+import { getDayMonthFormat, getNextRepetitionDate } from '../../firebase/utils/dateUtils';
+import { Badge } from '../Badge/Badge';
+import { IconRepeat } from '@tabler/icons';
 
-export const StudySetCard = ({ studySet, displayAsLink }: { studySet: StudySet; displayAsLink?: boolean }) => {
+interface StudySetCardProps {
+  studySet: StudySet;
+  displayAsLink?: boolean;
+}
+
+export const StudySetCard = ({ studySet, displayAsLink }: StudySetCardProps) => {
   const {
     summary: { title, termsId },
     studySetId,
   } = studySet;
-  const dispatch = useDispatch<AppDispatch>();
+  const { handleDelete } = useDeleteStudySet();
   const navigate = useNavigate();
-
-  const handleDelete = (studySetId: string, termsId: string) => {
-    dispatch(deleteStudySetThunk({ studySetId, termsId }));
-    navigate(`/${ROUTES.collection}`);
-  };
 
   return (
     <div className="study-set__card" key={title}>
@@ -73,12 +74,17 @@ const SettingsModal = ({ onDelete, onEdit }: any) => {
 const renderStudySetCardContent = (studySet: StudySet) => {
   const {
     summary: { title, description, numberOfItems },
+    progress,
   } = studySet;
+
+  const nextRepetition =
+    progress?.interval && progress.interval > 0 ? getDayMonthFormat(getNextRepetitionDate(progress.interval)) : null;
 
   return (
     <div className="study-set__card--content">
       <div className="study-set__card--header">
         <h2>{title}</h2>
+        {nextRepetition && <Badge icon={<IconRepeat />} content={nextRepetition} />}
       </div>
       <div className="study-set__card--summary">
         {description && <div className="summary--description">{studySet.summary.description}</div>}

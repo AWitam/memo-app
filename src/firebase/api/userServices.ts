@@ -8,7 +8,7 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { firebaseValue } from '..';
 import { getWeekRange } from '../utils/dateUtils';
 
@@ -72,7 +72,7 @@ export const getUserStreakData = async (uid: string) => {
 const addUserInfoToDb = async (uid: string) => {
   const userDoc = doc(firebaseValue.db, 'users', uid);
 
-  await setDoc(userDoc, {
+  await updateDoc(userDoc, {
     loginDaysThisWeek: [],
   });
 };

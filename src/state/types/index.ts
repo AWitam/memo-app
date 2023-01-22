@@ -1,8 +1,10 @@
-import { StudySet, TermItem } from '../../common/types';
+import type { StudySet, TermItem } from '../../common/types';
 
 export interface StudySetsState {
   studySets: Array<StudySet>;
   isLoading: boolean;
+  isError: boolean;
+  status?: string;
 }
 
 export type UserStudySetPayload = {

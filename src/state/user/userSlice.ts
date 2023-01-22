@@ -92,9 +92,11 @@ export const UserSlice = createSlice({
     validateUser(state, action) {
       if (!action.payload) {
         state.authState.isAuthorized = false;
+        state.authState.isLoading = false;
       } else {
         state.user = action.payload;
         state.authState.isAuthorized = true;
+        state.authState.isLoading = false;
       }
     },
     loggedOut(state) {
@@ -136,6 +138,7 @@ export const UserSlice = createSlice({
           state.authState.isLoading = false;
         }
       })
+    
       .addMatcher(isAnyOf(verifyAuth.pending, signInWithGoogle.pending, loginWithEmail.pending, getUserStreakData.pending), (state) => {
         state.authState.isLoading = true;
       });
