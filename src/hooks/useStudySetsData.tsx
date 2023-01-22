@@ -9,7 +9,7 @@ import { useAuth } from './useAuth';
 export const useStudySetsData = () => {
   const { user } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
-  const { studySets, isLoading } = useAppSelector((state) => state.collections);
+  const { studySets, isLoading, isError, status } = useAppSelector((state) => state.collections);
 
   useEffect(() => {
     (async () => {
@@ -20,5 +20,5 @@ export const useStudySetsData = () => {
       }
     })();
   }, [studySets]);
-  return { isLoading, studySets };
+  return { studySets, isLoading, isError, status };
 };

@@ -9,9 +9,7 @@ import { ReactComponent as ArrowRight } from '../../assets/icons/short-right.svg
 import { useStudySetsData } from '../../hooks/useStudySetsData';
 
 export const Home = () => {
-  const { isLoading, studySets } = useStudySetsData();
-
-
+  const { studySets, isLoading, isError, status } = useStudySetsData();
 
   return (
     <section id="home">
@@ -21,6 +19,7 @@ export const Home = () => {
       <div className="section__column">
         <article>
           <h2>Your collection</h2>
+          {isError && status}
           {isLoading && 'Loading...'}
           {!isLoading && studySets && studySets.length > 0 ? (
             <>

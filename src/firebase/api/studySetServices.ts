@@ -2,7 +2,7 @@ import type { DocumentData } from 'firebase/firestore';
 import { collection, deleteDoc, doc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { firebaseValue } from '..';
 import type { StudySet, TermItem } from '../../common/types';
-// import { getPreviousStudySetProgress } from './userProgressServices';
+import { getPreviousStudySetProgress } from './userProgressServices';
 
 export const fetchUserStudySets = async (userId: string) => {
   const studySetsRef = collection(firebaseValue.db, 'studySets');
@@ -10,18 +10,10 @@ export const fetchUserStudySets = async (userId: string) => {
   const querySnapshot = await getDocs(q);
   const userStudySetsData: Array<DocumentData> = [];
 
-  querySnapshot.forEach(async (doc) => {
-    userStudySetsData.push({ studySetId: doc.id, summary: doc.data() });
-  });
-
-  // const p = async () => {
-  //   for (const studySet of userStudySetsData) {
-  //     const progress = await getPreviousStudySetProgress(userId, studySet.studySetId);
-  //     studySet.progress = progress ?? [];
-  //   }
-  // };
-
-  // await p()
+  for (const doc of querySnapshot.docs) {
+    const progress = await getPreviousStudySetProgress(userId, doc.id);
+    userStudySetsData.push({ studySetId: doc.id, summary: doc.data(), progress });
+  }
 
   return userStudySetsData;
 };

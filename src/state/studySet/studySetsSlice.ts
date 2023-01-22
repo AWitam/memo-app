@@ -9,6 +9,7 @@ import type { ProgressRecord } from '../../firebase/api/userProgressServices';
 const initialState: StudySetsState = {
   studySets: [],
   isLoading: true,
+  isError: false,
 };
 
 export const fetchUserStudySets = createAsyncThunk('studySetsSlice/fetchUserStudySets', async (userId: string) => {
@@ -94,6 +95,10 @@ export const StudySetSlice = createSlice({
       .addCase(fetchUserStudySets.fulfilled, (state, action) => {
         action.payload.forEach((item: StudySet) => state.studySets.push(item));
         state.isLoading = false;
+      })
+      .addCase(fetchUserStudySets.rejected, (state, action) => {
+        state.isError = true;
+        state.status = action.error.message;
       })
 
       .addCase(deleteStudySetThunk.fulfilled, (state, action) => {

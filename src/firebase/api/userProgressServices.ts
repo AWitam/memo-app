@@ -24,7 +24,8 @@ export const getPreviousStudySetProgress = async (uid: string, studySetId: strin
       interval: 0,
       repetitions: 0,
     };
-    return defaultProgressRecord;
+
+    await updateDoc(userDocRef, { [`progress.${studySetId}`]: defaultProgressRecord });
   }
 
   return progress[studySetId];
